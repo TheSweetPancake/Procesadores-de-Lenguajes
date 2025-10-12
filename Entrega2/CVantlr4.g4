@@ -44,6 +44,7 @@ HABILIDADES     : 'habilidades' ;
 SOFT            : 'soft' ;
 HARD            : 'hard' ;
 HABILIDAD       : 'habilidad' ;
+NVHAB           : 'nvhab' ;
 CATEGORIA       : 'categoria' ;
 
 PORTAFOLIO      : 'portafolio' ;
