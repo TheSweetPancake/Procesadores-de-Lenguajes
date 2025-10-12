@@ -79,6 +79,7 @@ IDENT             = ([A-Z]|[a-z])([A-Z]|[a-z]|[0-9])*
 <YYINITIAL>"habilidades"         { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 <YYINITIAL>"soft"                { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 <YYINITIAL>"hard"                { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
+<YYINITIAL>"nvhab"               { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 <YYINITIAL>"habilidad"           { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 <YYINITIAL>"categoria"           { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 
@@ -119,3 +120,4 @@ IDENT             = ([A-Z]|[a-z])([A-Z]|[a-z]|[0-9])*
 
 /* ======== Error léxico ======== */
 <YYINITIAL>.                    {System.err.println("Error léxico en la línea " + (yyline) + ", columna " + (yycolumn) + ": carácter inesperado '" + yytext() + "'"); System.exit(1); }
+
