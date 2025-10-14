@@ -6,7 +6,7 @@ ID              : 'id' ;
 GVAR            : 'gvar' ;
 LVAR            : 'lvar' ;
 
-DATOS_PERSONALES: 'datospersonales' ;
+DP              : 'datospersonales' ;
 NOMYAPE         : 'nomyape' ;
 FOTO            : 'foto' ;
 FECHA           : 'fecha' ;
