@@ -42,7 +42,7 @@ IDENT             = ([A-Z]|[a-z])([A-Z]|[a-z]|[0-9])*
 <YYINITIAL>"gvar"                { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 <YYINITIAL>"lvar"                { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 
-<YYINITIAL>"datospersonales"     { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
+<YYINITIAL>"dp"                  { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 <YYINITIAL>"nomyape"             { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 <YYINITIAL>"foto"                { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
 <YYINITIAL>"fecha"               { System.out.println("Token: " + yytext() + " en fila: " + (yyline) + " en columna: " + (yycolumn)); }
@@ -120,4 +120,5 @@ IDENT             = ([A-Z]|[a-z])([A-Z]|[a-z]|[0-9])*
 
 /* ======== Error léxico ======== */
 <YYINITIAL>.                    {System.err.println("Error léxico en la línea " + (yyline) + ", columna " + (yycolumn) + ": carácter inesperado '" + yytext() + "'"); System.exit(1); }
+
 
