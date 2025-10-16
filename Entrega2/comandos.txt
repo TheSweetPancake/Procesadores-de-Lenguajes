@@ -1,0 +1,13 @@
+java -jar antlr-4.13.2-complete.jar CVantlr4.g4
+javac -cp ".:antlr-4.13.2-complete.jar" *.java
+java -cp ".:antlr-4.13.2-complete.jar" org.antlr.v4.gui.TestRig CVantlr4 tokens -tokens pruebaCV.txt
+
+
+java -jar antlr-4.13.2-complete.jar CVantlr4.g4
+javac -cp ".:antlr-4.13.2-complete.jar" *.java
+java -cp ".:antlr-4.13.2-complete.jar" org.antlr.v4.gui.TestRig CVantlr4 tokens -tokens pruebaCV_conFallo.txt
+
+jflex CVJflex.flex
+javac analizador.
+java analizador pruebaCV.txt
+java analizador pruebaCV_conFallo.txt

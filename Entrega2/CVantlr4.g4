@@ -66,7 +66,8 @@ PYC             : ';' ;
 // ======== Comentarios estilo C ========
 
 COMMENT
-    : '/*' .*? '*/' -> skip
+    : '/*' .*? '*/'      { skip(); }                      // comentario bien cerrado
+    | '/*' .*?  EOF      { System.err.println("Error léxico: comentario no cerrado antes del fin de archivo"); skip(); }
     ;
 
 // ======== Macros ========
