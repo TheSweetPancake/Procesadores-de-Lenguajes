@@ -1,0 +1,92 @@
+(* ================== Símbolo inicial ================== *)
+CVS             ::= {GVAR} CV {CV} ;
+
+(* ================== Elementos básicos ================ *)
+VAL             ::= TXT | NUM;
+TXT             ::= (PALABRA | CARACTER_ESPECIAL) { ' ' (PALABRA
+| CARACTER_ESPECIAL) } ;
+PALABRA         ::= LET {LET} ;
+LET             ::= 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+| 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q'
+| 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | 'a'
+| 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k'
+| 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u'
+| 'v' | 'w' | 'x' | 'y' | 'z' ;
+NUM             ::= ('0' | DIG {DIG | '0'}) ;
+DIG             ::= '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
+RUTA            ::= PALABRA CARACTER_RUTA {CARACTER_RUTA} PALABRA {('.' | '/') PALABRA} ;
+CARACTER_RUTA   ::= '/' | '.' | '-' | ':' ;
+CARACTER_ESPECIAL ::= '!' | '"' | '#' | '$' | '%' | '&' | '''
+| '(' | ')' | '*' | '+' | ',' | '-' | '.' | '/' | ':' | ';'
+| '<' | '=' | '>' | '?' | '@' | '[' | '\' | ']' | '^'
+| '‘' | '{' | '|' | '}' | '~' ;
+DIA             ::= ('0' | '1' | '2') DIG | "30" | "31" ;
+MES             ::= '0' DIG | "10" | "11" | "12" ;
+AÑO             ::= ('1' | '2') DIG DIG DIG ;
+COMENTARIO      ::= "/*" (VAL | CARACTER_ESPECIAL) {VAL | CARACTER_ESPECIAL} "*/" ;
+MAIL            ::= PALABRA {PALABRA | NUM | ’.’ | ’_’} '@' PALABRA {’.’ PALABRA} ’.’ PALABRA ;
+
+(* ================= Variables Globales ================= *)
+GVAR            ::= gvar '{' VAR {VAR} '}' ;
+VAR             ::= IDENT '=' TXT {VAL} ';' ;
+IDENT           ::= LET {VAL} ;
+
+(* ================== Curriculvbum Vitae ================== *)
+CV              ::= cv '{' LVAR ID DP FORMACION [IDIOMAS] [EXPERIENCIA] [HABILIDADES] [PORTAFOLIO] '}' ;
+LVAR            ::= lvar '{' VAR {VAR} '}' ;
+ID              ::= id '(' TXT {VAL} ')' ;
+
+(* ================== Datos personales ================== *)
+DP              ::= datospersonales '{' NOMYAPE [FOTO] FECHA [BIO] CONTACTO '}' ;
+NOMYAPE         ::= nomyape '(' TXT ')' ;
+FOTO            ::= foto '(' RUTA ')' ;
+FECHA           ::= fecha '(' DIA '/' MES '/' AÑO ')' ;
+BIO             ::= bio '(' TXT {VAL} ')' ;
+CONTACTO        ::= contacto '{' EMAIL TELEFONO [REDES] '}' ;
+EMAIL           ::= email '(' MAIL ')' ;
+TELEFONO        ::= telefono '(' DIG DIG DIG DIG DIG DIG DIG DIG DIG ')' ;
+REDES           ::= redes '{' (LINKEDIN [GITHUB] [WEB] | [LINKEDIN] GITHUB [WEB] | [LINKEDIN] [GITHUB] WEB) '}' ;
+LINKEDIN        ::= linkedin '(' RUTA ')' ;
+GITHUB          ::= github '(' RUTA ')' ;
+WEB             ::= web '(' RUTA ')' ;
+
+(* ================== Formación ================== *)
+FORMACION       ::= formacion '{' OFICIAL {OFICIAL} {COMPLEMENTARIA} '}' ;
+OFICIAL         ::= oficial '{' TITULO EXPEDIDOR [DESCRIPCION] [LOGROS] (FECHA | "En_curso") '}' ;
+TITULO          ::= titulo '(' TXT ')' ;
+EXPEDIDOR       ::= expedidor '(' TXT ')' ;
+DESCRIPCION     ::= descripcion '(' TXT {VAL} ')' ;
+LOGROS          ::= logros '(' TXT {VAL} ')' ;
+COMPLEMENTARIA  ::= complementaria '{' TITULO [CERTIFICADO] EXPEDIDOR [HORAS] (FECHA | "En_curso") '}' ;
+CERTIFICADO     ::= certificado '(' ("Si" | "No") ')' ;
+HORAS           ::= horas '(' NUM ')' ;
+
+(* ================== Idiomas ================== *)
+IDIOMAS         ::= idiomas '{' IDIOMA {IDIOMA} '}' ;
+IDIOMA          ::= idioma '(' PALABRA NIVEL [EXPEDIDOR] ')' ;
+NIVEL           ::= nivel '(' ('A' | 'B' | 'C') ('1' | '2') | "nativo" ')' ;
+
+(* ================== Experiencia ================== *)
+EXPERIENCIA     ::= experiencia '{' (LABORAL {LABORAL} {VOLUNTARIADO} | VOLUNTARIADO {VOLUNTARIADO}) '}' ;
+LABORAL         ::= laboral '(' ORGANIZACION PUESTO HORAS [RESPONSABILIDADES] ')' ;
+PUESTO          ::= puesto '(' TXT {VAL} ')' ;
+RESPONSABILIDADES ::= responsabilidades '(' TXT {VAL} ')' ;
+VOLUNTARIADO    ::= voluntariado '(' PUESTO DESCRIPCION HORAS ORGANIZACION ')' ;
+ORGANIZACION    ::= organizacion '(' TXT {VAL} ')' ;
+
+(* ================== Habilidades ================== *)
+HABILIDADES     ::= habilidades '{' (SOFT {SOFT} {HARD} | HARD {HARD}) '}' ;
+SOFT            ::= soft '(' HABILIDAD ')' ;
+HARD            ::= hard '(' HABILIDAD CATEGORIA NVHAB ')' ;
+NVHAB           ::= nvhab '(' ("bajo" | "medio" | "alto") ')' ;
+HABILIDAD       ::= habilidad '(' TXT {VAL} ')' ;
+CATEGORIA       ::= categoria '(' TXT ')'  ;
+
+(* ================== Portafolio ================== *)
+PORTAFOLIO      ::= portafolio '{' (PROYECTO {PROYECTO} {MERITOS} | MERITOS {MERITOS}) '}' ;
+PROYECTO        ::= proyecto '{' NOMBRE [GRUPO] DESCRIPCION CATEGORIA TECNOLOGIAS [WEB] '}' ;
+NOMBRE          ::= nombre '(' TXT {VAL} ')' ;
+GRUPO           ::= grupo '{' COMPAÑERO {COMPAÑERO} '}' ;
+COMPAÑERO       ::= compañero '{' NOMYAPE [GITHUB] '}' ;
+TECNOLOGIAS     ::= tecnologias '{' TXT {VAL} '}' ;
+MERITOS         ::= meritos '{' NOMBRE DESCRIPCION '}' ;
