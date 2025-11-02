@@ -64,8 +64,13 @@ PA_A            : '(' ;
 PA_C            : ')' ;
 IG              : '=' ;
 PYC             : ';' ;
+CO              : ',' ;
+CD              : '"' ;
 
 // ======== Comentarios estilo C ========
+ERR_COMMENT_CLOSE
+    : '*/' { System.err.println("Error léxico: cierre de comentario sin apertura"); skip(); }
+    ;
 
 COMMENT
     : '/*' .*? '*/'      { skip(); }                      // Comentario bien cerrado
@@ -73,16 +78,16 @@ COMMENT
     ;
 
 // ======== Macros ========
+TFNO            : ([5-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]) ;
 NUM             : ('0' | [1-9][0-9]*) ;
 PAL             : [A-Za-zÁÉÍÓÚáéíóúÑñ]+ ;
-IDENT           : ([A-Z]|[a-z])([A-Z]|[a-z]|[0-9])* ;
+IDENT           : CD PAL {PAL|NUM} CD ;
 MAIL            : [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* '@' [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* ;
 RUTA            : [A-Za-z]+ ( [./\-:]+ [A-Za-z]+ )+ ;
 FECHA_NUM       : ('0'[1-9] | [12][0-9] | '30' | '31') '/' ('0'[1-9] | '1'[0-2]) '/' ([12][0-9][0-9][0-9]);
 BOOL            : 'Si' | 'No' ;
 NVI             : ([ABC][12]) | 'nativo' ;
 NVH             : 'bajo' | 'medio' | 'alto' ;
-CE              : [!"#$%&'()+,\-.:;<=>?@[\\\]^_‘{|}~] ;
 
 // ======== Espacios y saltos de línea ========
 WS              : [ \t\r\n]+ -> skip ;
@@ -90,6 +95,7 @@ WS              : [ \t\r\n]+ -> skip ;
 // ======== token CONJPAL (conjunto de palabras) ========
 CONJPAL         : '"' (PAL (WS PAL)*)? '"' ;
 CONJPALYNUM         : '"' (PAL (WS PAL | WS NUM)*)? '"' ;
+
 // ======== Manejo de errores ========
 ERROR : . { System.err.println("Error léxico: carácter no reconocido " + getText()); } ;
 
@@ -109,7 +115,7 @@ fecha:          FECHA PA_A FECHA_NUM PA_C ;
 bio:            BIO PA_A CONJPALYNUM PA_C ;
 contacto:       CONTACTO LL_A email telefono redes LL_C ;
 email:          EMAIL PA_A MAIL PA_C ;
-telefono:       TELEFONO PA_A NUM PA_C ;
+telefono:       TELEFONO PA_A (TFNO | NUM) PA_C ;
 redes:          REDES (linkedin github? web?
             |   linkedin? github web?
             |   linkedin? github? web);
@@ -126,7 +132,7 @@ descripcion:    DESCRIPCION PA_A CONJPALYNUM PA_C ;
 logros:         LOGROS PA_A CONJPALYNUM PA_C ;
 
 idiomas:        IDIOMAS LL_A idioma+ LL_C ;
-idioma:         IDIOMA PA_A PAL NIVEL NVI PA_C  ;
+idioma:         IDIOMA LL_A NOMBRE NIVEL PA_A NVI PA_C expedidor? LL_C  ;
 
 complementaria: COMPLEMENTARIA LL_A titulo certificado? expedidor horas? fecha LL_C;
 certificado:    CERTIFICADO PA_A BOOL PA_C;
@@ -137,13 +143,13 @@ responsabilidades: RESPONSABILIDADES PA_A CONJPALYNUM PA_C;
 voluntariado:   VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C;
 organizacion:   ORGANIZACION PA_A CONJPALYNUM PA_C;
 
-habilidades:    HABILIDADES LL_A (soft+ hard* | hard+) LL_C;
-soft:           SOFT LL_A habilidad LL_C;
-hard:           HARD LL_A habilidad categoria nvh LL_C;
+habilidades:    HABILIDADES LL_A soft hard* LL_C| HABILIDADES LL_A hard+ LL_C;
+soft:           SOFT LL_A habilidad(CO habilildad)* LL_C;
+hard:           HARD LL_A categoria+ LL_C;
 
 nvh:            NVHAB PA_A NVH PA_C;
 habilidad:      HABILIDAD PA_A CONJPALYNUM PA_C;
-categoria:      CATEGORIA PA_A CONJPAL PA_C;
+categoria:      CATEGORIA PA_A NOMBRE (HABILIDAD NVHAB)+ PA_C;
 
 portafolio:     PORTAFOLIO LL_A (proyecto+ merito* | merito+) LL_C;
 proyecto:       PROYECTO LL_A nombre grupo? descripcion categoria tecnologias web? LL_C;
