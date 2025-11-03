@@ -74,7 +74,8 @@ ERR_COMMENT_CLOSE
 
 COMMENT
     : '/*' .*? '*/'      { skip(); }                      // Comentario bien cerrado
-    | '/*' .*?  EOF      { System.err.println("Error léxico: comentario no cerrado antes del fin de archivo"); skip(); }
+    | '/*' .*?  EOF      { System.err.println("Error léxico: comentario no cerrado antes del fin de archivo."); skip(); }
+    | '*/' .*?  EOF      { System.err.println("Error léxico: comentario no abierto."); skip(); }
     ;
 
 // ======== Macros ========
@@ -93,8 +94,8 @@ NVH             : 'bajo' | 'medio' | 'alto' ;
 WS              : [ \t\r\n]+ -> skip ;
 
 // ======== token CONJPAL (conjunto de palabras) ========
-CONJPAL         : '"' (PAL (WS PAL)*)? '"' ;
-CONJPALYNUM         : '"' (PAL (WS PAL | WS NUM)*)? '"' ;
+CONJPAL         : (PAL (WS PAL)*)? ;
+CONJPALYNUM     : (PAL (WS PAL | WS NUM)*)? ;
 
 // ======== Manejo de errores ========
 ERROR : . { System.err.println("Error léxico: carácter no reconocido " + getText()); } ;
@@ -109,13 +110,13 @@ variable:       IDENT IG CONJPALYNUM PYC ;
 cv:             CV IDENT LL_A local_var datospersonales formacion idiomas? experiencia? habilidades? portafolio? LL_C ;
 
 datospersonales:DP LL_A nomyape foto? fecha bio? contacto LL_C ;
-nomyape:        NOMYAPE PA_A CONJPAL+ PA_C ;
+nomyape:        NOMYAPE PA_A (CONJPAL|IDENT) PA_C ;
 foto:           FOTO PA_A RUTA PA_C ;
 fecha:          FECHA PA_A FECHA_NUM PA_C ;
-bio:            BIO PA_A CONJPALYNUM PA_C ;
+bio:            BIO PA_A (CONJPALYNUM|IDENT) PA_C ;
 contacto:       CONTACTO LL_A email telefono redes LL_C ;
 email:          EMAIL PA_A MAIL PA_C ;
-telefono:       TELEFONO PA_A (TFNO | NUM) PA_C ;
+telefono:       TELEFONO PA_A TFNO PA_C ;
 redes:          REDES (linkedin github? web?
             |   linkedin? github web?
             |   linkedin? github? web);
@@ -126,39 +127,40 @@ web:            WEB PA_A RUTA PA_C ;
 experiencia:    EXPERIENCIA LL_A (laboral+ voluntariado* | voluntariado+) LL_C;
 formacion:      FORMACION LL_A oficial+ complementaria* LL_C ;
 oficial:        OFICIAL LL_A titulo expedidor descripcion? logros? fecha LL_C ;
-titulo:         TITULO PA_A CONJPAL+ PA_C ;
-expedidor:      EXPEDIDOR PA_A CONJPAL+ PA_C ;
-descripcion:    DESCRIPCION PA_A CONJPALYNUM PA_C ;
-logros:         LOGROS PA_A CONJPALYNUM PA_C ;
+titulo:         TITULO PA_A (CONJPAL|IDENT) PA_C ;
+expedidor:      EXPEDIDOR PA_A (CONJPAL|IDENT) PA_C ;
+descripcion:    DESCRIPCION PA_A (CONJPALYNUM|IDENT) PA_C ;
+logros:         LOGROS PA_A (CONJPALYNUM|IDENT) PA_C ;
 
 idiomas:        IDIOMAS LL_A idioma+ LL_C ;
-idioma:         IDIOMA LL_A NOMBRE NIVEL PA_A NVI PA_C expedidor? LL_C  ;
+idioma:         IDIOMA LL_A nombre nvi expedidor? LL_C  ;
+nvi:            NIVEL PA_A NVI PA_C ;
 
 complementaria: COMPLEMENTARIA LL_A titulo certificado? expedidor horas? fecha LL_C;
 certificado:    CERTIFICADO PA_A BOOL PA_C;
 
-laboral:        LABORAL LL_A organizacion puesto horas responsabilidades? LL_C;
-puesto:         PUESTO PA_A CONJPALYNUM PA_C;
-responsabilidades: RESPONSABILIDADES PA_A CONJPALYNUM PA_C;
+laboral:        LABORAL LL_A puesto horas organizacion responsabilidades? LL_C;
+puesto:         PUESTO PA_A (CONJPALYNUM|IDENT) PA_C;
+responsabilidades: RESPONSABILIDADES PA_A (CONJPALYNUM|IDENT) PA_C;
 voluntariado:   VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C;
-organizacion:   ORGANIZACION PA_A CONJPALYNUM PA_C;
+organizacion:   ORGANIZACION PA_A (CONJPALYNUM|IDENT) PA_C;
 
-habilidades:    HABILIDADES LL_A soft hard* LL_C| HABILIDADES LL_A hard+ LL_C;
-soft:           SOFT LL_A habilidad(CO habilildad)* LL_C;
+habilidades:    (HABILIDADES LL_A soft hard* LL_C| HABILIDADES LL_A hard+ LL_C) ;
+soft:           SOFT LL_A habilidad (CO habilildad)* LL_C;
 hard:           HARD LL_A categoria+ LL_C;
 
 nvh:            NVHAB PA_A NVH PA_C;
-habilidad:      HABILIDAD PA_A CONJPALYNUM PA_C;
-categoria:      CATEGORIA PA_A NOMBRE (HABILIDAD NVHAB)+ PA_C;
+habilidad:      HABILIDAD PA_A (CONJPALYNUM|IDENT) PA_C;
+categoria:      CATEGORIA LL_A nombre habilidad nvh (CO habilidad nvh)+ LL_C;
 
 portafolio:     PORTAFOLIO LL_A (proyecto+ merito* | merito+) LL_C;
 proyecto:       PROYECTO LL_A nombre grupo? descripcion categoria tecnologias web? LL_C;
 
-nombre:         NOMBRE PA_A CONJPALYNUM PA_C;
+nombre:         NOMBRE PA_A (CONJPALYNUM|IDENT) PA_C;
 grupo:          GRUPO LL_A compañero+ LL_C;
 compañero:      COMPAÑERO LL_A nomyape github? LL_C;
 
-tecnologias:    TECNOLOGIAS PA_A CONJPALYNUM PA_C;
+tecnologias:    TECNOLOGIAS PA_A (CONJPALYNUM|IDENT) PA_C;
 merito:         MERITOS LL_A nombre descripcion LL_C;
 
 horas:          HORAS LL_A NUM LL_C; 
