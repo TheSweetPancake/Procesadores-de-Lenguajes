@@ -118,8 +118,8 @@ contacto:       CONTACTO LL_A email telefono redes LL_C ;
 email:          EMAIL PA_A MAIL PA_C ;
 telefono:       TELEFONO PA_A TFNO PA_C ;
 redes:          REDES (linkedin github? web?
-            |   linkedin? github web?
-            |   linkedin? github? web);
+            |   github web?
+            |   web);
 linkedin:       LINKEDIN PA_A RUTA PA_C ;
 github:         GITHUB PA_A RUTA PA_C ;
 web:            WEB PA_A RUTA PA_C ;
