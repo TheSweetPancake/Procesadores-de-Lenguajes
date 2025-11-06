@@ -101,7 +101,7 @@ CONJPALYNUM     : (PAL (WS PAL | WS NUM)*)? ;
 ERROR : . { System.err.println("Error léxico: carácter no reconocido " + getText()); } ;
 
 // ========== Sintaxis ==========
-cvs:            (global_var? (cv)+) ;
+cvs:            global_var? cv+ ;
         
 global_var:     GVAR LL_A variable LL_C ;
 local_var:      LVAR LL_A variable LL_C;
@@ -145,7 +145,7 @@ responsabilidades: RESPONSABILIDADES PA_A (CONJPALYNUM|IDENT) PA_C;
 voluntariado:   VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C;
 organizacion:   ORGANIZACION PA_A (CONJPALYNUM|IDENT) PA_C;
 
-habilidades:    (HABILIDADES LL_A soft hard* LL_C| HABILIDADES LL_A hard+ LL_C) ;
+habilidades:    HABILIDADES LL_A (soft hard* | hard+) LL_C) ;
 soft:           SOFT LL_A habilidad (CO habilildad)* LL_C;
 hard:           HARD LL_A categoria+ LL_C;
 
