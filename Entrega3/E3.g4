@@ -52,7 +52,7 @@ PORTAFOLIO      : 'portafolio' ;
 PROYECTO        : 'proyecto' ;
 NOMBRE          : 'nombre' ;
 GRUPO           : 'grupo' ;
-COMPAÑERO       : 'compañero' ;
+COMPANERO       : 'companero' ;
 TECNOLOGIAS     : 'tecnologias' ;
 MERITOS         : 'meritos' ;
 
@@ -81,7 +81,7 @@ COMMENT
 // ======== Macros ========
 TFNO            : ([5-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]) ;
 NUM             : ('0' | [1-9][0-9]*) ;
-PAL             : [A-Za-zÁÉÍÓÚáéíóúÑñ]+ ;
+PAL             : [A-Za-zÁÉÍÓÚáéíóúNn]+ ;
 IDENT           : CD PAL {PAL|NUM} CD ;
 MAIL            : [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* '@' [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* ;
 RUTA            : [A-Za-z]+ ( [./\-:]+ [A-Za-z]+ )+ ;
@@ -157,8 +157,8 @@ portafolio:     PORTAFOLIO LL_A (proyecto+ merito* | merito+) LL_C;
 proyecto:       PROYECTO LL_A nombre grupo? descripcion categoria tecnologias web? LL_C;
 
 nombre:         NOMBRE PA_A (CONJPALYNUM|IDENT) PA_C;
-grupo:          GRUPO LL_A compañero+ LL_C;
-compañero:      COMPAÑERO LL_A nomyape github? LL_C;
+grupo:          GRUPO LL_A companero+ LL_C;
+companero:      COMPANERO LL_A nomyape github? LL_C;
 
 tecnologias:    TECNOLOGIAS PA_A (CONJPALYNUM|IDENT) PA_C;
 merito:         MERITOS LL_A nombre descripcion LL_C;
