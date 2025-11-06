@@ -163,4 +163,4 @@ companero:      COMPANERO LL_A nomyape github? LL_C;
 tecnologias:    TECNOLOGIAS PA_A (CONJPALYNUM|IDENT) PA_C;
 merito:         MERITOS LL_A nombre descripcion LL_C;
 
-horas:          HORAS LL_A NUM LL_C; 
+horas:          HORAS PA_A NUM PA_C; 
