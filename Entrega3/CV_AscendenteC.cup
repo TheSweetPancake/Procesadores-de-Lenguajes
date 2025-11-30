@@ -1,0 +1,266 @@
+/* COMANDOS:
+jflex practica2.flex
+cup -expect 1 practica2.cup
+javac Yylex.java sym.java parser.java
+java parser prueba.txt
+*/
+
+import java_cup.runtime.*;
+import java.io.*;
+
+parser code {:
+    public static void main(String args[]) throws Exception {
+        FileInputStream stream = new FileInputStream(args[0]);
+        Reader reader = new InputStreamReader(stream);
+
+        try {
+            new parser(new Yylex(reader)).parse();
+        } catch (Exception e) {
+            System.out.println("Analisis INCORRECTO !!");
+            System.exit(1);
+        }
+        System.out.println("Analisis Correcto ");
+    }
+:}
+
+/************** TERMINALES **************/
+terminal CV, ID, GVAR, LVAR;
+terminal DP, NOMYAPE, FOTO, FECHA, BIO, CONTACTO, EMAIL, TELEFONO, REDES;
+terminal LINKEDIN, GITHUB, WEB;
+terminal FORMACION, OFICIAL, TITULO, EXPEDIDOR, DESCRIPCION, LOGROS;
+terminal COMPLEMENTARIA, CERTIFICADO, HORAS;
+terminal IDIOMAS, IDIOMA, NIVEL;
+terminal EXPERIENCIA, LABORAL, PUESTO, RESPONSABILIDADES;
+terminal VOLUNTARIADO, ORGANIZACION;
+terminal HABILIDADES, SOFT, HARD, HABILIDAD, NVHAB, CATEGORIA;
+terminal PORTAFOLIO, PROYECTO, NOMBRE, GRUPO, COMPANERO, TECNOLOGIAS, MERITOS;
+terminal NUM;
+
+/* símbolos sueltos */
+terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO, CD;
+
+/* macros y primitivas */
+terminal NVH, NVI, MAIL, RUTA, DIA, MES, ANIO, IDENT, BOOL;
+
+/* TERMINALES QUE FALTABAN EN EL CUP ORIGINAL */
+terminal TFNO;
+
+/************** NO TERMINALES **************/
+non terminal CONJPAL, CONJPALYNUM;
+
+non terminal cvs, cv_list, global_var, local_var, variable, cv;
+
+non terminal datospersonales, nomyape, foto, fecha, bio, contacto;
+non terminal email, telefono, redes, linkedin, github, web;
+
+non terminal experiencia, formacion, oficial, titulo, expedidor;
+non terminal descripcion, logros;
+
+non terminal idiomas, idioma, nvi;
+
+non terminal complementaria, certificado, horas;
+
+non terminal laboral, puesto, responsabilidades, voluntariado, organizacion;
+
+non terminal habilidades, soft, hard, nvh, habilidad, categoria;
+
+/* listas */
+non terminal laboral_list, voluntariado_list, voluntariado_opt_list;
+non terminal oficial_list, complementaria_list, complementaria_opt_list;
+non terminal idioma_list;
+non terminal hard_list, hard_opt_list, categoria_list, categoria_tail;
+non terminal soft_hab_tail;
+non terminal proyecto_list, merito_list, merito_opt_list, companero_list;
+
+/* portafolio */
+non terminal portafolio, proyecto, nombre, grupo, companero;
+non terminal tecnologias, merito;
+
+/* opcionales */
+non terminal idiomas_opt, experiencia_opt, habilidades_opt, portafolio_opt;
+non terminal foto_opt, bio_opt, github_opt, web_opt, expedidor_opt;
+non terminal descripcion_opt, logros_opt, horas_opt, responsabilidades_opt, certificado_opt;
+non terminal grupo_opt;
+
+/************** GRAMÁTICA **************/
+
+start with cvs;
+
+cvs ::= global_var cv_list
+      | cv_list
+      ;
+
+cv_list ::= cv CD ID CD cv_list
+          | cv CD ID CD
+          ;
+
+global_var ::= GVAR LL_A variable LL_C ;
+local_var ::= LVAR LL_A variable LL_C ;
+
+variable ::= IDENT IG CONJPALYNUM PYC ;
+
+cv ::= CV IDENT LL_A local_var datospersonales formacion
+       idiomas_opt experiencia_opt habilidades_opt portafolio_opt LL_C ;
+
+/******** OPCIONALES ********/
+idiomas_opt ::= idiomas | ;
+experiencia_opt ::= experiencia | ;
+habilidades_opt ::= habilidades | ;
+portafolio_opt ::= portafolio | ;
+foto_opt ::= foto | ;
+bio_opt ::= bio | ;
+github_opt ::= github | ;
+web_opt ::= web | ;
+expedidor_opt ::= expedidor | ;
+descripcion_opt ::= descripcion | ;
+logros_opt ::= logros | ;
+horas_opt ::= horas | ;
+responsabilidades_opt ::= responsabilidades | ;
+grupo_opt ::= grupo | ;
+
+/******** DATOS PERSONALES ********/
+datospersonales ::= DP LL_A nomyape foto_opt fecha bio_opt contacto LL_C ;
+
+nomyape ::= NOMYAPE PA_A CONJPAL PA_C
+          | NOMYAPE PA_A IDENT   PA_C ;
+
+foto ::= FOTO PA_A RUTA PA_C ;
+fecha ::= FECHA PA_A DIA MES ANIO PA_C ;
+
+bio ::= BIO PA_A CONJPALYNUM PA_C
+      | BIO PA_A IDENT       PA_C ;
+
+contacto ::= CONTACTO LL_A email telefono redes LL_C ;
+
+email ::= EMAIL PA_A MAIL PA_C ;
+telefono ::= TELEFONO PA_A TFNO PA_C ;
+
+/******** REDES ********/
+redes ::= REDES linkedin github_opt web_opt
+        | REDES github web_opt
+        | REDES web ;
+
+linkedin ::= LINKEDIN PA_A RUTA PA_C ;
+github ::= GITHUB PA_A RUTA PA_C ;
+web ::= WEB PA_A RUTA PA_C ;
+
+/******** EXPERIENCIA Y FORMACION ********/
+experiencia ::= EXPERIENCIA LL_A laboral_list voluntariado_opt_list LL_C
+              | EXPERIENCIA LL_A voluntariado_list LL_C ;
+
+laboral_list ::= laboral_list laboral
+               | laboral ;
+
+voluntariado_list ::= voluntariado_list voluntariado
+                    | voluntariado ;
+
+voluntariado_opt_list ::= voluntariado_list | ;
+
+formacion ::= FORMACION LL_A oficial_list complementaria_opt_list LL_C ;
+
+oficial_list ::= oficial_list oficial
+                | oficial ;
+
+complementaria_opt_list ::= complementaria_list | ;
+complementaria_list ::= complementaria_list complementaria
+                       | complementaria ;
+
+oficial ::= OFICIAL LL_A titulo expedidor descripcion_opt logros_opt fecha LL_C ;
+
+titulo ::= TITULO PA_A CONJPAL PA_C
+         | TITULO PA_A IDENT   PA_C ;
+
+expedidor ::= EXPEDIDOR PA_A CONJPAL PA_C
+            | EXPEDIDOR PA_A IDENT   PA_C ;
+
+descripcion ::= DESCRIPCION PA_A CONJPALYNUM PA_C
+              | DESCRIPCION PA_A IDENT       PA_C ;
+
+logros ::= LOGROS PA_A CONJPALYNUM PA_C
+         | LOGROS PA_A IDENT       PA_C ;
+
+idiomas ::= IDIOMAS LL_A idioma_list LL_C ;
+
+idioma_list ::= idioma_list idioma
+              | idioma ;
+
+idioma ::= IDIOMA LL_A nombre nvi expedidor_opt LL_C ;
+
+nvi ::= NIVEL PA_A NVI PA_C ;
+
+complementaria ::= COMPLEMENTARIA LL_A titulo certificado_opt expedidor horas_opt fecha LL_C ;
+
+certificado ::= CERTIFICADO PA_A BOOL PA_C ;
+
+laboral ::= LABORAL LL_A puesto horas organizacion responsabilidades_opt LL_C ;
+
+puesto ::= PUESTO PA_A CONJPALYNUM PA_C
+         | PUESTO PA_A IDENT       PA_C ;
+
+responsabilidades ::= RESPONSABILIDADES PA_A CONJPALYNUM PA_C
+                    | RESPONSABILIDADES PA_A IDENT       PA_C ;
+
+voluntariado ::= VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C ;
+
+organizacion ::= ORGANIZACION PA_A CONJPALYNUM PA_C
+                | ORGANIZACION PA_A IDENT       PA_C ;
+
+/******** HABILIDADES ********/
+habilidades ::= HABILIDADES LL_A soft hard_opt_list LL_C
+              | HABILIDADES LL_A hard_list       LL_C ;
+
+hard_list ::= hard_list hard
+            | hard ;
+
+hard_opt_list ::= hard_list | ;
+
+soft ::= SOFT LL_A habilidad soft_hab_tail LL_C ;
+
+soft_hab_tail ::= CO habilidad soft_hab_tail
+                | ;
+
+hard ::= HARD LL_A categoria_list LL_C ;
+
+categoria_list ::= categoria_list categoria
+                 | categoria ;
+
+nvh ::= NVHAB PA_A NVH PA_C ;
+
+habilidad ::= HABILIDAD PA_A CONJPALYNUM PA_C
+            | HABILIDAD PA_A IDENT       PA_C ;
+
+categoria ::= CATEGORIA LL_A nombre habilidad nvh categoria_tail LL_C ;
+
+categoria_tail ::= CO habilidad nvh
+                  | categoria_tail CO habilidad nvh ;
+
+/******** PORTAFOLIO Y PROYECTOS ********/
+portafolio ::= PORTAFOLIO LL_A proyecto_list merito_opt_list LL_C
+             | PORTAFOLIO LL_A merito_list                LL_C ;
+
+proyecto_list ::= proyecto_list proyecto
+                 | proyecto ;
+
+merito_list ::= merito_list merito
+               | merito ;
+
+merito_opt_list ::= merito_list | ;
+
+proyecto ::= PROYECTO LL_A nombre grupo_opt descripcion categoria tecnologias web_opt LL_C ;
+
+nombre ::= NOMBRE PA_A CONJPALYNUM PA_C
+         | NOMBRE PA_A IDENT       PA_C ;
+
+grupo ::= GRUPO LL_A companero_list LL_C ;
+
+companero_list ::= companero_list companero
+                  | companero ;
+
+companero ::= COMPANERO LL_A nomyape github_opt LL_C ;
+
+tecnologias ::= TECNOLOGIAS PA_A CONJPALYNUM PA_C
+              | TECNOLOGIAS PA_A IDENT       PA_C ;
+
+merito ::= MERITOS LL_A nombre descripcion LL_C ;
+
+horas ::= HORAS PA_A NUM PA_C ;
