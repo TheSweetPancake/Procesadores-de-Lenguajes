@@ -1,4 +1,4 @@
-grammar CVantlr4;
+grammar E3;
 
 // ======== Palabras clave ========
 CV              : 'cv' ;
@@ -81,7 +81,7 @@ COMMENT
 // ======== Macros ========
 TFNO            : ([5-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]) ;
 NUM             : ('0' | [1-9][0-9]*) ;
-PAL             : [A-Za-zÁÉÍÓÚáéíóúNn]+ ;
+PAL             : [A-Za-zÁÉÍÓÚáéíóúÑñ]+ ;
 IDENT           : CD PAL {PAL|NUM} CD ;
 MAIL            : [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* '@' [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* ;
 RUTA            : [A-Za-z]+ ( [./\-:]+ [A-Za-z]+ )+ ;
@@ -94,8 +94,8 @@ NVH             : 'bajo' | 'medio' | 'alto' ;
 WS              : [ \t\r\n]+ -> skip ;
 
 // ======== token CONJPAL (conjunto de palabras) ========
-CONJPAL         : (PAL (WS PAL)*)? ;
-CONJPALYNUM     : (PAL (WS PAL | WS NUM)*)? ;
+CONJPAL         : (PAL (WS PAL)*) ;
+CONJPALYNUM     : (PAL (WS PAL | WS NUM)*) ;
 
 // ======== Manejo de errores ========
 ERROR : . { System.err.println("Error léxico: carácter no reconocido " + getText()); } ;
@@ -145,8 +145,8 @@ responsabilidades: RESPONSABILIDADES PA_A (CONJPALYNUM|IDENT) PA_C;
 voluntariado:   VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C;
 organizacion:   ORGANIZACION PA_A (CONJPALYNUM|IDENT) PA_C;
 
-habilidades:    HABILIDADES LL_A (soft hard* | hard+) LL_C) ;
-soft:           SOFT LL_A habilidad (CO habilildad)* LL_C;
+habilidades:    HABILIDADES LL_A (soft hard* | hard+) LL_C ;
+soft:           SOFT LL_A habilidad (CO habilidad)* LL_C;
 hard:           HARD LL_A categoria+ LL_C;
 
 nvh:            NVHAB PA_A NVH PA_C;
