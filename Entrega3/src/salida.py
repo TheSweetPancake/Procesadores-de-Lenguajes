@@ -97,7 +97,7 @@ folio = Portafolio(
 
 ######################################## fin de la Chat gptada ########################################
 
-env = Environment(loader=FileSystemLoader("templates"))
+env = Environment(loader=FileSystemLoader("../templates"))
 template = env.get_template("plantilla_cv.html")
 
 html = template.render(
@@ -109,7 +109,7 @@ html = template.render(
     portafolio=folio.to_dict()
 )
 
-with open("cv_generado.html", "w", encoding="utf-8") as f:
+with open("../generado/cv_generado.html", "w", encoding="utf-8") as f:
     f.write(html)
 
 print("Guardado cv_generado.html")

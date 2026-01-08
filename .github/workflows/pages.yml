@@ -34,12 +34,15 @@ jobs:
 
       - name: Sanity check templates
         run: |
-          test -f templates/plantilla_cv.html
+          test -f Entrega3/templates/plantilla_cv.html
 
       - name: Generate site (index.html)
         run: |
+          cd Entrega3/src
           python salida.py
-          test -f index.html
+          cd ../..
+          test -f Entrega3/generado/cv_generado.html
+          cp Entrega3/generado/cv_generado.html index.html
 
       - name: Prepare Pages artifact
         run: |
