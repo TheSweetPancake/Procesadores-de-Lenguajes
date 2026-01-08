@@ -39,7 +39,7 @@ jobs:
       - name: Generate site (index.html)
         run: |
           python Entrega3/src/salida.py
-          test -f index.html
+          test -f Entrega3/generado/index.html
 
       - name: Prepare Pages artifact
         run: |
