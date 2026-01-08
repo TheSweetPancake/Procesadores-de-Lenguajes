@@ -11,7 +11,7 @@ from portafolio import Portafolio, Proyecto, Merito
 # Datos de prueba (luego cambiar por la salida de ANTLR4)
 ######################################## Chat gptada total ########################################
 datos = DatosPersonales(
-    nombre="Baltasar Lopez",
+    nombre="Diu me cagoen",
     foto=None,  # poner ruta de la imagen
     fecha_nacimiento="1995-11-01",
     bio="Desarrollador de IA y software",
