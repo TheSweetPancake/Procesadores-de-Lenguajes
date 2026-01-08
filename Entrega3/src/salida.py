@@ -114,7 +114,7 @@ html = template.render(
     portafolio=folio.to_dict()
 )
 
-output_file = os.path.join(generado_dir, "cv_generado.html")
+output_file = os.path.join(generado_dir, "index.html")
 with open(output_file, "w", encoding="utf-8") as f:
     f.write(html)
 
