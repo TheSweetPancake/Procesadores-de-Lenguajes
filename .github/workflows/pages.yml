@@ -44,7 +44,7 @@ jobs:
       - name: Prepare Pages artifact
         run: |
           mkdir -p site
-          cp index.html site/index.html
+          cp Entrega3/generado/index.html site/index.html
           # CSS fijo (no se modifica):
           cp styles.css site/styles.css
 
