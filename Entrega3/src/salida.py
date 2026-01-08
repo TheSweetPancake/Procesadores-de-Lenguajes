@@ -1,3 +1,4 @@
+import os
 from jinja2 import Environment, FileSystemLoader
 from datosPersonales import DatosPersonales
 from formacion import Formacion, FormacionItem
@@ -97,7 +98,10 @@ folio = Portafolio(
 
 ######################################## fin de la Chat gptada ########################################
 
-env = Environment(loader=FileSystemLoader("../templates"))
+script_dir = os.path.dirname(os.path.abspath(__file__))
+templates_dir = os.path.join(os.path.dirname(script_dir), "templates")
+
+env = Environment(loader=FileSystemLoader(templates_dir))
 template = env.get_template("plantilla_cv.html")
 
 html = template.render(
