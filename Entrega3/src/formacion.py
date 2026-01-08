@@ -12,11 +12,11 @@ from typing import List, Optional, Literal
 class FormacionItem:
     titulo: str
     institucion: str
+    tipo: Literal["oficial", "complementaria"]
     descripcion: Optional[str] = None
     logros: Optional[str] = None
     fecha: Optional[str] = None
     en_curso: bool = False
-    tipo: Literal["oficial", "complementaria"]
     # tipo: TipoFormacion
 
 @dataclass
