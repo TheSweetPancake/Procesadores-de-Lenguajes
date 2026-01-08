@@ -38,11 +38,8 @@ jobs:
 
       - name: Generate site (index.html)
         run: |
-          cd Entrega3/src
-          python salida.py
-          cd ../..
-          test -f Entrega3/generado/cv_generado.html
-          cp Entrega3/generado/cv_generado.html index.html
+          python Entrega3/src/salida.py
+          test -f index.html
 
       - name: Prepare Pages artifact
         run: |
