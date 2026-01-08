@@ -100,6 +100,7 @@ folio = Portafolio(
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 templates_dir = os.path.join(os.path.dirname(script_dir), "templates")
+generado_dir = os.path.join(os.path.dirname(script_dir), "generado")
 
 env = Environment(loader=FileSystemLoader(templates_dir))
 template = env.get_template("plantilla_cv.html")
@@ -113,7 +114,8 @@ html = template.render(
     portafolio=folio.to_dict()
 )
 
-with open("../generado/cv_generado.html", "w", encoding="utf-8") as f:
+output_file = os.path.join(generado_dir, "cv_generado.html")
+with open(output_file, "w", encoding="utf-8") as f:
     f.write(html)
 
 print("Guardado cv_generado.html")
