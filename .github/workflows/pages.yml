@@ -48,6 +48,8 @@ jobs:
         run: |
           mkdir -p site
           cp index.html site/index.html
+          # CSS fijo (no se modifica):
+          cp styles.css site/styles.css
 
 
       - name: Upload Pages artifact
