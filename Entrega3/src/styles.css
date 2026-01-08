@@ -1,0 +1,89 @@
+/* Reset muy básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Base */
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+    color: #222;
+    line-height: 1.6;
+  }
+  
+  /* Contenedor principal */
+  .cv {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Encabezado */
+  header {
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+  }
+  
+  header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 4px;
+  }
+  
+  header p {
+    color: #555;
+  }
+  
+  /* Secciones */
+  section {
+    margin-bottom: 28px;
+  }
+  
+  section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: #1e88e5;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+  }
+  
+  /* Items */
+  .item {
+    margin-bottom: 16px;
+  }
+  
+  .item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+  }
+  
+  .item .meta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  
+  .item ul {
+    margin-left: 18px;
+  }
+  
+  /* Listas simples (habilidades, idiomas) */
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .list span {
+    background: #e3f2fd;
+    color: #0d47a1;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+  }
+  
