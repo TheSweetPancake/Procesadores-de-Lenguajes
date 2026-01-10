@@ -82,7 +82,6 @@ COMMENT
 TFNO            : ([5-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]) ;
 NUM             : ('0' | [1-9][0-9]*) ;
 PAL             : [A-Za-zÁÉÍÓÚáéíóúÑñ]+ ;
-IDENT           : CD PAL {CONJPALYNUM} CD ;
 MAIL            : [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* '@' [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* ;
 RUTA            : [A-Za-z]+ ( [./\-:]+ [A-Za-z]+ )+ ;
 FECHA_NUM       : ('0'[1-9] | [12][0-9] | '30' | '31') '/' ('0'[1-9] | '1'[0-2]) '/' ([12][0-9][0-9][0-9]);
@@ -96,6 +95,7 @@ WS              : [ \t\r\n]+ -> skip ;
 // ======== token CONJPAL (conjunto de palabras) ========
 CONJPAL         : (PAL (WS PAL)*) ;
 CONJPALYNUM     : (PAL (WS PAL | WS NUM)*) ;
+IDENT           : CD CONJPALYNUM CD ;
 
 // ======== Manejo de errores ========
 ERROR : . { System.err.println("Error léxico: carácter no reconocido " + getText()); } ;
