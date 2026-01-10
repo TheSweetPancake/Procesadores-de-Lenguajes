@@ -2,87 +2,71 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Martín González Rodríguez - CV</title>
+    <title>{{ datos.nombre }} - CV</title>
     <link rel="stylesheet" href="../src/styles_persona2.css">
 </head>
 <body>
     <div class="cv">
-    <h1>Martín González Rodríguez</h1>
-    <img src="https://via.placeholder.com/120" alt="Foto de Martín González" width="120">
-    <p><strong>Email:</strong> martin.gonzalez@email.com</p>
-    <p><strong>Teléfono:</strong> +34 678 543 210</p>
-    <p><strong>LinkedIn:</strong> https://linkedin.com/in/martingonzalez</p>
-    <p><strong>GitHub:</strong> https://github.com/martingonzalez</p>
-    <p><strong>Web:</strong> https://martingonzalez.dev</p>
-    <p><em>Ingeniero de Software especializado en desarrollo fullstack con 6 años de experiencia en arquitectura de microservicios y optimización de rendimiento.</em></p>
+    <h1>{{ datos.nombre }}</h1>
+    {% if datos.foto %}
+        <img src="{{ datos.foto }}" alt="Foto de {{ datos.nombre }}" width="120">
+    {% endif %}
+    <p><strong>Email:</strong> {{ datos.email }}</p>
+    <p><strong>Teléfono:</strong> {{ datos.telefono }}</p>
+    <p><strong>LinkedIn:</strong> {{ datos.linkedin }}</p>
+    <p><strong>GitHub:</strong> {{ datos.github }}</p>
+    <p><strong>Web:</strong> {{ datos.web }}</p>
+    <p><em>{{ datos.bio }}</em></p>
 
     <div class="section">
         <h2>Formación</h2>
         <ul>
+            {% for f in formacion.formacion %}
             <li>
-                <strong>Grado en Ingeniería Informática</strong> — Universitat Politècnica de València (2018)
-                <br>Calificación: 7.8/10
-                <br><em>Especialización en ingeniería de software</em>
+                <strong>{{ f.titulo }}</strong> — {{ f.institucion }} ({{ f.fecha }})
+                {% if f.descripcion %}<br>{{ f.descripcion }}{% endif %}
+                {% if f.logros %}<br><em>{{ f.logros }}</em>{% endif %}
+                {% if f.en_curso %}<br><strong>En curso</strong>{% endif %}
             </li>
-            <li>
-                <strong>Certificación AWS Solutions Architect Associate</strong> — Amazon Web Services (2023)
-            </li>
-            <li>
-                <strong>Certificación Spring Professional</strong> — VMware (2022)
-            </li>
-            <li>
-                <strong>Curso Advanced React Patterns</strong> — Egghead.io (2023)
-                <br><em>En curso</em>
-            </li>
+            {% endfor %}
         </ul>
     </div>
 
     <div class="section">
         <h2>Idiomas</h2>
         <ul>
-            <li>Español — Nativo</li>
-            <li>Inglés — Fluido (IELTS 7.5)</li>
-            <li>Francés — Básico (A2)</li>
+        {% for i in idiomas.idiomas %}
+            <li>{{ i.nombre }} — {{ i.nivel }}
+                {% if i.expedidor %}( {{ i.expedidor }} ){% endif %}
+            </li>
+        {% endfor %}
         </ul>
     </div>
 
     <div class="section">
         <h2>Experiencia</h2>
         <ul>
+        {% for e in experiencia.experiencia %}
             <li>
-                <strong>Senior Backend Developer</strong> — TechVision Solutions (Contratación)
-                <br><em>Desarrollo y mantenimiento de microservicios usando Spring Boot y Node.js. Implementación de sistemas de caché distribuido con Redis. Reducción de tiempo de respuesta en 40%.</em>
+                <strong>{{ e.puesto }}</strong> — {{ e.organizacion }} ({{ e.tipo }})
+                {% if e.horas %} · {{ e.horas }} h/sem{% endif %}
+                {% if e.descripcion %}<br><em>{{ e.descripcion }}</em>{% endif %}
             </li>
-            <li>
-                <strong>Full Stack Developer</strong> — Innovatech Startup (Contratación)
-                <br><em>Desarrollo de plataforma web de e-commerce con React y Django. Implementación de pasarela de pagos y sistema de notificaciones en tiempo real.</em>
-            </li>
-            <li>
-                <strong>Junior Developer</strong> — WebDevelopers Company (Contratación)
-                <br><em>Desarrollo de aplicaciones web responsivas. Participación en refactorización de código legacy y mejora de cobertura de tests.</em>
-            </li>
-            <li>
-                <strong>Freelancer Full Stack</strong> — Proyecto independiente (Autónomo)
-                <br><em>Desarrollo de soluciones web personalizadas para pequeñas empresas y startups.</em>
-            </li>
+        {% endfor %}
         </ul>
     </div>
 
     <div class="section">
         <h2>Habilidades</h2>
         <ul>
-            <li>Java — Backend · Avanzado</li>
-            <li>Spring Boot — Backend · Avanzado</li>
-            <li>Node.js — Backend · Avanzado</li>
-            <li>React — Frontend · Avanzado</li>
-            <li>TypeScript — Frontend · Avanzado</li>
-            <li>PostgreSQL — Bases de Datos · Avanzado</li>
-            <li>MongoDB — Bases de Datos · Avanzado</li>
-            <li>Docker — DevOps · Intermedio</li>
-            <li>Kubernetes — DevOps · Intermedio</li>
-            <li>AWS — Cloud · Intermedio</li>
-            <li>Git — Control de versiones · Avanzado</li>
-            <li>Agile/Scrum — Metodología · Avanzado</li>
+        {% for h in habilidades.habilidades %}
+            <li>
+                {{ h.nombre }}
+                {% if h.tipo %} — {{ h.tipo }}{% endif %}
+                {% if h.categoria %} · {{ h.categoria }}{% endif %}
+                {% if h.nivel %} · {{ h.nivel }}{% endif %}
+            </li>
+        {% endfor %}
         </ul>
     </div>
 
@@ -90,34 +74,22 @@
         <h2>Portafolio</h2>
         <h3>Proyectos</h3>
         <ul>
+        {% for p in portafolio.proyectos %}
             <li>
-                <strong>Sistema de Gestión de Inventario Inteligente</strong> — E-commerce
-                <br><a href="https://github.com/martingonzalez/inventory-system">https://github.com/martingonzalez/inventory-system</a>
-                <br>Plataforma completa de inventario con predicción de demanda usando Machine Learning. Desarrollada con Spring Boot en backend y React en frontend.
-                <br>Tecnologías: Spring Boot, React, PostgreSQL, TensorFlow, Docker, Kubernetes
-                <br>Equipo: Martín González, Carlos López, Ana Martínez
+                <strong>{{ p.nombre }}</strong> — {{ p.categoria }}
+                {% if p.web %}<br><a href="{{ p.web }}">{{ p.web }}</a>{% endif %}
+                <br>{{ p.descripcion }}
+                <br>Tecnologías: {{ p.tecnologias|join(', ') }}
+                {% if p.grupo %}<br>Equipo: {{ p.grupo|join(', ') }}{% endif %}
             </li>
-            <li>
-                <strong>API REST de Análisis de Datos en Tiempo Real</strong> — Analytics
-                <br><a href="https://github.com/martingonzalez/realtime-analytics-api">https://github.com/martingonzalez/realtime-analytics-api</a>
-                <br>API escalable para procesamiento y análisis de millones de eventos por día. Integración con Kafka y Elasticsearch para búsqueda avanzada.
-                <br>Tecnologías: Node.js, Apache Kafka, Elasticsearch, MongoDB, AWS
-            </li>
-            <li>
-                <strong>Aplicación de Redes Sociales Descentralizada</strong> — Blockchain
-                <br><a href="https://github.com/martingonzalez/decentralized-social">https://github.com/martingonzalez/decentralized-social</a>
-                <br>Red social descentralizada con contratos inteligentes. Uso de Web3.js y Ethereum.
-                <br>Tecnologías: Solidity, Web3.js, React, Node.js, Ethereum
-                <br>Equipo: Martín González, Laura Fernández
-            </li>
+        {% endfor %}
         </ul>
 
         <h3>Méritos</h3>
         <ul>
-            <li><strong>Desarrollador del Año 2023</strong>: Reconocimiento de TechVision Solutions por contribución técnica excepcional</li>
-            <li><strong>Speaker en JSConf Spain 2023</strong>: Presentación sobre optimización de rendimiento en React</li>
-            <li><strong>Mentor de Coding Bootcamp</strong>: Ha guiado a 15+ nuevos desarrolladores en su carrera profesional</li>
-            <li><strong>Publicaciones técnicas</strong>: 8 artículos en Medium sobre arquitectura de software</li>
+        {% for m in portafolio.meritos %}
+            <li><strong>{{ m.nombre }}</strong>: {{ m.descripcion }}</li>
+        {% endfor %}
         </ul>
     </div>
     </div>
