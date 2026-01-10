@@ -1,92 +1,82 @@
-(* ================== Símbolo inicial ================== *)
-CVS             ::= {GVAR} CV {CV} ;
+(* ==================== Símbolo inicial ==================== *)
+cvs             ::= {global_var} cv {cv} ;
 
-(* ================== Elementos básicos ================ *)
-VAL             ::= TXT | NUM;
-TXT             ::= (PALABRA | CARACTER_ESPECIAL) { ' ' (PALABRA
-| CARACTER_ESPECIAL) } ;
-PALABRA         ::= LET {LET} ;
-LET             ::= 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
-| 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q'
-| 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | 'a'
-| 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k'
-| 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u'
-| 'v' | 'w' | 'x' | 'y' | 'z' ;
-NUM             ::= ('0' | DIG {DIG | '0'}) ;
-DIG             ::= '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
-RUTA            ::= PALABRA CARACTER_RUTA {CARACTER_RUTA} PALABRA {('.' | '/') PALABRA} ;
-CARACTER_RUTA   ::= '/' | '.' | '-' | ':' ;
-CARACTER_ESPECIAL ::= '!' | '"' | '#' | '$' | '%' | '&' | '''
-| '(' | ')' | '*' | '+' | ',' | '-' | '.' | '/' | ':' | ';'
-| '<' | '=' | '>' | '?' | '@' | '[' | '\' | ']' | '^'
-| '‘' | '{' | '|' | '}' | '~' ;
-DIA             ::= ('0' | '1' | '2') DIG | "30" | "31" ;
-MES             ::= '0' DIG | "10" | "11" | "12" ;
-AÑO             ::= ('1' | '2') DIG DIG DIG ;
-COMENTARIO      ::= "/*" (VAL | CARACTER_ESPECIAL) {VAL | CARACTER_ESPECIAL} "*/" ;
-MAIL            ::= PALABRA {PALABRA | NUM | ’.’ | ’_’} '@' PALABRA {’.’ PALABRA} ’.’ PALABRA ;
+(* ==================== Variables ==================== *)
+gloabal_var      ::= GVAR LL_A variable LL_C ;
+local_var        ::= LVAR LL_A variable LL_C ;
+variable         ::= IDENT IG CONJPALYNUM PYC ;
 
-(* ================= Variables Globales ================= *)
-GVAR            ::= gvar '{' VAR {VAR} '}' ;
-VAR             ::= IDENT '=' TXT {VAL} ';' ;
-IDENT           ::= LET {VAL} ;
+(* ==================== Curriculvbum Vitae ==================== *)
+cv               ::= CV IDENT LL_A local_var datospersonales formacion [idiomas] [experiencia] [habilidades] [portafolio] LL_C ;
 
-(* ================== Curriculvbum Vitae ================== *)
-CV              ::= cv '{' LVAR ID DP FORMACION [IDIOMAS] [EXPERIENCIA] [HABILIDADES] [PORTAFOLIO] '}' ;
-LVAR            ::= lvar '{' VAR {VAR} '}' ;
-ID              ::= id '(' TXT {VAL} ')' ;
+(* ==================== Datos personales ==================== *)
+datospersonales  ::= DP LL_A nomyape [foto] fecha [bio] contacto LL_C ;
+nomyape          ::= NOMYAPE PA_A CONJPAL PA_C
+                    |NOMYAPE PA_A IDENT PA_C;
+foto             ::= FOTO PA_A RUTA PA_C ;
+fecha            ::= FECHA PA_A FECHA_NUM PA_C ;
+bio              ::= BIO PA_A CONJPAL PA_C
+                    |BIO PA_A IDENT PA_C;
+contacto         ::= CONTACTO LL_A email telefono redes LL_C ;
+email            ::= EMAIL PA_A MAIL PA_C ;
+telefono         ::= TELEFONO PA_A TFNO PA_C ;
+redes            ::= REDES LL_A LINKEDIN [GITHUB] [WEB] LL_C
+                    |REDES LL_A GITHUB [WEB] LL_C
+                    |REDES LL_A WEB LL_C;
+linkedin         ::= LINKEDIN PA_A RUTA PA_C ;
+github           ::= GITHUB PA_A RUTA PA_C ;
+web              ::= WEB PA_A RUTA PA_C ;
 
-(* ================== Datos personales ================== *)
-DP              ::= datospersonales '{' NOMYAPE [FOTO] FECHA [BIO] CONTACTO '}' ;
-NOMYAPE         ::= nomyape '(' TXT ')' ;
-FOTO            ::= foto '(' RUTA ')' ;
-FECHA           ::= fecha '(' DIA '/' MES '/' AÑO ')' ;
-BIO             ::= bio '(' TXT {VAL} ')' ;
-CONTACTO        ::= contacto '{' EMAIL TELEFONO [REDES] '}' ;
-EMAIL           ::= email '(' MAIL ')' ;
-TELEFONO        ::= telefono '(' DIG DIG DIG DIG DIG DIG DIG DIG DIG ')' ;
-REDES           ::= redes '{' (LINKEDIN [GITHUB] [WEB] | [LINKEDIN] GITHUB [WEB] | [LINKEDIN] [GITHUB] WEB) '}' ;
-LINKEDIN        ::= linkedin '(' RUTA ')' ;
-GITHUB          ::= github '(' RUTA ')' ;
-WEB             ::= web '(' RUTA ')' ;
+(* ==================== Formación ==================== *)
+formacion        ::= FORMACION LL_A oficial {oficial} {complementaria} LL_C ;
+oficial          ::= OFICIAL LL_A titulo expedidor [descripcion] [logros] fecha LL_C ;
+titulo           ::= TITULO PA_A CONJPAL PA_C
+                    |TITULO PA_A IDENT PA_C;
+expedidor        ::= EXPEDIDOR PA_A CONJPAL PA_C
+                    |EXPEDIDOR PA_A IDENT PA_C;
+descripcion      ::= DESCRIPCION PA_A CONJPAL PA_C
+                    |DESCRIPCION PA_A IDENT PA_C;
+logros           ::= LOGROS PA_A CONJPAL PA_C
+                    |LOGROS PA_A IDENT PA_C;
+complementaria   ::= COMPLEMENTARIA LL_A titulo [certificado] expedidor [horas] fecha LL_C;
+certificado      ::= CERTIFICADO PA_A BOOL PA_C;
+horas            ::= HORAS PA_A NUM PA_C; 
 
-(* ================== Formación ================== *)
-FORMACION       ::= formacion '{' OFICIAL {OFICIAL} {COMPLEMENTARIA} '}' ;
-OFICIAL         ::= oficial '{' TITULO EXPEDIDOR [DESCRIPCION] [LOGROS] (FECHA | "En_curso") '}' ;
-TITULO          ::= titulo '(' TXT ')' ;
-EXPEDIDOR       ::= expedidor '(' TXT ')' ;
-DESCRIPCION     ::= descripcion '(' TXT {VAL} ')' ;
-LOGROS          ::= logros '(' TXT {VAL} ')' ;
-COMPLEMENTARIA  ::= complementaria '{' TITULO [CERTIFICADO] EXPEDIDOR [HORAS] (FECHA | "En_curso") '}' ;
-CERTIFICADO     ::= certificado '(' ("Si" | "No") ')' ;
-HORAS           ::= horas '(' NUM ')' ;
+(* ==================== Idiomas ==================== *)
+idiomas          ::= IDIOMAS LL_A idioma {idioma} LL_C ;
+idioma           ::= IDIOMA LL_A nombre nvi [expedidor] LL_C  ;
+nvi              ::= NIVEL PA_A NVI PA_C ;
 
-(* ================== Idiomas ================== *)
-IDIOMAS         ::= idiomas '{' IDIOMA {IDIOMA} '}' ;
-IDIOMA          ::= idioma '(' PALABRA NIVEL [EXPEDIDOR] ')' ;
-NIVEL           ::= nivel '(' ('A' | 'B' | 'C') ('1' | '2') | "nativo" ')' ;
+(* ==================== Experiencia ==================== *)
+experiencia      ::= EXPERIENCIA LL_A laboral {laboral} {voluntariado} LL_C
+                    |EXPERIENCIA LL_A laboral voluntariado {voluntariado} LL_C;
+laboral          ::= LABORAL LL_A puesto horas organizacion [responsabilidades] LL_C;
+puesto           ::= PUESTO PA_A CONJPAL PA_C
+                    |PUESTO PA_A IDENT PA_C;
+responsabilidades::= RESPONSABILIDADES PA_A CONJPAL PA_C
+                    |RESPONSABILIDADES PA_A IDENT PA_C;
+voluntariado     ::= VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C;
+organizacion     ::= ORGANIZACION PA_A CONJPAL PA_C
+                    |ORGANIZACION PA_A IDENT PA_C;
 
-(* ================== Experiencia ================== *)
-EXPERIENCIA     ::= experiencia '{' (LABORAL {LABORAL} {VOLUNTARIADO} | VOLUNTARIADO {VOLUNTARIADO}) '}' ;
-LABORAL         ::= laboral '(' ORGANIZACION PUESTO HORAS [RESPONSABILIDADES] ')' ;
-PUESTO          ::= puesto '(' TXT {VAL} ')' ;
-RESPONSABILIDADES ::= responsabilidades '(' TXT {VAL} ')' ;
-VOLUNTARIADO    ::= voluntariado '(' PUESTO DESCRIPCION HORAS ORGANIZACION ')' ;
-ORGANIZACION    ::= organizacion '(' TXT {VAL} ')' ;
+(* ==================== Habilidades ==================== *)
+habilidades      ::= HABILIDADES LL_A soft [hard] LL_C
+                    |HABILIDADES LL_A hard LL_C ;
+soft             ::= SOFT LL_A habilidad {CO habilidad} LL_C;
+hard             ::= HARD LL_A categoria {categoria} LL_C;
+nvh              ::= NVHAB PA_A NVH PA_C;
+habilidad        ::= HABILIDAD PA_A CONJPAL PA_C
+                    |HABILIDAD PA_A IDENT PA_C;
+categoria        ::= CATEGORIA LL_A nombre habilidad nvh {CO habilidad nvh} LL_C;
 
-(* ================== Habilidades ================== *)
-HABILIDADES     ::= habilidades '{' (SOFT {SOFT} {HARD} | HARD {HARD}) '}' ;
-SOFT            ::= soft '(' HABILIDAD ')' ;
-HARD            ::= hard '(' HABILIDAD CATEGORIA NVHAB ')' ;
-NVHAB           ::= nvhab '(' ("bajo" | "medio" | "alto") ')' ;
-HABILIDAD       ::= habilidad '(' TXT {VAL} ')' ;
-CATEGORIA       ::= categoria '(' TXT ')'  ;
-
-(* ================== Portafolio ================== *)
-PORTAFOLIO      ::= portafolio '{' (PROYECTO {PROYECTO} {MERITOS} | MERITOS {MERITOS}) '}' ;
-PROYECTO        ::= proyecto '{' NOMBRE [GRUPO] DESCRIPCION CATEGORIA TECNOLOGIAS [WEB] '}' ;
-NOMBRE          ::= nombre '(' TXT {VAL} ')' ;
-GRUPO           ::= grupo '{' COMPAÑERO {COMPAÑERO} '}' ;
-COMPAÑERO       ::= compañero '{' NOMYAPE [GITHUB] '}' ;
-TECNOLOGIAS     ::= tecnologias '{' TXT {VAL} '}' ;
-MERITOS         ::= meritos '{' NOMBRE DESCRIPCION '}' ;
+(* ==================== Portafolio ==================== *)
+portafolio       ::= PORTAFOLIO LL_A proyecto {proyecto} {merito} LL_C
+                    |PORTAFOLIO LL_A merito {merito} LL_C;
+proyecto         ::= PROYECTO LL_A nombre [grupo] descripcion categoria tecnologias [web] LL_C;
+nombre           ::= NOMBRE PA_A CONJPAL PA_C
+                    |NOMBRE PA_A IDENT PA_C;
+grupo            ::= GRUPO LL_A [companero] LL_C;
+companero        ::= COMPANERO LL_A nomyape [github] LL_C;
+tecnologias      ::= TECNOLOGIAS PA_A CONJPAL PA_C
+                    |TECNOLOGIAS PA_A IDENT PA_C;
+merito           ::= MERITOS LL_A nombre descripcion LL_C;
