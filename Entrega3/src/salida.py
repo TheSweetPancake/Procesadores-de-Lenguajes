@@ -103,7 +103,7 @@ templates_dir = os.path.join(os.path.dirname(script_dir), "templates")
 generado_dir = os.path.join(os.path.dirname(script_dir), "generado")
 
 env = Environment(loader=FileSystemLoader(templates_dir))
-template = env.get_template("plantilla_cv.html")
+template = env.get_template("plantilla_cv_persona2.html")
 
 html = template.render(
     datos=datos.to_dict(),

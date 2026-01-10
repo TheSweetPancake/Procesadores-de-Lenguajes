@@ -1,0 +1,145 @@
+/* Reset muy básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Base */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+    color: #222;
+    line-height: 1.6;
+}
+
+/* Contenedor principal */
+.cv {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Encabezado */
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 16px;
+    color: #1e88e5;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 12px;
+}
+
+/* Foto de perfil */
+img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #1e88e5;
+    margin-bottom: 16px;
+    object-fit: cover;
+}
+
+/* Información de contacto */
+p {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+p strong {
+    color: #333;
+}
+
+p em {
+    color: #666;
+    font-style: italic;
+}
+
+/* Secciones */
+.section {
+    margin-bottom: 28px;
+    background: #fafafa;
+    padding: 16px;
+    border-radius: 6px;
+    border-left: 4px solid #1e88e5;
+}
+
+.section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+    color: #1e88e5;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.section h3 {
+    font-size: 1.1rem;
+    margin-top: 16px;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+/* Listas */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-left: 0;
+}
+
+li {
+    margin-bottom: 12px;
+    padding-left: 16px;
+    border-left: 2px solid #e0e0e0;
+    position: relative;
+}
+
+li:before {
+    content: "▸";
+    color: #1e88e5;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+li strong {
+    color: #1e88e5;
+}
+
+li em {
+    color: #666;
+    font-style: italic;
+    display: block;
+    margin-top: 4px;
+}
+
+li a {
+    color: #1e88e5;
+    text-decoration: none;
+    display: block;
+    margin: 4px 0;
+}
+
+li a:hover {
+    text-decoration: underline;
+}
+
+/* Información de contacto en párrafos */
+p {
+    margin-bottom: 6px;
+}
+
+/* Mejora de espaciado entre items de lista */
+li {
+    line-height: 1.5;
+}
+
+/* Estilos para subsecciones */
+.section ul ul {
+    margin-left: 16px;
+}
+
+.section ul ul li {
+    margin-bottom: 8px;
+}
