@@ -14,20 +14,20 @@
 
 /* ======== Macros (expresiones regulares) ======== */
 
+
+WS                = [ \t\r\n]+
 NUM               = (0|[1-9][0-9]*)
-PAL               = ([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÑñ])+
-TFNO              = ([5-9][0-9]{8})
-MAIL              = ([A-Z]|[a-z]|[0-9])+(\.[A-Z]|[a-z]|[0-9]+)*"@"([A-Z]|[a-z]|[0-9])+(\.[A-Z]|[a-z]|[0-9]+)*
-RUTA              = ([A-Z]|[a-z])+ ("/"|"."|"-"|":")+ ([A-Z]|[a-z])+ (("/"|"."|"-"|":")+ ([A-Z]|[a-z])+)+ 
-DIA               = (0[1-9]|(1|2)[0-9]|30|31)
-MES               = (0[1-9]|1[0-2])
-ANIO              = (1|2)[0-9][0-9][0-9]
-BOOL              = (Si|No)
-NVI               = (([ABC][12])|nativo)
-NVH               = (bajo|medio|alto)
-IDENT             = ([A-Z]|[a-z])([A-Z]|[a-z]|[0-9])*
-CONJPAL           = {PAL}(\s+{PAL})*
-CONJPALYNUM       = {PAL}(\s+{PAL}|\s+{NUM})*
+PAL               = [A-Za-zÁÉÍÓÚáéíóúÑñ]+
+TFNO              = [5-9][0-9]{8}
+MAIL              = [A-Za-z0-9]+(\.[A-Za-z0-9]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*
+RUTA              = [A-Za-z]+([./\-:]+[A-Za-z]+)+
+FECHA_NUM         = (0[1-9]|[12][0-9]|30|31)/(0[1-9]|1[0-2])/([12][0-9]{3})
+BOOL              = Si|No
+NVI               = ([ABC][12])|nativo
+NVH               = bajo|medio|alto
+IDENT             = \"{PAL}({PAL}|{NUM})*\"
+CONJPAL           = {PAL}({WS}{PAL})*
+CONJPALYNUM       = {PAL}({WS}({PAL}|{NUM}))*
 
 %%
 
@@ -98,33 +98,31 @@ CONJPALYNUM       = {PAL}(\s+{PAL}|\s+{NUM})*
 /* ======== Símbolos y operadores ======== */
 <YYINITIAL>"/*"                  { yybegin(COMMENT); }
 
-<YYINITIAL>"{"                   { return new Symbol(sym.LLAVE_ABRE); }
-<YYINITIAL>"}"                   { return new Symbol(sym.LLAVE_CIERRA); }
-<YYINITIAL>"("                   { return new Symbol(sym.PAR_ABRE); }
-<YYINITIAL>")"                   { return new Symbol(sym.PAR_CIERRA); }
-<YYINITIAL>","                   { return new Symbol(sym.CO); }
-<YYINITIAL>"\""                  { return new Symbol(sym.CD); }
-<YYINITIAL>"="                   { return new Symbol(sym.IGUAL); }
-<YYINITIAL>";"                   { return new Symbol(sym.PYC); }
+<YYINITIAL>"{" { return new Symbol(sym.LL_A); }
+<YYINITIAL>"}" { return new Symbol(sym.LL_C); }
+<YYINITIAL>"(" { return new Symbol(sym.PA_A); }
+<YYINITIAL>")" { return new Symbol(sym.PA_C); }
+<YYINITIAL>"=" { return new Symbol(sym.IG); }
+<YYINITIAL>";" { return new Symbol(sym.PYC); }
+<YYINITIAL>"," { return new Symbol(sym.CO); }
+<YYINITIAL>"\"" { return new Symbol(sym.CD); }
 
 /* ======== Macros ======== */
-<YYINITIAL>{BOOL}                { return new Symbol(sym.BOOL); }
-<YYINITIAL>{NVH}                 { return new Symbol(sym.NVH); }
-<YYINITIAL>{NVI}                 { return new Symbol(sym.NVI); }
-<YYINITIAL>{MAIL}                { return new Symbol(sym.MAIL); }
-<YYINITIAL>{RUTA}                { return new Symbol(sym.RUTA); }
-<YYINITIAL>{TFNO}                { return new Symbol(sym.TFNO); }
-<YYINITIAL>{MES}                 { return new Symbol(sym.MES); }
-<YYINITIAL>{DIA}                 { return new Symbol(sym.DIA); }
-<YYINITIAL>{ANIO}                { return new Symbol(sym.ANIO); }
-<YYINITIAL>{NUM}                 { return new Symbol(sym.NUM); }
-<YYINITIAL>{IDENT}               { return new Symbol(sym.IDENT); }
-<YYINITIAL>{PAL}                 { return new Symbol(sym.PAL); }
-<YYINITIAL>{CONJPAL}             { return new Symbol(sym.CONJPAL); }
-<YYINITIAL>{CONJPALYNUM}         { return new Symbol(sym.CONJPALYNUM); }
+<YYINITIAL>{CONJPALYNUM} { return new Symbol(sym.CONJPALYNUM); }
+<YYINITIAL>{CONJPAL}     { return new Symbol(sym.CONJPAL); }
+<YYINITIAL>{IDENT}       { return new Symbol(sym.IDENT); }
+<YYINITIAL>{FECHA_NUM}   { return new Symbol(sym.FECHA_NUM); }
+<YYINITIAL>{MAIL}        { return new Symbol(sym.MAIL); }
+<YYINITIAL>{RUTA}        { return new Symbol(sym.RUTA); }
+<YYINITIAL>{TFNO}        { return new Symbol(sym.TFNO); }
+<YYINITIAL>{BOOL}        { return new Symbol(sym.BOOL); }
+<YYINITIAL>{NVI}         { return new Symbol(sym.NVI); }
+<YYINITIAL>{NVH}         { return new Symbol(sym.NVH); }
+<YYINITIAL>{NUM}         { return new Symbol(sym.NUM); }
+<YYINITIAL>{PAL}         { return new Symbol(sym.PAL); }
 
 /* ======== Espacios en blanco ======== */
-[|\t|\r|\n|" "]+                {} /* ignorar */
+{WS}                {} /* ignorar */
 
 /* ======== Error léxico ======== */
 <YYINITIAL>.                    {System.err.println("Error léxico en la línea " + (yyline) + ", columna " + (yycolumn) + ": carácter inesperado '" + yytext() + "'"); System.exit(1); }
