@@ -25,7 +25,7 @@
                 <section>
                     <h2 class="side-title">Habilidades</h2>
                     <div class="skills-list">
-                        {% for h in skills.habilidades %}  <!-- Cambiado -->
+                        {% for h in habilidades.habilidades %}
                         <span class="skill-tag">{{ h.nombre }}</span>
                         {% endfor %}
                     </div>
@@ -33,7 +33,7 @@
 
                 <section>
                     <h2 class="side-title">Idiomas</h2>
-                    {% for i in langs.idiomas %}  <!-- Cambiado -->
+                    {% for i in idiomas.idiomas %}
                     <p class="lang-text"><strong>{{ i.nombre }}</strong>: {{ i.nivel }}</p>
                     {% endfor %}
                 </section>
@@ -42,7 +42,7 @@
             <main class="main-body">
                 <section>
                     <h2 class="body-title">Experiencia Profesional</h2>
-                    {% for e in xp.experiencias %}  <!-- Cambiado -->
+                    {% for e in experiencia.experiencias %}
                     <div class="job-item">
                         <div class="job-header">
                             <span class="job-puesto">{{ e.puesto }}</span>
@@ -56,7 +56,7 @@
 
                 <section>
                     <h2 class="body-title">Formación Académica</h2>
-                    {% for f in form.formacion %}  <!-- Cambiado -->
+                    {% for f in formacion.formacion %}
                     <div class="edu-item">
                         <div class="edu-header">
                             <span class="edu-title">{{ f.titulo }}</span>
@@ -70,7 +70,7 @@
 
                 <section>
                     <h2 class="body-title">Portafolio Seleccionado</h2>
-                    {% for p in folio.proyectos %}  <!-- Cambiado -->
+                    {% for p in portafolio.proyectos %}
                     <div class="project-box">
                         <strong>{{ p.nombre }}</strong> — <small>{{ p.categoria }}</small>
                         <p>{{ p.descripcion }}</p>
