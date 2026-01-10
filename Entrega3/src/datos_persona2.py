@@ -5,141 +5,124 @@ from experiencia import Experiencia, ExperienciaItem
 from habilidades import Habilidades, Habilidad
 from portafolio import Portafolio, Proyecto, Merito
 
-
-# Datos de la segunda persona - Martín González Rodríguez
+# Datos Personales Ampliados
 datos = DatosPersonales(
-    nombre="Martín González Rodríguez",
-    foto=None,  # poner ruta de la imagen
-    fecha_nacimiento="1995-06-15",
-    bio="Ingeniero de Software especializado en desarrollo fullstack con 6 años de experiencia en arquitectura de microservicios y optimización de rendimiento.",
-    email="martin.gonzalez@email.com",
-    telefono="+34 678 543 210",
-    linkedin="/in/martingonzalez",
-    github="/martingonzalez",
-    web="https://martingonzalez.dev"
+    nombre="Elena Rivas Castro",
+    foto=None, 
+    fecha_nacimiento="1992-03-22",
+    bio="Diseñadora UX/UI Senior y Product Strategist con más de 8 años de experiencia transformando ideas complejas en interfaces intuitivas. Experta en liderar procesos de User Research, creación de Design Systems escalables y optimización de la tasa de conversión (CRO). Enfocada en la accesibilidad y el diseño centrado en el ser humano.",
+    email="elena.rivas@uxdesign.com",
+    telefono="+34 611 222 333",
+    linkedin="linkedin.com/in/elenarivas",
+    github="github.com/elenarivas-design",
+    web="https://elenarivas.pro"
 )
 
+# Formación Ampliada
 form = Formacion(items=[
     FormacionItem(
-        titulo="Grado en Ingeniería Informática",
-        institucion="Universitat Politècnica de València",
-        descripcion="Especialización en ingeniería de software",
-        logros="Calificación final: 7.8/10",
-        fecha="2018-06-15",
+        titulo="Máster en Diseño de Interacción y Experiencia de Usuario (UX)",
+        institucion="IED Madrid",
+        descripcion="Especialización en prototipado de alta fidelidad, flujos de usuario complejos y psicología del color aplicada a interfaces.",
+        logros="Premio Extraordinario al mejor proyecto final de máster 2017.",
+        fecha="2017-07-15",
         en_curso=False,
-        tipo="oficial"
+        tipo="Postgrado"
     ),
     FormacionItem(
-        titulo="Certificación AWS Solutions Architect Associate",
-        institucion="Amazon Web Services",
-        descripcion=None,
-        logros=None,
-        fecha="2023-03-20",
+        titulo="Grado en Diseño Gráfico y Comunicación Visual",
+        institucion="Escuela de Arte de Sevilla",
+        descripcion="Fundamentos de tipografía, composición, teoría del diseño y branding.",
+        logros="Matrícula de honor en Proyectos Editoriales.",
+        fecha="2014-06-20",
         en_curso=False,
-        tipo="complementaria"
+        tipo="Grado Universitario"
     ),
     FormacionItem(
-        titulo="Certificación Spring Professional",
-        institucion="VMware",
-        descripcion=None,
+        titulo="Certificación en Google UX Design",
+        institucion="Coursera / Google",
+        descripcion="Enfoque profesional en el proceso de diseño: empatizar, definir, idear, prototipar y probar.",
         logros=None,
-        fecha="2022-11-10",
+        fecha="2021-02-10",
         en_curso=False,
-        tipo="complementaria"
-    ),
-    FormacionItem(
-        titulo="Curso Advanced React Patterns",
-        institucion="Egghead.io",
-        descripcion=None,
-        logros=None,
-        fecha="2023-09-15",
-        en_curso=True,
-        tipo="complementaria"
-    ),
+        tipo="Certificación Internacional"
+    )
 ])
 
+# Idiomas
 langs = Idiomas(idiomas=[
     Idioma(nombre="Español", nivel="Nativo"),
-    Idioma(nombre="Inglés", nivel="Fluido", expedidor="IELTS 7.5 - 2022"),
-    Idioma(nombre="Francés", nivel="Básico", expedidor="A2")
+    Idioma(nombre="Inglés", nivel="C1 - Avanzado (Cambridge Advanced)"),
+    Idioma(nombre="Francés", nivel="B2 - Intermedio"),
+    Idioma(nombre="Alemán", nivel="A1 - Básico")
 ])
 
-xp = Experiencia(experiencias=[
+# Experiencia Laboral Ampliada
+xp = Experiencia(experiencia=[
     ExperienciaItem(
-        tipo="laboral",
-        organizacion="TechVision Solutions",
-        puesto="Senior Backend Developer",
-        descripcion="Desarrollo y mantenimiento de microservicios usando Spring Boot y Node.js. Implementación de sistemas de caché distribuido con Redis. Reducción de tiempo de respuesta en 40%.",
-        horas=40
+        puesto="Senior Product Designer",
+        organizacion="Creative Minds Agency",
+        tipo="Remoto",
+        descripcion="Liderazgo creativo en el rediseño de la plataforma fintech 'PayLite'. Reduje el 'churn rate' en un 15% mediante la simplificación del flujo de onboarding y la creación de un Design System propio en Figma utilizado por 3 equipos de desarrollo.",
+        fecha_inicio="2020-05-01"
     ),
     ExperienciaItem(
-        tipo="laboral",
-        organizacion="Innovatech Startup",
-        puesto="Full Stack Developer",
-        descripcion="Desarrollo de plataforma web de e-commerce con React y Django. Implementación de pasarela de pagos y sistema de notificaciones en tiempo real.",
-        horas=40
+        puesto="UX/UI Designer & Researcher",
+        organizacion="TechStart Lab",
+        tipo="Presencial",
+        descripcion="Encargada de realizar tests de usabilidad con usuarios reales y moderar sesiones de Lean UX. Diseño de dashboards de análisis de datos masivos para clientes gubernamentales.",
+        fecha_inicio="2017-09-01"
     ),
     ExperienciaItem(
-        tipo="laboral",
-        organizacion="WebDevelopers Company",
-        puesto="Junior Developer",
-        descripcion="Desarrollo de aplicaciones web responsivas. Participación en refactorización de código legacy y mejora de cobertura de tests.",
-        horas=40
-    ),
-    ExperienciaItem(
-        tipo="autónomo",
-        organizacion="Proyecto independiente",
-        puesto="Freelancer Full Stack",
-        descripcion="Desarrollo de soluciones web personalizadas para pequeñas empresas y startups.",
-        horas=20
-    ),
+        puesto="Junior Visual Designer",
+        organizacion="Estudio Gráfico Imprime",
+        tipo="Híbrido",
+        descripcion="Creación de identidades visuales para startups, diseño de materiales de marketing digital y apoyo en la maquetación de landings.",
+        fecha_inicio="2014-10-01"
+    )
 ])
 
+# Habilidades Ampliadas
 skills = Habilidades(habilidades=[
-    Habilidad(nombre="Java", tipo="hard", categoria="Backend", nivel="Avanzado"),
-    Habilidad(nombre="Spring Boot", tipo="hard", categoria="Backend", nivel="Avanzado"),
-    Habilidad(nombre="Node.js", tipo="hard", categoria="Backend", nivel="Avanzado"),
-    Habilidad(nombre="React", tipo="hard", categoria="Frontend", nivel="Avanzado"),
-    Habilidad(nombre="TypeScript", tipo="hard", categoria="Frontend", nivel="Avanzado"),
-    Habilidad(nombre="PostgreSQL", tipo="hard", categoria="Bases de Datos", nivel="Avanzado"),
-    Habilidad(nombre="MongoDB", tipo="hard", categoria="Bases de Datos", nivel="Avanzado"),
-    Habilidad(nombre="Docker", tipo="hard", categoria="DevOps", nivel="Intermedio"),
-    Habilidad(nombre="Kubernetes", tipo="hard", categoria="DevOps", nivel="Intermedio"),
-    Habilidad(nombre="AWS", tipo="hard", categoria="Cloud", nivel="Intermedio"),
-    Habilidad(nombre="Git", tipo="hard", categoria="Control de versiones", nivel="Avanzado"),
-    Habilidad(nombre="Agile/Scrum", tipo="soft", categoria="Metodología", nivel="Avanzado"),
+    Habilidad(nombre="Figma & Auto Layout", nivel="Experto", categoria="Diseño"),
+    Habilidad(nombre="Design Systems", nivel="Avanzado", categoria="Estrategia"),
+    Habilidad(nombre="User Research", nivel="Experto", categoria="Investigación"),
+    Habilidad(nombre="Prototipado (Principle/Protopie)", nivel="Avanzado", categoria="Herramientas"),
+    Habilidad(nombre="HTML5 & CSS3 (Flexbox/Grid)", nivel="Intermedio", categoria="Tecnología"),
+    Habilidad(nombre="Accesibilidad Web (WCAG)", nivel="Avanzado", categoria="Estándares"),
+    Habilidad(nombre="Metodologías Ágiles (Scrum)", nivel="Avanzado", categoria="Gestión"),
+    Habilidad(nombre="Adobe Creative Suite", nivel="Experto", categoria="Diseño")
 ])
 
+# Portafolio y Méritos Ampliados
 folio = Portafolio(
     proyectos=[
         Proyecto(
-            nombre="Sistema de Gestión de Inventario Inteligente",
-            descripcion="Plataforma completa de inventario con predicción de demanda usando Machine Learning. Desarrollada con Spring Boot en backend y React en frontend.",
-            categoria="E-commerce",
-            tecnologias=["Spring Boot", "React", "PostgreSQL", "TensorFlow", "Docker", "Kubernetes"],
-            web="https://github.com/martingonzalez/inventory-system",
-            grupo=["Martín González", "Carlos López", "Ana Martínez"]
+            nombre="EcoApp Mobile",
+            descripcion="Aplicación móvil para la gestión de huella de carbono personal. Incluye gamificación y red social.",
+            categoria="UX/UI Design & Strategy",
+            tecnologias=["Figma", "User Testing", "Lottie Animations"],
+            web="https://behance.net/ecoapp"
         ),
         Proyecto(
-            nombre="API REST de Análisis de Datos en Tiempo Real",
-            descripcion="API escalable para procesamiento y análisis de millones de eventos por día. Integración con Kafka y Elasticsearch para búsqueda avanzada.",
-            categoria="Analytics",
-            tecnologias=["Node.js", "Apache Kafka", "Elasticsearch", "MongoDB", "AWS"],
-            web="https://github.com/martingonzalez/realtime-analytics-api"
+            nombre="AquaSphere Web Portal",
+            descripcion="Plataforma de gestión de recursos hídricos para Smart Cities. Interfaz compleja de mapas y gráficos.",
+            categoria="Dashboard Design",
+            tecnologias=["Figma", "Design Systems", "D3.js integration"],
+            web="https://aquasphere.io"
         ),
         Proyecto(
-            nombre="Aplicación de Redes Sociales Descentralizada",
-            descripcion="Red social descentralizada con contratos inteligentes. Uso de Web3.js y Ethereum.",
-            categoria="Blockchain",
-            tecnologias=["Solidity", "Web3.js", "React", "Node.js", "Ethereum"],
-            web="https://github.com/martingonzalez/decentralized-social",
-            grupo=["Martín González", "Laura Fernández"]
-        ),
+            nombre="FinTrack Extension",
+            descripcion="Extensión de navegador para control de gastos mediante IA.",
+            categoria="Product Design",
+            tecnologias=["Adobe XD", "UI Motion"],
+            web=None
+        )
     ],
     meritos=[
-        Merito(nombre="Desarrollador del Año 2023", descripcion="Reconocimiento de TechVision Solutions por contribución técnica excepcional"),
-        Merito(nombre="Speaker en JSConf Spain 2023", descripcion="Presentación sobre optimización de rendimiento en React"),
-        Merito(nombre="Mentor de Coding Bootcamp", descripcion="Ha guiado a 15+ nuevos desarrolladores en su carrera profesional"),
-        Merito(nombre="Publicaciones técnicas", descripcion="8 artículos en Medium sobre arquitectura de software"),
+        Merito(nombre="Awwwards Honorable Mention 2022", descripcion="Reconocimiento por el diseño visual y experiencia de usuario del proyecto AquaSphere."),
+        Merito(nombre="Top Designer en Behance (UX)", descripcion="Inclusión en la galería 'Best of Behance' en 3 ocasiones durante 2023."),
+        Merito(nombre="Ponente en UX Spain 2023", descripcion="Charla magistral sobre 'Sistemas de Diseño en equipos remotos'."),
+        Merito(nombre="Publicación en Smashing Magazine", descripcion="Artículo técnico sobre microinteracciones y feedback emocional.")
     ]
 )
