@@ -49,7 +49,7 @@ nvi              ::= NIVEL PA_A NVI PA_C ;
 
 (* ==================== Experiencia ==================== *)
 experiencia      ::= EXPERIENCIA LL_A laboral {laboral} {voluntariado} LL_C
-                    |EXPERIENCIA LL_A laboral voluntariado {voluntariado} LL_C;
+                    |EXPERIENCIA LL_A voluntariado {voluntariado} LL_C;
 laboral          ::= LABORAL LL_A puesto horas organizacion [responsabilidades] LL_C;
 puesto           ::= PUESTO PA_A CONJPAL PA_C
                     |PUESTO PA_A IDENT PA_C;
