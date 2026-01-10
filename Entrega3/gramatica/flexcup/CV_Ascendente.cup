@@ -1,8 +1,8 @@
 /* COMANDOS:
-jflex practica2.flex
-cup -expect 1 practica2.cup
+jflex CV_Ascendente.flex
+cup -expect 2 CV_Ascendente.cup
 javac Yylex.java sym.java parser.java
-java parser prueba.txt
+java parser CV_Antonio_Lobato.txt
 */
 
 import java_cup.runtime.*;
@@ -37,10 +37,10 @@ terminal PORTAFOLIO, PROYECTO, NOMBRE, GRUPO, COMPANERO, TECNOLOGIAS, MERITOS;
 terminal NUM;
 
 /* símbolos sueltos */
-terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO;
+terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO, CD;
 
 /* macros y primitivas */
-terminal NVH, NVI, MAIL, RUTA, FECHA_NUM, IDENT, BOOL, TFNO;
+terminal PAL, NVH, NVI, MAIL, RUTA, FECHA_NUM, IDENT, BOOL, TFNO;
 terminal CONJPAL, CONJPALYNUM;
 
 /************** NO TERMINALES **************/
