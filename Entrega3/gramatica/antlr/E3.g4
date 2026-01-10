@@ -103,11 +103,11 @@ ERROR : . { System.err.println("Error léxico: carácter no reconocido " + getTe
 // ========== Sintaxis ==========
 cvs:            global_var? cv+ ;
         
-global_var:     GVAR LL_A variable LL_C ;
-local_var:      LVAR LL_A variable LL_C;
+global_var:     GVAR LL_A variable+ LL_C ;
+local_var:      LVAR LL_A variable+ LL_C;
 variable:       IDENT IG CONJPALYNUM PYC ;
 
-cv:             CV IDENT LL_A local_var datospersonales formacion idiomas? experiencia? habilidades? portafolio? LL_C ;
+cv:             CV IDENT LL_A local_var? datospersonales formacion idiomas? experiencia? habilidades? portafolio? LL_C ;
 
 datospersonales:DP LL_A nomyape foto? fecha bio? contacto LL_C ;
 nomyape:        NOMYAPE PA_A (CONJPAL|IDENT) PA_C ;
