@@ -1,7 +1,7 @@
 import os
 from jinja2 import Environment, FileSystemLoader
 
-PERSONA = 3
+PERSONA = 2
 
 if PERSONA == 1:
     from datos_persona1 import datos, form, langs, xp, skills, folio
@@ -41,4 +41,5 @@ with open(output_file, "w", encoding="utf-8") as f:
 
 
 print("Guardado index.html")
+
 
