@@ -124,21 +124,21 @@ linkedin:       LINKEDIN PA_A RUTA PA_C ;
 github:         GITHUB PA_A RUTA PA_C ;
 web:            WEB PA_A RUTA PA_C ;
 
-experiencia:    EXPERIENCIA LL_A (laboral+ voluntariado* | voluntariado+) LL_C;
 formacion:      FORMACION LL_A oficial+ complementaria* LL_C ;
 oficial:        OFICIAL LL_A titulo expedidor descripcion? logros? fecha LL_C ;
 titulo:         TITULO PA_A (CONJPAL|IDENT) PA_C ;
 expedidor:      EXPEDIDOR PA_A (CONJPAL|IDENT) PA_C ;
 descripcion:    DESCRIPCION PA_A (CONJPALYNUM|IDENT) PA_C ;
 logros:         LOGROS PA_A (CONJPALYNUM|IDENT) PA_C ;
+complementaria: COMPLEMENTARIA LL_A titulo certificado? expedidor horas? fecha LL_C;
+certificado:    CERTIFICADO PA_A BOOL PA_C;
+horas:          HORAS PA_A NUM PA_C; 
 
 idiomas:        IDIOMAS LL_A idioma+ LL_C ;
 idioma:         IDIOMA LL_A nombre nvi expedidor? LL_C  ;
 nvi:            NIVEL PA_A NVI PA_C ;
 
-complementaria: COMPLEMENTARIA LL_A titulo certificado? expedidor horas? fecha LL_C;
-certificado:    CERTIFICADO PA_A BOOL PA_C;
-
+experiencia:    EXPERIENCIA LL_A (laboral+ voluntariado* | voluntariado+) LL_C;
 laboral:        LABORAL LL_A puesto horas organizacion responsabilidades? LL_C;
 puesto:         PUESTO PA_A (CONJPALYNUM|IDENT) PA_C;
 responsabilidades: RESPONSABILIDADES PA_A (CONJPALYNUM|IDENT) PA_C;
@@ -148,19 +148,14 @@ organizacion:   ORGANIZACION PA_A (CONJPALYNUM|IDENT) PA_C;
 habilidades:    HABILIDADES LL_A (soft hard* | hard+) LL_C ;
 soft:           SOFT LL_A habilidad (CO habilidad)* LL_C;
 hard:           HARD LL_A categoria+ LL_C;
-
 nvh:            NVHAB PA_A NVH PA_C;
 habilidad:      HABILIDAD PA_A (CONJPALYNUM|IDENT) PA_C;
 categoria:      CATEGORIA LL_A nombre habilidad nvh (CO habilidad nvh)+ LL_C;
 
 portafolio:     PORTAFOLIO LL_A (proyecto+ merito* | merito+) LL_C;
 proyecto:       PROYECTO LL_A nombre grupo? descripcion categoria tecnologias web? LL_C;
-
 nombre:         NOMBRE PA_A (CONJPALYNUM|IDENT) PA_C;
 grupo:          GRUPO LL_A companero+ LL_C;
 companero:      COMPANERO LL_A nomyape github? LL_C;
-
 tecnologias:    TECNOLOGIAS PA_A (CONJPALYNUM|IDENT) PA_C;
 merito:         MERITOS LL_A nombre descripcion LL_C;
-
-horas:          HORAS PA_A NUM PA_C; 
