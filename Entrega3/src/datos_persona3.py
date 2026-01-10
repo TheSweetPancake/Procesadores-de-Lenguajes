@@ -5,53 +5,54 @@ from experiencia import Experiencia, ExperienciaItem
 from habilidades import Habilidades, Habilidad
 from portafolio import Portafolio, Proyecto, Merito
 
-# Datos de la tercera persona - Lucía Méndez Riva
+
+# Datos de la tercera persona - Laura Martínez Ortega
 datos = DatosPersonales(
-    nombre="Lucía Méndez Riva",
+    nombre="Laura Martínez Ortega",
     foto=None,  # poner ruta de la imagen
-    fecha_nacimiento="1990-11-05",
-    bio="Especialista en Ciberseguridad y Ethical Hacking con 10 años de experiencia protegiendo infraestructuras críticas y liderando auditorías de seguridad en entornos cloud.",
-    email="lucia.mendez@security.net",
-    telefono="+34 600 111 222",
-    linkedin="/in/luciamendezsec",
-    github="/lusec-dev",
-    web="https://lusec.io"
+    fecha_nacimiento="1993-03-22",
+    bio="Diseñadora UX/UI y Desarrolladora Frontend con 7 años de experiencia creando experiencias digitales intuitivas y accesibles. Especializada en Design Systems y React.",
+    email="laura.martinez@email.com",
+    telefono="+34 612 345 678",
+    linkedin="/in/lauramartinezux",
+    github="/lauramartinez",
+    web="https://lauramartinez.design"
 )
 
 form = Formacion(items=[
     FormacionItem(
-        titulo="Grado en Ingeniería de Ciberseguridad",
-        institucion="Universidad Rey Juan Carlos",
-        descripcion="Enfoque en criptografía avanzada y seguridad en redes.",
-        logros="Premio al mejor proyecto fin de carrera en seguridad ofensiva",
-        fecha="2013-07-10",
+        titulo="Grado en Diseño Digital y Multimedia",
+        institucion="Universidad Complutense de Madrid",
+        descripcion="Especialización en diseño de interfaces y experiencia de usuario",
+        logros="Premio al mejor proyecto final: 'Sistema de diseño para apps de salud'",
+        fecha="2016-06-20",
         en_curso=False,
         tipo="oficial"
     ),
     FormacionItem(
-        titulo="Certified Information Systems Security Professional (CISSP)",
-        institucion="ISC2",
-        descripcion=None,
+        titulo="Máster en Desarrollo Frontend Avanzado",
+        institucion="Escuela de Organización Industrial (EOI)",
+        descripcion="Programación avanzada en JavaScript, React y arquitectura frontend",
         logros=None,
-        fecha="2021-05-15",
+        fecha="2019-11-15",
         en_curso=False,
         tipo="complementaria"
     ),
     FormacionItem(
-        titulo="Offensive Security Certified Professional (OSCP)",
-        institucion="Offensive Security",
+        titulo="Certificación en Accesibilidad Web WCAG 2.1",
+        institucion="Interaction Design Foundation",
         descripcion=None,
-        logros=None,
-        fecha="2019-11-30",
+        logros="Puntuación: 98/100",
+        fecha="2022-05-10",
         en_curso=False,
         tipo="complementaria"
     ),
     FormacionItem(
-        titulo="Especialista en Análisis Forense Digital",
-        institucion="SANS Institute",
-        descripcion=None,
+        titulo="Curso de Diseño de Producto Avanzado",
+        institucion="Coursera - Google UX Design",
+        descripcion="Metodologías de investigación de usuarios y testing",
         logros=None,
-        fecha="2024-01-20",
+        fecha="2023-09-01",
         en_curso=True,
         tipo="complementaria"
     ),
@@ -59,86 +60,89 @@ form = Formacion(items=[
 
 langs = Idiomas(idiomas=[
     Idioma(nombre="Español", nivel="Nativo"),
-    Idioma(nombre="Inglés", nivel="C2 - Bilingüe", expedidor="Cambridge Proficiency - 2020"),
-    Idioma(nombre="Alemán", nivel="Intermedio", expedidor="B1")
+    Idioma(nombre="Inglés", nivel="Avanzado", expedidor="C1 Cambridge - 2021"),
+    Idioma(nombre="Alemán", nivel="Intermedio", expedidor="B1 Goethe - 2020")
 ])
 
 xp = Experiencia(experiencias=[
     ExperienciaItem(
         tipo="laboral",
-        organizacion="CyberShield Defense Corp",
-        puesto="Head of Security Operations (SOC)",
-        descripcion="Gestión de incidentes de seguridad a gran escala. Implementación de políticas Zero Trust y supervisión de auditorías externas. Mejora del tiempo de detección de intrusiones en un 60%.",
-        horas=45
-    ),
-    ExperienciaItem(
-        tipo="laboral",
-        organizacion="Global Bank Solutions",
-        puesto="Cybersecurity Analyst",
-        descripcion="Pentesting periódico de aplicaciones bancarias y respuesta ante incidentes de fraude digital. Aseguramiento de cumplimiento con normativas ISO 27001.",
+        organizacion="DigitalMind Agency",
+        puesto="Lead UX/UI Designer",
+        descripcion="Liderazgo del equipo de diseño. Creación y mantenimiento del Design System utilizado en 15+ proyectos. Aumento del 25% en la satisfacción del usuario en proyectos clave.",
         horas=40
     ),
     ExperienciaItem(
         tipo="laboral",
-        organizacion="SecureNet Consulting",
-        puesto="Security Junior Consultant",
-        descripcion="Auditoría de vulnerabilidades en redes corporativas y despliegue de firewalls perimetrales para clientes gubernamentales.",
+        organizacion="TechCreators Inc.",
+        puesto="Senior Frontend Developer & UX Designer",
+        descripcion="Desarrollo de componentes React reutilizables. Implementación de arquitectura basada en micro-frontends. Colaboración directa con equipo de producto.",
+        horas=40
+    ),
+    ExperienciaItem(
+        tipo="laboral",
+        organizacion="StartupLabs",
+        puesto="Diseñadora UX/UI",
+        descripcion="Diseño de interfaces para aplicaciones móviles y web. Realización de tests de usabilidad y entrevistas con usuarios.",
         horas=40
     ),
     ExperienciaItem(
         tipo="voluntariado",
-        organizacion="HackForGood",
-        puesto="Mentor de Seguridad",
-        descripcion="Asesoramiento en proyectos de impacto social enfocados en la privacidad de datos de usuarios vulnerables.",
+        organizacion="Design for Good NGO",
+        puesto="Consultora de Accesibilidad",
+        descripcion="Voluntariado para mejorar la accesibilidad de plataformas educativas para personas con discapacidad visual.",
         horas=10
     ),
 ])
 
 skills = Habilidades(habilidades=[
-    Habilidad(nombre="Ethical Hacking", tipo="hard", categoria="Seguridad", nivel="Avanzado"),
-    Habilidad(nombre="Análisis Forense", tipo="hard", categoria="Seguridad", nivel="Intermedio"),
-    Habilidad(nombre="Cloud Security (Azure/AWS)", tipo="hard", categoria="Infraestructura", nivel="Avanzado"),
-    Habilidad(nombre="Python (Security Scripts)", tipo="hard", categoria="Programación", nivel="Avanzado"),
-    Habilidad(nombre="C++", tipo="hard", categoria="Programación", nivel="Intermedio"),
-    Habilidad(nombre="SIEM (Splunk/ELK)", tipo="hard", categoria="Herramientas", nivel="Avanzado"),
-    Habilidad(nombre="Kali Linux", tipo="hard", categoria="Herramientas", nivel="Avanzado"),
-    Habilidad(nombre="Wireshark", tipo="hard", categoria="Redes", nivel="Avanzado"),
-    Habilidad(nombre="VPN & Firewalling", tipo="hard", categoria="Redes", nivel="Avanzado"),
-    Habilidad(nombre="Liderazgo de equipos", tipo="soft", categoria="Gestión", nivel="Avanzado"),
-    Habilidad(nombre="Gestión de Crisis", tipo="soft", categoria="Gestión", nivel="Avanzado"),
-    Habilidad(nombre="Pensamiento Crítico", tipo="soft", categoria="Metodología", nivel="Avanzado"),
+    Habilidad(nombre="Figma", tipo="hard", categoria="Diseño", nivel="Avanzado"),
+    Habilidad(nombre="Adobe Creative Suite", tipo="hard", categoria="Diseño", nivel="Avanzado"),
+    Habilidad(nombre="React", tipo="hard", categoria="Frontend", nivel="Avanzado"),
+    Habilidad(nombre="TypeScript", tipo="hard", categoria="Frontend", nivel="Avanzado"),
+    Habilidad(nombre="Next.js", tipo="hard", categoria="Frontend", nivel="Intermedio"),
+    Habilidad(nombre="Storybook", tipo="hard", categoria="Herramientas", nivel="Avanzado"),
+    Habilidad(nombre="Design Systems", tipo="hard", categoria="Diseño", nivel="Avanzado"),
+    Habilidad(nombre="User Research", tipo="hard", categoria="UX", nivel="Intermedio"),
+    Habilidad(nombre="Prototyping", tipo="hard", categoria="UX", nivel="Avanzado"),
+    Habilidad(nombre="Git", tipo="hard", categoria="Control de versiones", nivel="Intermedio"),
+    Habilidad(nombre="Tailwind CSS", tipo="hard", categoria="Frontend", nivel="Avanzado"),
+    Habilidad(nombre="Trabajo en equipo", tipo="soft", categoria="Habilidades", nivel="Avanzado"),
+    Habilidad(nombre="Comunicación", tipo="soft", categoria="Habilidades", nivel="Avanzado"),
+    Habilidad(nombre="Pensamiento crítico", tipo="soft", categoria="Habilidades", nivel="Avanzado"),
 ])
 
 folio = Portafolio(
     proyectos=[
         Proyecto(
-            nombre="Framework de Respuesta Automática ante Incidentes",
-            descripcion="Sistema basado en IA para la contención automática de ataques de denegación de servicio (DDoS). Integrado con balanceadores de carga en la nube.",
-            categoria="Software de Seguridad",
-            tecnologias=["Python", "TensorFlow", "AWS Lambda", "Terraform", "Go"],
-            web="https://github.com/lusec-dev/auto-response-framework",
-            grupo=["Lucía Méndez", "Roberto Sanz"]
+            nombre="Sistema de Diseño Aurora",
+            descripcion="Design System completo para empresa fintech con 50+ componentes accesibles y documentados. Implementado en React y Figma.",
+            categoria="Design System",
+            tecnologias=["Figma", "React", "TypeScript", "Storybook", "Jest", "Cypress"],
+            web="https://github.com/lauramartinez/aurora-design-system",
+            grupo=["Laura Martínez", "Carlos Ruiz", "Ana López"]
         ),
         Proyecto(
-            nombre="Herramienta de Auditoría de Permisos Cloud",
-            descripcion="Escáner multicloud para detectar configuraciones erróneas en cubos S3 y roles IAM con privilegios excesivos.",
-            categoria="Herramientas Cloud",
-            tecnologias=["Go", "Bash", "Azure SDK", "AWS CLI"],
-            web="https://github.com/lusec-dev/cloud-audit-scanner"
+            nombre="App de Salud Mental MindCare",
+            descripcion="Aplicación móvil para seguimiento del bienestar emocional con interfaz empática y accesible. Ganadora del premio UX Awards 2022.",
+            categoria="Salud Digital",
+            tecnologias=["React Native", "Figma", "Node.js", "MongoDB", "AWS"],
+            web="https://mindcare-app.com"
         ),
         Proyecto(
-            nombre="Protocolo de Comunicación Post-Quantum",
-            descripcion="Investigación y prototipado de un sistema de mensajería resistente a la computación cuántica usando algoritmos de red.",
-            categoria="I+D Criptografía",
-            tecnologias=["C++", "OpenSSL", "Rust"],
-            web="https://github.com/lusec-dev/pq-messenger",
-            grupo=["Lucía Méndez", "Dr. Hans Mueller"]
+            nombre="Plataforma de E-learning Accesible",
+            descripcion="Rediseño completo de plataforma educativa para cumplir con WCAG 2.1 AA. Mejora del 40% en accesibilidad.",
+            categoria="Educación",
+            tecnologias=["Vue.js", "Figma", "Django", "PostgreSQL", "Lighthouse"],
+            web="https://github.com/lauramartinez/accessible-learning",
+            grupo=["Laura Martínez", "Miguel Torres"]
         ),
     ],
     meritos=[
-        Merito(nombre="Hallazgo de Vulnerabilidad Crítica (CVE)", descripcion="Descubrimiento y reporte responsable de una vulnerabilidad de ejecución remota de código en un kernel Linux"),
-        Merito(nombre="Ganadora de Capture The Flag (CTF) DEF CON", descripcion="Primer puesto con el equipo 'SecGroup' en la competición internacional de 2022"),
-        Merito(nombre="Contribuidora al Proyecto OWASP", descripcion="Co-autora de la guía de seguridad para APIs de servicios financieros"),
-        Merito(nombre="Top 1% en TryHackMe", descripcion="Reconocimiento por completar desafíos avanzados de explotación y defensa"),
+        Merito(nombre="Premio UX Awards 2022", descripcion="Mejor diseño de app de salud por MindCare"),
+        Merito(nombre="Speaker en React Conf 2023", descripcion="Charla 'Design Systems en React: más allá de los componentes'"),
+        Merito(nombre="Mentora en Women Who Code", descripcion="Mentoría a 20+ mujeres en diseño y desarrollo frontend"),
+        Merito(nombre="Publicaciones en Smashing Magazine", descripcion="3 artículos sobre accesibilidad y sistemas de diseño"),
+        Merito(nombre="Certificación Adobe Certified Expert", descripcion="Photoshop y Illustrator 2023"),
     ]
 )
