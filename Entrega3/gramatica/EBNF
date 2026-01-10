@@ -2,12 +2,12 @@
 cvs             ::= {global_var} cv {cv} ;
 
 (* ==================== Variables ==================== *)
-gloabal_var      ::= GVAR LL_A variable LL_C ;
-local_var        ::= LVAR LL_A variable LL_C ;
+gloabal_var      ::= GVAR LL_A variable {variable} LL_C ;
+local_var        ::= LVAR LL_A variable {variable} LL_C ;
 variable         ::= IDENT IG CONJPALYNUM PYC ;
 
 (* ==================== Curriculvbum Vitae ==================== *)
-cv               ::= CV IDENT LL_A local_var datospersonales formacion [idiomas] [experiencia] [habilidades] [portafolio] LL_C ;
+cv               ::= CV IDENT LL_A {local_var} datospersonales formacion [idiomas] [experiencia] [habilidades] [portafolio] LL_C ;
 
 (* ==================== Datos personales ==================== *)
 datospersonales  ::= DP LL_A nomyape [foto] fecha [bio] contacto LL_C ;
