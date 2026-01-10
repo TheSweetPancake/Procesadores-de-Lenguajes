@@ -19,7 +19,8 @@ datos = DatosPersonales(
     web="https://lauramartinez.design"
 )
 
-form = Formacion(items=[
+# IMPORTANTE: Los nombres deben coincidir exactamente con lo que espera la plantilla
+formacion = Formacion(items=[
     FormacionItem(
         titulo="Grado en Diseño Digital y Multimedia",
         institucion="Universidad Complutense de Madrid",
@@ -58,13 +59,13 @@ form = Formacion(items=[
     ),
 ])
 
-langs = Idiomas(idiomas=[
+idiomas = Idiomas(idiomas=[
     Idioma(nombre="Español", nivel="Nativo"),
     Idioma(nombre="Inglés", nivel="Avanzado", expedidor="C1 Cambridge - 2021"),
     Idioma(nombre="Alemán", nivel="Intermedio", expedidor="B1 Goethe - 2020")
 ])
 
-xp = Experiencia(experiencias=[
+experiencia = Experiencia(experiencias=[
     ExperienciaItem(
         tipo="laboral",
         organizacion="DigitalMind Agency",
@@ -95,7 +96,7 @@ xp = Experiencia(experiencias=[
     ),
 ])
 
-skills = Habilidades(habilidades=[
+habilidades = Habilidades(habilidades=[
     Habilidad(nombre="Figma", tipo="hard", categoria="Diseño", nivel="Avanzado"),
     Habilidad(nombre="Adobe Creative Suite", tipo="hard", categoria="Diseño", nivel="Avanzado"),
     Habilidad(nombre="React", tipo="hard", categoria="Frontend", nivel="Avanzado"),
@@ -112,7 +113,7 @@ skills = Habilidades(habilidades=[
     Habilidad(nombre="Pensamiento crítico", tipo="soft", categoria="Habilidades", nivel="Avanzado"),
 ])
 
-folio = Portafolio(
+portafolio = Portafolio(
     proyectos=[
         Proyecto(
             nombre="Sistema de Diseño Aurora",
@@ -126,7 +127,7 @@ folio = Portafolio(
             nombre="App de Salud Mental MindCare",
             descripcion="Aplicación móvil para seguimiento del bienestar emocional con interfaz empática y accesible. Ganadora del premio UX Awards 2022.",
             categoria="Salud Digital",
-            tecnologias=["React Native", "Figma", "Node.js", "MongoDB", "AWS"],
+            tecnologias=["React Native", "Figura", "Node.js", "MongoDB", "AWS"],
             web="https://mindcare-app.com"
         ),
         Proyecto(
