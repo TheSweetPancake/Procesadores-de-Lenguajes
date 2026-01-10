@@ -1,0 +1,211 @@
+/* src/styles_persona3.css */
+:root {
+    --bg-sidebar: #1e293b;   /* Azul oscuro elegante */
+    --text-sidebar: #f1f5f9; /* Blanco hueso */
+    --accent: #3b82f6;       /* Azul vibrante */
+    --text-main: #334155;    /* Gris oscuro para lectura */
+    --bg-main: #ffffff;
+    --border-color: #e2e8f0;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8fafc;
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+.cv-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    max-width: 1000px;
+    margin: 40px auto;
+    background: var(--bg-main);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    min-height: 297mm; /* Tamaño A4 aprox */
+}
+
+/* --- BARRA LATERAL --- */
+aside {
+    background-color: var(--bg-sidebar);
+    color: var(--text-sidebar);
+    padding: 40px 30px;
+}
+
+/* Avatar generado por CSS (Inicial) */
+.avatar-placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0 auto 30px auto;
+    border: 4px solid rgba(255,255,255,0.1);
+}
+
+aside h2 {
+    color: var(--accent);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #475569;
+    padding-bottom: 5px;
+}
+
+.contact-info p {
+    margin: 12px 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.contact-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.contact-info a {
+    color: var(--text-sidebar);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+    word-break: break-all;
+}
+
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background: rgba(255,255,255,0.1);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+main {
+    padding: 50px;
+}
+
+header {
+    margin-bottom: 40px;
+    border-bottom: 4px solid var(--accent);
+    padding-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.8rem;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1;
+}
+
+.bio {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: #0f172a;
+    border-left: 5px solid var(--accent);
+    padding-left: 15px;
+    margin-top: 45px;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* Items de lista (Experiencia/Formación) */
+.timeline-block {
+    margin-bottom: 30px;
+    position: relative;
+    padding-left: 25px;
+    border-left: 2px solid #e2e8f0;
+}
+
+.timeline-block::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+}
+
+.job-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.job-meta {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-family: monospace;
+}
+
+.job-org {
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Grid de Proyectos */
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.project-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 15px;
+    transition: transform 0.2s;
+}
+
+.project-card h4 {
+    margin: 0 0 5px 0;
+    color: var(--accent);
+}
+
+.project-tech {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 10px;
+    font-family: monospace;
+}
+
+/* Impresión */
+@media print {
+    body { background: white; }
+    .cv-container { box-shadow: none; margin: 0; max-width: 100%; }
+    aside { -webkit-print-color-adjust: exact; }
+}
