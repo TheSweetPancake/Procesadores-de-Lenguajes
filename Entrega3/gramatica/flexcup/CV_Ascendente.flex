@@ -16,15 +16,18 @@
 
 NUM               = (0|[1-9][0-9]*)
 PAL               = ([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÑñ])+
-MAIL              = ([A-Z]|[a-z]|[0-9])+ (.([A-Z]|[a-z]|[0-9]))* "@" ([A-Z]|[a-z]|[0-9])+ (.([A-Z]|[a-z]|[0-9]))*
+TFNO              = ([5-9][0-9]{8})
+MAIL              = ([A-Z]|[a-z]|[0-9])+(\.[A-Z]|[a-z]|[0-9]+)*"@"([A-Z]|[a-z]|[0-9])+(\.[A-Z]|[a-z]|[0-9]+)*
 RUTA              = ([A-Z]|[a-z])+ ("/"|"."|"-"|":")+ ([A-Z]|[a-z])+ (("/"|"."|"-"|":")+ ([A-Z]|[a-z])+)+ 
 DIA               = (0[1-9]|(1|2)[0-9]|30|31)
 MES               = (0[1-9]|1[0-2])
-ANIO               = (1|2)[0-9][0-9][0-9]
+ANIO              = (1|2)[0-9][0-9][0-9]
 BOOL              = (Si|No)
 NVI               = (([ABC][12])|nativo)
 NVH               = (bajo|medio|alto)
 IDENT             = ([A-Z]|[a-z])([A-Z]|[a-z]|[0-9])*
+CONJPAL           = {PAL}(\s+{PAL})*
+CONJPALYNUM       = {PAL}(\s+{PAL}|\s+{NUM})*
 
 %%
 
@@ -99,6 +102,8 @@ IDENT             = ([A-Z]|[a-z])([A-Z]|[a-z]|[0-9])*
 <YYINITIAL>"}"                   { return new Symbol(sym.LLAVE_CIERRA); }
 <YYINITIAL>"("                   { return new Symbol(sym.PAR_ABRE); }
 <YYINITIAL>")"                   { return new Symbol(sym.PAR_CIERRA); }
+<YYINITIAL>","                   { return new Symbol(sym.CO); }
+<YYINITIAL>"\""                  { return new Symbol(sym.CD); }
 <YYINITIAL>"="                   { return new Symbol(sym.IGUAL); }
 <YYINITIAL>";"                   { return new Symbol(sym.PYC); }
 
@@ -108,12 +113,15 @@ IDENT             = ([A-Z]|[a-z])([A-Z]|[a-z]|[0-9])*
 <YYINITIAL>{NVI}                 { return new Symbol(sym.NVI); }
 <YYINITIAL>{MAIL}                { return new Symbol(sym.MAIL); }
 <YYINITIAL>{RUTA}                { return new Symbol(sym.RUTA); }
+<YYINITIAL>{TFNO}                { return new Symbol(sym.TFNO); }
 <YYINITIAL>{MES}                 { return new Symbol(sym.MES); }
 <YYINITIAL>{DIA}                 { return new Symbol(sym.DIA); }
-<YYINITIAL>{ANIO}                 { return new Symbol(sym.ANIO); }
+<YYINITIAL>{ANIO}                { return new Symbol(sym.ANIO); }
 <YYINITIAL>{NUM}                 { return new Symbol(sym.NUM); }
 <YYINITIAL>{IDENT}               { return new Symbol(sym.IDENT); }
 <YYINITIAL>{PAL}                 { return new Symbol(sym.PAL); }
+<YYINITIAL>{CONJPAL}             { return new Symbol(sym.CONJPAL); }
+<YYINITIAL>{CONJPALYNUM}         { return new Symbol(sym.CONJPALYNUM); }
 
 /* ======== Espacios en blanco ======== */
 [|\t|\r|\n|" "]+                {} /* ignorar */

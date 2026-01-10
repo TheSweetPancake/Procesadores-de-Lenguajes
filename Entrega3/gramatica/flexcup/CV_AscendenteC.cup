@@ -40,10 +40,8 @@ terminal NUM;
 terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO, CD;
 
 /* macros y primitivas */
-terminal NVH, NVI, MAIL, RUTA, DIA, MES, ANIO, IDENT, BOOL;
-
-/* TERMINALES QUE FALTABAN EN EL CUP ORIGINAL */
-terminal TFNO;
+terminal NVH, NVI, MAIL, RUTA, DIA, MES, ANIO, IDENT, BOOL, TFNO;
+terminal CONJPAL, CONJPALYNUM;
 
 /************** NO TERMINALES **************/
 non terminal CONJPAL, CONJPALYNUM;
@@ -90,8 +88,8 @@ cvs ::= global_var cv_list
       | cv_list
       ;
 
-cv_list ::= cv CD ID CD cv_list
-          | cv CD ID CD
+cv_list ::= cv cv_list
+          | cv
           ;
 
 global_var ::= GVAR LL_A variable LL_C ;
@@ -101,6 +99,8 @@ variable ::= IDENT IG CONJPALYNUM PYC ;
 
 cv ::= CV IDENT LL_A local_var datospersonales formacion
        idiomas_opt experiencia_opt habilidades_opt portafolio_opt LL_C ;
+
+id_decl ::= ID PA_A IDENT PA_C ;
 
 /******** OPCIONALES ********/
 idiomas_opt ::= idiomas | ;
