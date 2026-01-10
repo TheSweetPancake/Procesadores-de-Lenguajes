@@ -10,7 +10,7 @@ elif PERSONA == 2:
     from datos_persona2 import datos, form, langs, xp, skills, folio
     plantilla = "plantilla_cv_persona2.html"
 elif PERSONA == 3:
-    from datos_persona2 import datos, form, langs, xp, skills, folio 
+    from datos_persona3 import datos, form, langs, xp, skills, folio 
     plantilla = "plantilla_cv_persona3.html"
 else:
     raise ValueError("PERSONA debe ser 1, 2 o 3")
@@ -41,3 +41,4 @@ with open(output_file, "w", encoding="utf-8") as f:
 
 
 print("Guardado index.html")
+
