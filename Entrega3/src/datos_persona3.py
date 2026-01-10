@@ -19,8 +19,7 @@ datos = DatosPersonales(
     web="https://lauramartinez.design"
 )
 
-# IMPORTANTE: Los nombres deben coincidir exactamente con lo que espera la plantilla
-formacion = Formacion(items=[
+form = Formacion(items=[
     FormacionItem(
         titulo="Grado en Diseño Digital y Multimedia",
         institucion="Universidad Complutense de Madrid",
@@ -59,13 +58,13 @@ formacion = Formacion(items=[
     ),
 ])
 
-idiomas = Idiomas(idiomas=[
+langs = Idiomas(idiomas=[
     Idioma(nombre="Español", nivel="Nativo"),
     Idioma(nombre="Inglés", nivel="Avanzado", expedidor="C1 Cambridge - 2021"),
     Idioma(nombre="Alemán", nivel="Intermedio", expedidor="B1 Goethe - 2020")
 ])
 
-experiencia = Experiencia(experiencias=[
+xp = Experiencia(experiencias=[
     ExperienciaItem(
         tipo="laboral",
         organizacion="DigitalMind Agency",
@@ -96,7 +95,7 @@ experiencia = Experiencia(experiencias=[
     ),
 ])
 
-habilidades = Habilidades(habilidades=[
+skills = Habilidades(habilidades=[
     Habilidad(nombre="Figma", tipo="hard", categoria="Diseño", nivel="Avanzado"),
     Habilidad(nombre="Adobe Creative Suite", tipo="hard", categoria="Diseño", nivel="Avanzado"),
     Habilidad(nombre="React", tipo="hard", categoria="Frontend", nivel="Avanzado"),
@@ -113,7 +112,7 @@ habilidades = Habilidades(habilidades=[
     Habilidad(nombre="Pensamiento crítico", tipo="soft", categoria="Habilidades", nivel="Avanzado"),
 ])
 
-portafolio = Portafolio(
+folio = Portafolio(
     proyectos=[
         Proyecto(
             nombre="Sistema de Diseño Aurora",
@@ -127,7 +126,7 @@ portafolio = Portafolio(
             nombre="App de Salud Mental MindCare",
             descripcion="Aplicación móvil para seguimiento del bienestar emocional con interfaz empática y accesible. Ganadora del premio UX Awards 2022.",
             categoria="Salud Digital",
-            tecnologias=["React Native", "Figura", "Node.js", "MongoDB", "AWS"],
+            tecnologias=["React Native", "Figma", "Node.js", "MongoDB", "AWS"],
             web="https://mindcare-app.com"
         ),
         Proyecto(
