@@ -41,59 +41,59 @@ CONJPALYNUM       = {PAL}({WS}({PAL}|{NUM}))*
 <COMMENT> .                      {} /* ignorar contenido del comentario */
 
 /* ======== Palabras clave ======== */
-<YYINITIAL>"cv"                  { return new Symbol(sym.cv); }
-<YYINITIAL>"id"                  { return new Symbol(sym.id); }
-<YYINITIAL>"gvar"                { return new Symbol(sym.gvar); }
-<YYINITIAL>"lvar"                { return new Symbol(sym.lvar); }
+<YYINITIAL>"cv"                  { return new Symbol(sym.CV); }
+<YYINITIAL>"id"                  { return new Symbol(sym.ID); }
+<YYINITIAL>"gvar"                { return new Symbol(sym.GVAR); }
+<YYINITIAL>"lvar"                { return new Symbol(sym.LVAR); }
 
-<YYINITIAL>"datospersonales"     { return new Symbol(sym.datospersonales); }
-<YYINITIAL>"nomyape"             { return new Symbol(sym.nomyape); }
-<YYINITIAL>"foto"                { return new Symbol(sym.foto); }
-<YYINITIAL>"fecha"               { return new Symbol(sym.fecha); }
-<YYINITIAL>"bio"                 { return new Symbol(sym.bio); }
-<YYINITIAL>"contacto"            { return new Symbol(sym.contacto); }
-<YYINITIAL>"email"               { return new Symbol(sym.email); }
-<YYINITIAL>"telefono"            { return new Symbol(sym.telefono); }
-<YYINITIAL>"redes"               { return new Symbol(sym.redes); }
-<YYINITIAL>"linkedin"            { return new Symbol(sym.linkedin); }
-<YYINITIAL>"github"              { return new Symbol(sym.github); }
-<YYINITIAL>"web"                 { return new Symbol(sym.web); }
+<YYINITIAL>"datospersonales"     { return new Symbol(sym.DP); }
+<YYINITIAL>"nomyape"             { return new Symbol(sym.NOMYAPE); }
+<YYINITIAL>"foto"                { return new Symbol(sym.FOTO); }
+<YYINITIAL>"fecha"               { return new Symbol(sym.FECHA); }
+<YYINITIAL>"bio"                 { return new Symbol(sym.BIO); }
+<YYINITIAL>"contacto"            { return new Symbol(sym.CONTACTO); }
+<YYINITIAL>"email"               { return new Symbol(sym.EMAIL); }
+<YYINITIAL>"telefono"            { return new Symbol(sym.TELEFONO); }
+<YYINITIAL>"redes"               { return new Symbol(sym.REDES); }
+<YYINITIAL>"linkedin"            { return new Symbol(sym.LINKEDIN); }
+<YYINITIAL>"github"              { return new Symbol(sym.GITHUB); }
+<YYINITIAL>"web"                 { return new Symbol(sym.WEB); }
 
-<YYINITIAL>"formacion"           { return new Symbol(sym.formacion); }
-<YYINITIAL>"oficial"             { return new Symbol(sym.oficial); }
-<YYINITIAL>"titulo"              { return new Symbol(sym.titulo); }
-<YYINITIAL>"expedidor"           { return new Symbol(sym.expedidor); }
-<YYINITIAL>"descripcion"         { return new Symbol(sym.descripcion); }
-<YYINITIAL>"logros"              { return new Symbol(sym.logros); }
-<YYINITIAL>"complementaria"      { return new Symbol(sym.complementaria); }
-<YYINITIAL>"certificado"         { return new Symbol(sym.certificado); }
-<YYINITIAL>"horas"               { return new Symbol(sym.horas); }
+<YYINITIAL>"formacion"           { return new Symbol(sym.FORMACION); }
+<YYINITIAL>"oficial"             { return new Symbol(sym.OFICIAL); }
+<YYINITIAL>"titulo"              { return new Symbol(sym.TITULO); }
+<YYINITIAL>"expedidor"           { return new Symbol(sym.EXPEDIDOR); }
+<YYINITIAL>"descripcion"         { return new Symbol(sym.DESCRIPCION); }
+<YYINITIAL>"logros"              { return new Symbol(sym.LOGROS); }
+<YYINITIAL>"complementaria"      { return new Symbol(sym.COMPLEMENTARIA); }
+<YYINITIAL>"certificado"         { return new Symbol(sym.CERTIFICADO); }
+<YYINITIAL>"horas"               { return new Symbol(sym.HORAS); }
 
-<YYINITIAL>"idiomas"             { return new Symbol(sym.idiomas); }
-<YYINITIAL>"idioma"              { return new Symbol(sym.idioma); }
-<YYINITIAL>"nivel"               { return new Symbol(sym.nivel); }
+<YYINITIAL>"idiomas"             { return new Symbol(sym.IDIOMAS); }
+<YYINITIAL>"idioma"              { return new Symbol(sym.IDIOMA); }
+<YYINITIAL>"nivel"               { return new Symbol(sym.NIVEL); }
 
-<YYINITIAL>"experiencia"         { return new Symbol(sym.experiencia); }
-<YYINITIAL>"laboral"             { return new Symbol(sym.laboral); }
-<YYINITIAL>"puesto"              { return new Symbol(sym.puesto); }
-<YYINITIAL>"responsabilidades"   { return new Symbol(sym.responsabilidades); }
-<YYINITIAL>"voluntariado"        { return new Symbol(sym.voluntariado); }
-<YYINITIAL>"organizacion"        { return new Symbol(sym.organizacion); }
+<YYINITIAL>"experiencia"         { return new Symbol(sym.EXPERIENCIA); }
+<YYINITIAL>"laboral"             { return new Symbol(sym.LABORAL); }
+<YYINITIAL>"puesto"              { return new Symbol(sym.PUESTO); }
+<YYINITIAL>"responsabilidades"   { return new Symbol(sym.RESPONSABILIDADES); }
+<YYINITIAL>"voluntariado"        { return new Symbol(sym.VOLUNTARIADO); }
+<YYINITIAL>"organizacion"        { return new Symbol(sym.ORGANIZACION); }
 
-<YYINITIAL>"habilidades"         { return new Symbol(sym.habilidades); }
-<YYINITIAL>"soft"                { return new Symbol(sym.soft); }
-<YYINITIAL>"hard"                { return new Symbol(sym.hard); }
-<YYINITIAL>"nvhab"               { return new Symbol(sym.nvhab); }
-<YYINITIAL>"habilidad"           { return new Symbol(sym.habilidad); }
-<YYINITIAL>"categoria"           { return new Symbol(sym.categoria); }
+<YYINITIAL>"habilidades"         { return new Symbol(sym.HABILIDADES); }
+<YYINITIAL>"soft"                { return new Symbol(sym.SOFT); }
+<YYINITIAL>"hard"                { return new Symbol(sym.HARD); }
+<YYINITIAL>"habilidad"           { return new Symbol(sym.HABILIDAD); }
+<YYINITIAL>"nvhab"               { return new Symbol(sym.NVHAB); }
+<YYINITIAL>"categoria"           { return new Symbol(sym.CATEGORIA); }
 
-<YYINITIAL>"portafolio"          { return new Symbol(sym.portafolio); }
-<YYINITIAL>"proyecto"            { return new Symbol(sym.proyecto); }
-<YYINITIAL>"nombre"              { return new Symbol(sym.nombre); }
-<YYINITIAL>"grupo"               { return new Symbol(sym.grupo); }
-<YYINITIAL>"compañero"           { return new Symbol(sym.compañero); }
-<YYINITIAL>"tecnologias"         { return new Symbol(sym.tecnologias); }
-<YYINITIAL>"meritos"             { return new Symbol(sym.meritos); }
+<YYINITIAL>"portafolio"          { return new Symbol(sym.PORTAFOLIO); }
+<YYINITIAL>"proyecto"            { return new Symbol(sym.PROYECTO); }
+<YYINITIAL>"nombre"              { return new Symbol(sym.NOMBRE); }
+<YYINITIAL>"grupo"               { return new Symbol(sym.GRUPO); }
+<YYINITIAL>"companero"           { return new Symbol(sym.COMPANERO); }
+<YYINITIAL>"tecnologias"         { return new Symbol(sym.TECNOLOGIAS); }
+<YYINITIAL>"meritos"             { return new Symbol(sym.MERITOS); }
 
 /* ======== Símbolos y operadores ======== */
 <YYINITIAL>"/*"                  { yybegin(COMMENT); }
