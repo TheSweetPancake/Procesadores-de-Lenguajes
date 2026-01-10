@@ -7,74 +7,74 @@
 </head>
 <body>
     <div class="cv-container">
-        <header>
+        <header class="main-header">
             <h1>{{ datos.nombre }}</h1>
-            <p class="bio-top">{{ datos.bio }}</p>
+            <p class="main-bio">{{ datos.bio }}</p>
         </header>
 
-        <div class="main-content">
-            <aside>
-                <div class="contact-section">
-                    <h2 class="section-title">Contacto</h2>
-                    <p><span class="contact-label">Email</span> {{ datos.email }}</p>
-                    <p><span class="contact-label">Teléfono</span> {{ datos.telefono }}</p>
-                    <p><span class="contact-label">LinkedIn</span> {{ datos.linkedin }}</p>
-                    <p><span class="contact-label">Web</span> {{ datos.web }}</p>
-                </div>
+        <div class="cv-content">
+            <aside class="sidebar">
+                <section>
+                    <h2 class="side-title">Contacto</h2>
+                    <div class="contact-item"><strong>Email:</strong> {{ datos.email }}</div>
+                    <div class="contact-item"><strong>Teléfono:</strong> {{ datos.telefono }}</div>
+                    <div class="contact-item"><strong>LinkedIn:</strong> {{ datos.linkedin }}</div>
+                    <div class="contact-item"><strong>Web:</strong> {{ datos.web }}</div>
+                </section>
 
-                <div class="contact-section" style="margin-top: 30px;">
-                    <h2 class="section-title">Habilidades</h2>
-                    <div class="tag-container">
+                <section>
+                    <h2 class="side-title">Habilidades</h2>
+                    <div class="skills-list">
                         {% for h in habilidades.habilidades %}
-                        <span class="tag">{{ h.nombre }}</span>
+                        <span class="skill-tag">{{ h.nombre }}</span>
                         {% endfor %}
                     </div>
-                </div>
+                </section>
 
-                <div class="contact-section" style="margin-top: 30px;">
-                    <h2 class="section-title">Idiomas</h2>
+                <section>
+                    <h2 class="side-title">Idiomas</h2>
                     {% for i in idiomas.idiomas %}
-                    <p><strong>{{ i.nombre }}</strong>: {{ i.nivel }}</p>
+                    <p class="lang-text"><strong>{{ i.nombre }}</strong>: {{ i.nivel }}</p>
                     {% endfor %}
-                </div>
+                </section>
             </aside>
 
-            <main>
+            <main class="main-body">
                 <section>
-                    <h2 class="section-title">Experiencia Profesional</h2>
+                    <h2 class="body-title">Experiencia Profesional</h2>
                     {% for e in experiencia.experiencias %}
-                    <div class="item-block">
-                        <div class="item-header">
-                            <span>{{ e.puesto }}</span>
-                            <span style="font-weight: normal; color: #64748b;">{{ e.tipo }}</span>
+                    <div class="job-item">
+                        <div class="job-header">
+                            <span class="job-puesto">{{ e.puesto }}</span>
+                            <span class="job-tipo">{{ e.tipo }}</span>
                         </div>
-                        <div class="item-org">{{ e.organizacion }}</div>
-                        <p style="font-size: 0.9rem;">{{ e.descripcion }}</p>
+                        <div class="job-org">{{ e.organizacion }} {% if e.horas %}({{ e.horas }}h/sem){% endif %}</div>
+                        <p class="job-desc">{{ e.descripcion }}</p>
                     </div>
                     {% endfor %}
                 </section>
 
-                <section style="margin-top: 40px;">
-                    <h2 class="section-title">Formación Académica</h2>
+                <section>
+                    <h2 class="body-title">Formación Académica</h2>
                     {% for f in formacion.formacion %}
-                    <div class="item-block">
-                        <div class="item-header">
-                            <span>{{ f.titulo }}</span>
-                            <span style="font-weight: normal; color: #64748b;">{{ f.fecha }}</span>
+                    <div class="edu-item">
+                        <div class="edu-header">
+                            <span class="edu-title">{{ f.titulo }}</span>
+                            <span class="edu-date">{{ f.fecha }}</span>
                         </div>
-                        <div class="item-org">{{ f.institucion }}</div>
-                        {% if f.logros %}<p style="font-size: 0.85rem; color: #1e293b;">🏅 {{ f.logros }}</p>{% endif %}
+                        <div class="edu-inst">{{ f.institucion }}</div>
+                        {% if f.logros %}<p class="edu-logro">🏅 {{ f.logros }}</p>{% endif %}
                     </div>
                     {% endfor %}
                 </section>
-                
-                <section style="margin-top: 40px;">
-                    <h2 class="section-title">Portafolio Seleccionado</h2>
+
+                <section>
+                    <h2 class="body-title">Portafolio Seleccionado</h2>
                     {% for p in portafolio.proyectos %}
-                    <div class="item-block" style="border: 1px solid #f1f5f9; padding: 10px; border-radius: 4px;">
-                        <strong>{{ p.nombre }}</strong> ({{ p.categoria }})
-                        <p style="font-size: 0.85rem; margin: 5px 0;">{{ p.descripcion }}</p>
-                        <small><em>Tecnologías: {{ p.tecnologias|join(', ') }}</em></small>
+                    <div class="project-box">
+                        <strong>{{ p.nombre }}</strong> — <small>{{ p.categoria }}</small>
+                        <p>{{ p.descripcion }}</p>
+                        <div class="project-tech">Stack: {{ p.tecnologias|join(', ') }}</div>
                     </div>
                     {% endfor %}
                 </section>
@@ -83,3 +83,4 @@
     </div>
 </body>
 </html>
+
