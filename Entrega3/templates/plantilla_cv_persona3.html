@@ -7,123 +7,79 @@
 </head>
 <body>
     <div class="cv-container">
-        
-        <aside>
-            {% if datos.foto %}
-                <img src="{{ datos.foto }}" alt="Foto" class="avatar-placeholder" style="object-fit:cover; border:none;">
-            {% else %}
-                <div class="avatar-placeholder">
-                    {{ datos.nombre[0] }}
+        <header>
+            <h1>{{ datos.nombre }}</h1>
+            <p class="bio-top">{{ datos.bio }}</p>
+        </header>
+
+        <div class="main-content">
+            <aside>
+                <div class="contact-section">
+                    <h2 class="section-title">Contacto</h2>
+                    <p><span class="contact-label">Email</span> {{ datos.email }}</p>
+                    <p><span class="contact-label">Teléfono</span> {{ datos.telefono }}</p>
+                    <p><span class="contact-label">LinkedIn</span> {{ datos.linkedin }}</p>
+                    <p><span class="contact-label">Web</span> {{ datos.web }}</p>
                 </div>
-            {% endif %}
 
-            <div class="contact-info">
-                <h2>Contacto</h2>
-                <p>
-                    <span class="contact-label">Email</span>
-                    {{ datos.email }}
-                </p>
-                <p>
-                    <span class="contact-label">Teléfono</span>
-                    {{ datos.telefono }}
-                </p>
-                {% if datos.linkedin %}
-                <p>
-                    <span class="contact-label">LinkedIn</span>
-                    <a href="{{ datos.linkedin }}">{{ datos.linkedin }}</a>
-                </p>
-                {% endif %}
-                {% if datos.github %}
-                <p>
-                    <span class="contact-label">GitHub</span>
-                    <a href="{{ datos.github }}">{{ datos.github }}</a>
-                </p>
-                {% endif %}
-                {% if datos.web %}
-                <p>
-                    <span class="contact-label">Web</span>
-                    <a href="{{ datos.web }}">{{ datos.web }}</a>
-                </p>
-                {% endif %}
-            </div>
-
-            <div class="contact-info">
-                <h2>Habilidades</h2>
-                <div class="tag-cloud">
-                {% for h in habilidades.habilidades %}
-                    <span class="skill-tag">{{ h.nombre }}</span>
-                {% endfor %}
-                </div>
-            </div>
-
-            <div class="contact-info">
-                <h2>Idiomas</h2>
-                {% for i in idiomas.idiomas %}
-                    <p>
-                        <strong>{{ i.nombre }}</strong> <br>
-                        <span style="opacity:0.8; font-size:0.85rem">{{ i.nivel }}</span>
-                    </p>
-                {% endfor %}
-            </div>
-        </aside>
-
-        <main>
-            <header>
-                <h1>{{ datos.nombre }}</h1>
-                <div class="bio">{{ datos.bio }}</div>
-            </header>
-
-            <section>
-                <h3 class="section-title">Experiencia Profesional</h3>
-                {% for e in experiencia.experiencia %}
-                <div class="timeline-block">
-                    <div class="job-header">
-                        <span class="job-title">{{ e.puesto }}</span>
-                        <span class="job-meta">{{ e.tipo }}</span>
-                    </div>
-                    <span class="job-org">{{ e.organizacion }}</span>
-                    <div class="bio" style="font-size: 0.95rem; font-style: normal;">
-                        {{ e.descripcion }}
+                <div class="contact-section" style="margin-top: 30px;">
+                    <h2 class="section-title">Habilidades</h2>
+                    <div class="tag-container">
+                        {% for h in habilidades.habilidades %}
+                        <span class="tag">{{ h.nombre }}</span>
+                        {% endfor %}
                     </div>
                 </div>
-                {% endfor %}
-            </section>
 
-            <section>
-                <h3 class="section-title">Portafolio</h3>
-                <div class="projects-grid">
-                {% for p in portafolio.proyectos %}
-                    <div class="project-card">
-                        <h4>{{ p.nombre }}</h4>
-                        <div style="font-size:0.85rem; margin-bottom:8px;">
-                            {{ p.categoria }}
-                            {% if p.web %} | <a href="{{ p.web }}" style="color:var(--accent)">Link</a>{% endif %}
+                <div class="contact-section" style="margin-top: 30px;">
+                    <h2 class="section-title">Idiomas</h2>
+                    {% for i in idiomas.idiomas %}
+                    <p><strong>{{ i.nombre }}</strong>: {{ i.nivel }}</p>
+                    {% endfor %}
+                </div>
+            </aside>
+
+            <main>
+                <section>
+                    <h2 class="section-title">Experiencia Profesional</h2>
+                    {% for e in experiencia.experiencias %}
+                    <div class="item-block">
+                        <div class="item-header">
+                            <span>{{ e.puesto }}</span>
+                            <span style="font-weight: normal; color: #64748b;">{{ e.tipo }}</span>
                         </div>
-                        <div style="font-size:0.9rem;">{{ p.descripcion }}</div>
-                        <div class="project-tech">
-                            {{ p.tecnologias|join(', ') }}
-                        </div>
+                        <div class="item-org">{{ e.organizacion }}</div>
+                        <p style="font-size: 0.9rem;">{{ e.descripcion }}</p>
                     </div>
-                {% endfor %}
-                </div>
-            </section>
+                    {% endfor %}
+                </section>
 
-            <section>
-                <h3 class="section-title">Formación</h3>
-                {% for f in formacion.formacion %}
-                <div class="timeline-block" style="border-left-color: #cbd5e1;">
-                    <div class="job-header">
-                        <span class="job-title">{{ f.titulo }}</span>
-                        <span class="job-meta">{{ f.fecha }}</span>
+                <section style="margin-top: 40px;">
+                    <h2 class="section-title">Formación Académica</h2>
+                    {% for f in formacion.formacion %}
+                    <div class="item-block">
+                        <div class="item-header">
+                            <span>{{ f.titulo }}</span>
+                            <span style="font-weight: normal; color: #64748b;">{{ f.fecha }}</span>
+                        </div>
+                        <div class="item-org">{{ f.institucion }}</div>
+                        {% if f.logros %}<p style="font-size: 0.85rem; color: #1e293b;">🏅 {{ f.logros }}</p>{% endif %}
                     </div>
-                    <span class="job-org" style="color:#64748b">{{ f.institucion }}</span>
-                    {% if f.logros %}
-                        <div style="font-size:0.85rem; margin-top:5px;">🏅 {{ f.logros }}</div>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </section>
-        </main>
+                    {% endfor %}
+                </section>
+                
+                <section style="margin-top: 40px;">
+                    <h2 class="section-title">Portafolio Seleccionado</h2>
+                    {% for p in portafolio.proyectos %}
+                    <div class="item-block" style="border: 1px solid #f1f5f9; padding: 10px; border-radius: 4px;">
+                        <strong>{{ p.nombre }}</strong> ({{ p.categoria }})
+                        <p style="font-size: 0.85rem; margin: 5px 0;">{{ p.descripcion }}</p>
+                        <small><em>Tecnologías: {{ p.tecnologias|join(', ') }}</em></small>
+                    </div>
+                    {% endfor %}
+                </section>
+            </main>
+        </div>
     </div>
 </body>
 </html>
