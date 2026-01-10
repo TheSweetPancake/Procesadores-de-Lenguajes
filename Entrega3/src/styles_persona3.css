@@ -1,109 +1,114 @@
 /* src/styles_persona3.css */
-:root {
-    --bg-sidebar: #f8fafc;   /* Ahora es un gris muy claro para un estilo tradicional */
-    --text-sidebar: #334155;
-    --accent: #1e293b;       /* Color oscuro para títulos */
-    --text-main: #334155;
-    --bg-main: #ffffff;
-    --border-color: #cbd5e1;
-}
-
 body {
-    font-family: "Georgia", "Times New Roman", serif; /* Fuente más tradicional */
+    font-family: 'Times New Roman', Times, serif; /* Estilo tradicional */
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.5;
     margin: 0;
-    padding: 0;
-    background-color: #e2e8f0;
-    color: var(--text-main);
 }
 
 .cv-container {
-    max-width: 900px;
-    margin: 40px auto;
-    background: white;
+    max-width: 950px;
+    margin: 30px auto;
+    background: #fff;
     padding: 50px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* ENCABEZADO TRADICIONAL (Nombre arriba de todo) */
-header {
+/* Header */
+.main-header {
     text-align: center;
-    border-bottom: 2px solid var(--accent);
+    border-bottom: 2px solid #333;
     padding-bottom: 20px;
     margin-bottom: 30px;
 }
 
-header h1 {
-    font-size: 2.5rem;
+.main-header h1 {
     margin: 0;
+    font-size: 2.8rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--accent);
+    letter-spacing: 1px;
 }
 
-.bio-top {
-    font-style: italic;
+.main-bio {
     margin-top: 10px;
-    color: #64748b;
-    max-width: 700px;
+    font-style: italic;
+    color: #555;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* CUERPO DEL CV */
-.main-content {
-    display: grid;
-    grid-template-columns: 250px 1fr; /* Contacto a la izquierda, contenido a la derecha */
+/* Layout */
+.cv-content {
+    display: flex;
     gap: 40px;
 }
 
-/* SECCIONES */
-h2.section-title {
-    font-size: 1.2rem;
+.sidebar {
+    flex: 1;
+    border-right: 1px solid #eee;
+    padding-right: 20px;
+}
+
+.main-body {
+    flex: 2.5;
+}
+
+/* Títulos */
+.side-title, .body-title {
     text-transform: uppercase;
-    border-bottom: 1px solid var(--border-color);
+    font-size: 1.1rem;
+    border-bottom: 1px solid #333;
     padding-bottom: 5px;
-    margin-top: 0;
-    color: var(--accent);
+    margin-bottom: 15px;
 }
 
-.contact-section p {
-    font-size: 0.9rem;
-    margin: 10px 0;
+/* Elementos de experiencia y formación */
+.job-item, .edu-item {
+    margin-bottom: 20px;
 }
 
-.contact-label {
-    font-weight: bold;
-    display: block;
-    font-size: 0.75rem;
-    color: #64748b;
-}
-
-/* BLOQUES DE TEXTO */
-.item-block {
-    margin-bottom: 25px;
-}
-
-.item-header {
+.job-header, .edu-header {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
 }
 
-.item-org {
-    color: #475569;
+.job-org, .edu-inst {
     font-style: italic;
+    color: #666;
 }
 
-.tag-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 10px;
+.job-desc {
+    margin-top: 5px;
+    font-size: 0.95rem;
 }
 
-.tag {
-    font-size: 0.8rem;
-    background: #f1f5f9;
+/* Habilidades en la sidebar */
+.skill-tag {
+    display: inline-block;
+    background: #eee;
     padding: 2px 8px;
-    border: 1px solid #e2e8f0;
+    margin: 2px;
+    font-size: 0.85rem;
+    border-radius: 3px;
+}
+
+.contact-item {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.project-box {
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.project-tech {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #444;
 }
