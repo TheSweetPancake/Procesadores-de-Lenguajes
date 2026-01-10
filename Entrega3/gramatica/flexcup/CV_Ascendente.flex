@@ -1,16 +1,16 @@
 /* ======== Analizador léxico JFlex corregido ======== */
 
+import java_cup.runtime.Symbol;
+
 %%
 
-%class analizador
-%standalone
+%class Yylex
 %unicode
 %line
 %column
-
 %cup
-
 %state COMMENT
+
 
 /* ======== Macros (expresiones regulares) ======== */
 
@@ -42,7 +42,6 @@ CONJPALYNUM       = {PAL}({WS}({PAL}|{NUM}))*
 
 /* ======== Palabras clave ======== */
 <YYINITIAL>"cv"                  { return new Symbol(sym.CV); }
-<YYINITIAL>"id"                  { return new Symbol(sym.ID); }
 <YYINITIAL>"gvar"                { return new Symbol(sym.GVAR); }
 <YYINITIAL>"lvar"                { return new Symbol(sym.LVAR); }
 
