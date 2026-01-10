@@ -1300,7 +1300,7 @@ class analizador implements java_cup.runtime.Scanner {
             // fall through
           case 92: break;
           case 24: 
-            { return new Symbol(sym.AÑO);
+            { return new Symbol(sym.ANIO);
             } 
             // fall through
           case 93: break;

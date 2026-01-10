@@ -24,7 +24,7 @@ parser code {:
 :}
 
 /************** TERMINALES **************/
-terminal CV, ID, GVAR, LVAR;
+terminal CV, GVAR, LVAR;
 terminal DP, NOMYAPE, FOTO, FECHA, BIO, CONTACTO, EMAIL, TELEFONO, REDES;
 terminal LINKEDIN, GITHUB, WEB;
 terminal FORMACION, OFICIAL, TITULO, EXPEDIDOR, DESCRIPCION, LOGROS;
@@ -37,14 +37,13 @@ terminal PORTAFOLIO, PROYECTO, NOMBRE, GRUPO, COMPANERO, TECNOLOGIAS, MERITOS;
 terminal NUM;
 
 /* símbolos sueltos */
-terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO, CD;
+terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO;
 
 /* macros y primitivas */
 terminal NVH, NVI, MAIL, RUTA, DIA, MES, ANIO, IDENT, BOOL, TFNO;
 terminal CONJPAL, CONJPALYNUM;
 
 /************** NO TERMINALES **************/
-non terminal CONJPAL, CONJPALYNUM;
 
 non terminal cvs, cv_list, global_var, local_var, variable, cv;
 
@@ -100,8 +99,6 @@ variable ::= IDENT IG CONJPALYNUM PYC ;
 cv ::= CV IDENT LL_A local_var datospersonales formacion
        idiomas_opt experiencia_opt habilidades_opt portafolio_opt LL_C ;
 
-id_decl ::= ID PA_A IDENT PA_C ;
-
 /******** OPCIONALES ********/
 idiomas_opt ::= idiomas | ;
 experiencia_opt ::= experiencia | ;
@@ -116,6 +113,7 @@ descripcion_opt ::= descripcion | ;
 logros_opt ::= logros | ;
 horas_opt ::= horas | ;
 responsabilidades_opt ::= responsabilidades | ;
+certificado_opt ::= certificado | ;
 grupo_opt ::= grupo | ;
 
 /******** DATOS PERSONALES ********/
