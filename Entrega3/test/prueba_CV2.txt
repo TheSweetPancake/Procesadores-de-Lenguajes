@@ -1,0 +1,140 @@
+/* CV de Laura Martínez Ortega - Perfil UX/UI y Frontend */
+
+cv {
+  id (CurriculumLaura)
+
+  datospersonales {
+    nomyape(Laura Martínez Ortega)
+    foto(None)
+    fecha(22/03/1993)
+    bio(Diseñadora UX/UI y Desarrolladora Frontend con 7 años de experiencia creando experiencias digitales intuitivas y accesibles. Especializada en Design Systems y React.)
+    contacto {
+      email(laura.martinez@email.com)
+      telefono(612345678)
+      redes {
+        linkedin(linkedin.com/in/lauramartinezux)
+        github(github.com/lauramartinez)
+        web(lauramartinez.design)
+      }
+    }
+  }
+
+  formacion {
+    oficial {
+      titulo(Grado en Diseño Digital y Multimedia)
+      expedidor(Universidad Complutense de Madrid)
+      descripcion(Especialización en diseño de interfaces y experiencia de usuario)
+      logros(Premio al mejor proyecto final: 'Sistema de diseño para apps de salud')
+      fecha(20/06/2016)
+    }
+    complementaria {
+      titulo(Máster en Desarrollo Frontend Avanzado)
+      expedidor(Escuela de Organización Industrial (EOI))
+      descripcion(Programación avanzada en JavaScript, React y arquitectura frontend)
+      fecha(15/11/2019)
+    }
+    complementaria {
+      titulo(Certificación en Accesibilidad Web WCAG 2.1)
+      expedidor(Interaction Design Foundation)
+      logros(Puntuación: 98/100)
+      fecha(10/05/2022)
+    }
+    complementaria {
+      titulo(Curso de Diseño de Producto Avanzado)
+      expedidor(Coursera - Google UX Design)
+      descripcion(Metodologías de investigación de usuarios y testing)
+      fecha(En_curso)
+    }
+  }
+
+  idiomas {
+    idioma(
+      Español
+      nivel(nativo)
+    )
+    idioma(
+      Inglés
+      nivel(C1)
+      expedidor(Cambridge)
+    )
+    idioma(
+      Alemán
+      nivel(B1)
+      expedidor(Goethe)
+    )
+  }
+
+  experiencia {
+    laboral {
+      organizacion(DigitalMind Agency)
+      puesto(Lead UX/UI Designer)
+      horas(160)
+      responsabilidades(Liderazgo del equipo de diseño. Creación y mantenimiento del Design System utilizado en 15+ proyectos.)
+    }
+    laboral {
+      organizacion(TechCreators Inc.)
+      puesto(Senior Frontend Developer & UX Designer)
+      horas(160)
+      responsabilidades(Desarrollo de componentes React reutilizables e implementación de arquitectura basada en micro-frontends.)
+    }
+    laboral {
+      organizacion(StartupLabs)
+      puesto(Diseñadora UX/UI)
+      horas(160)
+      responsabilidades(Diseño de interfaces para aplicaciones móviles y web. Realización de tests de usabilidad.)
+    }
+    voluntariado {
+      puesto(Consultora de Accesibilidad)
+      organizacion(Design for Good NGO)
+      descripcion(Mejora de accesibilidad de plataformas educativas para personas con discapacidad visual.)
+      horas(40)
+    }
+  }
+
+  habilidades {
+    hard {
+      habilidad(Figma)
+      categoria(Diseño)
+      nvhab(alto)
+    }
+    hard {
+      habilidad(React)
+      categoria(Frontend)
+      nvhab(alto)
+    }
+    hard {
+      habilidad(TypeScript)
+      categoria(Frontend)
+      nvhab(alto)
+    }
+    soft {
+      habilidad(Trabajo en equipo)
+    }
+    soft {
+      habilidad(Comunicación)
+    }
+  }
+
+  portafolio {
+    proyecto {
+      nombre(Sistema de Diseño Aurora)
+      descripcion(Design System completo para empresa fintech con 50+ componentes accesibles.)
+      categoria(Design System)
+      tecnologias(React, Figma, Storybook)
+    }
+    proyecto {
+      nombre(App de Salud Mental MindCare)
+      descripcion(Aplicación móvil para seguimiento del bienestar emocional.)
+      categoria(Salud Digital)
+      tecnologias(React Native, MongoDB)
+    }
+    meritos {
+      nombre(Premio UX Awards 2022)
+      descripcion(Mejor diseño de app de salud por MindCare)
+    }
+    meritos {
+      nombre(Speaker en React Conf 2023)
+      descripcion(Charla sobre Design Systems en React)
+    }
+  }
+}
