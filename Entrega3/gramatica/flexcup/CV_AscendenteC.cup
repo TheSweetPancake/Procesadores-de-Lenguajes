@@ -40,7 +40,7 @@ terminal NUM;
 terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO;
 
 /* macros y primitivas */
-terminal NVH, NVI, MAIL, RUTA, DIA, MES, ANIO, IDENT, BOOL, TFNO;
+terminal NVH, NVI, MAIL, RUTA, FECHA_NUM, IDENT, BOOL, TFNO;
 terminal CONJPAL, CONJPALYNUM;
 
 /************** NO TERMINALES **************/
@@ -123,7 +123,7 @@ nomyape ::= NOMYAPE PA_A CONJPAL PA_C
           | NOMYAPE PA_A IDENT   PA_C ;
 
 foto ::= FOTO PA_A RUTA PA_C ;
-fecha ::= FECHA PA_A DIA MES ANIO PA_C ;
+fecha ::= FECHA PA_A FECHA_NUM PA_C ;
 
 bio ::= BIO PA_A CONJPALYNUM PA_C
       | BIO PA_A IDENT       PA_C ;
