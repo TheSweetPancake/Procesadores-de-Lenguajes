@@ -23,63 +23,57 @@ parser code {:
     }
 :}
 
-/************** TERMINALES **************/
-terminal CV, GVAR, LVAR;
-terminal DP, NOMYAPE, FOTO, FECHA, BIO, CONTACTO, EMAIL, TELEFONO, REDES;
-terminal LINKEDIN, GITHUB, WEB;
+/********* TERMINALES *********/
+terminal CV, ID, GVAR, LVAR;
+
+terminal DP, NOMYAPE, FOTO, FECHA, BIO, CONTACTO;
+terminal EMAIL, TELEFONO, REDES, LINKEDIN, GITHUB, WEB;
+
 terminal FORMACION, OFICIAL, TITULO, EXPEDIDOR, DESCRIPCION, LOGROS;
 terminal COMPLEMENTARIA, CERTIFICADO, HORAS;
+
 terminal IDIOMAS, IDIOMA, NIVEL;
+
 terminal EXPERIENCIA, LABORAL, PUESTO, RESPONSABILIDADES;
 terminal VOLUNTARIADO, ORGANIZACION;
+
 terminal HABILIDADES, SOFT, HARD, HABILIDAD, NVHAB, CATEGORIA;
-terminal PORTAFOLIO, PROYECTO, NOMBRE, GRUPO, COMPANERO, TECNOLOGIAS, MERITOS;
-terminal NUM;
 
-/* símbolos sueltos */
-terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO, CD;
+terminal PORTAFOLIO, PROYECTO, NOMBRE, GRUPO, COMPANERO;
+terminal TECNOLOGIAS, MERITOS;
 
-/* macros y primitivas */
-terminal PAL, NVH, NVI, MAIL, RUTA, FECHA_NUM, IDENT, BOOL, TFNO;
-terminal CONJPAL, CONJPALYNUM;
+terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO;
 
-/************** NO TERMINALES **************/
+terminal IDENT, CONJPAL, CONJPALYNUM, RUTA, MAIL, TFNO;
+terminal NUM, FECHA_NUM, BOOL, NVI, NVH;
 
-non terminal cvs, cv_list, global_var, local_var, variable, cv;
+/********* NO TERMINALES *********/
+
+non terminal cvs, cv_list, cv;
+non terminal global_var, local_var, variable, variable_list;
 
 non terminal datospersonales, nomyape, foto, fecha, bio, contacto;
 non terminal email, telefono, redes, linkedin, github, web;
 
-non terminal experiencia, formacion, oficial, titulo, expedidor;
-non terminal descripcion, logros;
+non terminal formacion, oficial_list, oficial;
+non terminal titulo, expedidor, descripcion, logros;
+non terminal complementaria_list, complementaria, certificado, horas;
 
-non terminal idiomas, idioma, nvi;
+non terminal idiomas, idioma_list, idioma, nvi;
 
-non terminal complementaria, certificado, horas;
+non terminal experiencia, laboral_list, laboral;
+non terminal voluntariado_list, voluntariado;
+non terminal puesto, responsabilidades, organizacion;
 
-non terminal laboral, puesto, responsabilidades, voluntariado, organizacion;
+non terminal habilidades, soft, hard;
+non terminal habilidad, categoria, categoria_list, nvh;
 
-non terminal habilidades, soft, hard, nvh, habilidad, categoria;
+non terminal portafolio, proyecto_list, proyecto;
+non terminal grupo, companero_list, companero;
+non terminal tecnologias, merito_list, merito;
+non terminal nombre;
 
-/* listas */
-non terminal laboral_list, voluntariado_list, voluntariado_opt_list;
-non terminal oficial_list, complementaria_list, complementaria_opt_list;
-non terminal idioma_list;
-non terminal hard_list, hard_opt_list, categoria_list, categoria_tail;
-non terminal soft_hab_tail;
-non terminal proyecto_list, merito_list, merito_opt_list, companero_list;
-
-/* portafolio */
-non terminal portafolio, proyecto, nombre, grupo, companero;
-non terminal tecnologias, merito;
-
-/* opcionales */
-non terminal idiomas_opt, experiencia_opt, habilidades_opt, portafolio_opt;
-non terminal foto_opt, bio_opt, github_opt, web_opt, expedidor_opt;
-non terminal descripcion_opt, logros_opt, horas_opt, responsabilidades_opt, certificado_opt;
-non terminal grupo_opt;
-
-/************** GRAMÁTICA **************/
+/********* GRAMÁTICA *********/
 
 start with cvs;
 
@@ -87,178 +81,217 @@ cvs ::= global_var cv_list
       | cv_list
       ;
 
-cv_list ::= cv cv_list
+cv_list ::= cv_list cv
           | cv
           ;
 
-global_var ::= GVAR LL_A variable LL_C ;
-local_var ::= LVAR LL_A variable LL_C ;
+global_var ::= GVAR LL_A variable_list LL_C ;
+
+local_var ::= LVAR LL_A variable_list LL_C ;
+
+variable_list ::= variable_list variable
+                | variable
+                ;
 
 variable ::= IDENT IG CONJPALYNUM PYC ;
 
-cv ::= CV IDENT LL_A local_var datospersonales formacion
-       idiomas_opt experiencia_opt habilidades_opt portafolio_opt LL_C ;
+/********* CV *********/
 
-/******** OPCIONALES ********/
-idiomas_opt ::= idiomas | ;
-experiencia_opt ::= experiencia | ;
-habilidades_opt ::= habilidades | ;
-portafolio_opt ::= portafolio | ;
-foto_opt ::= foto | ;
-bio_opt ::= bio | ;
-github_opt ::= github | ;
-web_opt ::= web | ;
-expedidor_opt ::= expedidor | ;
-descripcion_opt ::= descripcion | ;
-logros_opt ::= logros | ;
-horas_opt ::= horas | ;
-responsabilidades_opt ::= responsabilidades | ;
-certificado_opt ::= certificado | ;
-grupo_opt ::= grupo | ;
+cv ::= CV IDENT LL_A local_var datospersonales formacion idiomas experiencia habilidades portafolio LL_C
+     | CV IDENT LL_A datospersonales formacion idiomas experiencia habilidades portafolio LL_C
+     ;
 
-/******** DATOS PERSONALES ********/
-datospersonales ::= DP LL_A nomyape foto_opt fecha bio_opt contacto LL_C ;
+/********* Datos personales *********/
+
+datospersonales ::= DP LL_A nomyape foto fecha bio contacto LL_C
+                  | DP LL_A nomyape fecha bio contacto LL_C
+                  | DP LL_A nomyape foto fecha contacto LL_C
+                  | DP LL_A nomyape fecha contacto LL_C
+                  ;
 
 nomyape ::= NOMYAPE PA_A CONJPAL PA_C
-          | NOMYAPE PA_A IDENT   PA_C ;
+          | NOMYAPE PA_A IDENT PA_C
+          ;
 
 foto ::= FOTO PA_A RUTA PA_C ;
+
 fecha ::= FECHA PA_A FECHA_NUM PA_C ;
 
 bio ::= BIO PA_A CONJPALYNUM PA_C
-      | BIO PA_A IDENT       PA_C ;
+      | BIO PA_A IDENT PA_C
+      ;
 
 contacto ::= CONTACTO LL_A email telefono redes LL_C ;
 
 email ::= EMAIL PA_A MAIL PA_C ;
+
 telefono ::= TELEFONO PA_A TFNO PA_C ;
 
-/******** REDES ********/
-redes ::= REDES linkedin github_opt web_opt
-        | REDES github web_opt
-        | REDES web ;
+redes ::= REDES LL_A linkedin github web LL_C
+        | REDES LL_A github web LL_C
+        | REDES LL_A web LL_C
+        ;
 
 linkedin ::= LINKEDIN PA_A RUTA PA_C ;
+
 github ::= GITHUB PA_A RUTA PA_C ;
+
 web ::= WEB PA_A RUTA PA_C ;
 
-/******** EXPERIENCIA Y FORMACION ********/
-experiencia ::= EXPERIENCIA LL_A laboral_list voluntariado_opt_list LL_C
-              | EXPERIENCIA LL_A voluntariado_list LL_C ;
+/********* Formación *********/
 
-laboral_list ::= laboral_list laboral
-               | laboral ;
-
-voluntariado_list ::= voluntariado_list voluntariado
-                    | voluntariado ;
-
-voluntariado_opt_list ::= voluntariado_list | ;
-
-formacion ::= FORMACION LL_A oficial_list complementaria_opt_list LL_C ;
+formacion ::= FORMACION LL_A oficial_list complementaria_list LL_C
+            | FORMACION LL_A oficial_list LL_C
+            ;
 
 oficial_list ::= oficial_list oficial
-                | oficial ;
+               | oficial
+               ;
 
-complementaria_opt_list ::= complementaria_list | ;
-complementaria_list ::= complementaria_list complementaria
-                       | complementaria ;
-
-oficial ::= OFICIAL LL_A titulo expedidor descripcion_opt logros_opt fecha LL_C ;
+oficial ::= OFICIAL LL_A titulo expedidor descripcion logros fecha LL_C
+          | OFICIAL LL_A titulo expedidor fecha LL_C
+          ;
 
 titulo ::= TITULO PA_A CONJPAL PA_C
-         | TITULO PA_A IDENT   PA_C ;
+         | TITULO PA_A IDENT PA_C
+         ;
 
 expedidor ::= EXPEDIDOR PA_A CONJPAL PA_C
-            | EXPEDIDOR PA_A IDENT   PA_C ;
+            | EXPEDIDOR PA_A IDENT PA_C
+            ;
 
 descripcion ::= DESCRIPCION PA_A CONJPALYNUM PA_C
-              | DESCRIPCION PA_A IDENT       PA_C ;
+              | DESCRIPCION PA_A IDENT PA_C
+              ;
 
 logros ::= LOGROS PA_A CONJPALYNUM PA_C
-         | LOGROS PA_A IDENT       PA_C ;
+         | LOGROS PA_A IDENT PA_C
+         ;
+
+complementaria_list ::= complementaria_list complementaria
+                      | complementaria
+                      ;
+
+complementaria ::= COMPLEMENTARIA LL_A titulo certificado expedidor horas fecha LL_C
+                 | COMPLEMENTARIA LL_A titulo expedidor fecha LL_C
+                 ;
+
+certificado ::= CERTIFICADO PA_A BOOL PA_C ;
+
+horas ::= HORAS PA_A NUM PA_C ;
+
+/********* Idiomas *********/
 
 idiomas ::= IDIOMAS LL_A idioma_list LL_C ;
 
 idioma_list ::= idioma_list idioma
-              | idioma ;
+              | idioma
+              ;
 
-idioma ::= IDIOMA LL_A nombre nvi expedidor_opt LL_C ;
+idioma ::= IDIOMA LL_A nombre nvi expedidor LL_C
+         | IDIOMA LL_A nombre nvi LL_C
+         ;
 
 nvi ::= NIVEL PA_A NVI PA_C ;
 
-complementaria ::= COMPLEMENTARIA LL_A titulo certificado_opt expedidor horas_opt fecha LL_C ;
+/********* Experiencia *********/
 
-certificado ::= CERTIFICADO PA_A BOOL PA_C ;
+experiencia ::= EXPERIENCIA LL_A laboral_list voluntariado_list LL_C
+              | EXPERIENCIA LL_A voluntariado_list LL_C
+              ;
 
-laboral ::= LABORAL LL_A puesto horas organizacion responsabilidades_opt LL_C ;
+laboral_list ::= laboral_list laboral
+               | laboral
+               ;
+
+laboral ::= LABORAL LL_A puesto horas organizacion responsabilidades LL_C
+          | LABORAL LL_A puesto horas organizacion LL_C
+          ;
 
 puesto ::= PUESTO PA_A CONJPALYNUM PA_C
-         | PUESTO PA_A IDENT       PA_C ;
+         | PUESTO PA_A IDENT PA_C
+         ;
 
 responsabilidades ::= RESPONSABILIDADES PA_A CONJPALYNUM PA_C
-                    | RESPONSABILIDADES PA_A IDENT       PA_C ;
+                    | RESPONSABILIDADES PA_A IDENT PA_C
+                    ;
+
+voluntariado_list ::= voluntariado_list voluntariado
+                    | voluntariado
+                    ;
 
 voluntariado ::= VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C ;
 
 organizacion ::= ORGANIZACION PA_A CONJPALYNUM PA_C
-                | ORGANIZACION PA_A IDENT       PA_C ;
+               | ORGANIZACION PA_A IDENT PA_C
+               ;
 
-/******** HABILIDADES ********/
-habilidades ::= HABILIDADES LL_A soft hard_opt_list LL_C
-              | HABILIDADES LL_A hard_list       LL_C ;
+/********* Habilidades *********/
 
-hard_list ::= hard_list hard
-            | hard ;
+habilidades ::= HABILIDADES LL_A soft hard LL_C
+              | HABILIDADES LL_A hard LL_C
+              ;
 
-hard_opt_list ::= hard_list | ;
+soft ::= SOFT LL_A habilidad_list LL_C ;
 
-soft ::= SOFT LL_A habilidad soft_hab_tail LL_C ;
+habilidad_list ::= habilidad_list CO habilidad
+                 | habilidad
+                 ;
 
-soft_hab_tail ::= CO habilidad soft_hab_tail
-                | ;
+habilidad ::= HABILIDAD PA_A CONJPALYNUM PA_C
+            | HABILIDAD PA_A IDENT PA_C
+            ;
 
 hard ::= HARD LL_A categoria_list LL_C ;
 
 categoria_list ::= categoria_list categoria
-                 | categoria ;
+                 | categoria
+                 ;
+
+categoria ::= CATEGORIA LL_A nombre habilidad_nvh_list LL_C ;
+
+habilidad_nvh_list ::= habilidad_nvh_list CO habilidad nvh
+                     | habilidad nvh
+                     ;
 
 nvh ::= NVHAB PA_A NVH PA_C ;
 
-habilidad ::= HABILIDAD PA_A CONJPALYNUM PA_C
-            | HABILIDAD PA_A IDENT       PA_C ;
+/********* Portafolio *********/
 
-categoria ::= CATEGORIA LL_A nombre habilidad nvh categoria_tail LL_C ;
-
-categoria_tail ::= CO habilidad nvh
-                  | categoria_tail CO habilidad nvh ;
-
-/******** PORTAFOLIO Y PROYECTOS ********/
-portafolio ::= PORTAFOLIO LL_A proyecto_list merito_opt_list LL_C
-             | PORTAFOLIO LL_A merito_list                LL_C ;
+portafolio ::= PORTAFOLIO LL_A proyecto_list merito_list LL_C
+             | PORTAFOLIO LL_A merito_list LL_C
+             ;
 
 proyecto_list ::= proyecto_list proyecto
-                 | proyecto ;
+                | proyecto
+                ;
 
-merito_list ::= merito_list merito
-               | merito ;
-
-merito_opt_list ::= merito_list | ;
-
-proyecto ::= PROYECTO LL_A nombre grupo_opt descripcion categoria tecnologias web_opt LL_C ;
+proyecto ::= PROYECTO LL_A nombre grupo descripcion tecnologias web LL_C
+           | PROYECTO LL_A nombre descripcion tecnologias web LL_C
+           | PROYECTO LL_A nombre grupo descripcion tecnologias LL_C
+           | PROYECTO LL_A nombre descripcion tecnologias LL_C
+           ;
 
 nombre ::= NOMBRE PA_A CONJPALYNUM PA_C
-         | NOMBRE PA_A IDENT       PA_C ;
+         | NOMBRE PA_A IDENT PA_C
+         ;
 
 grupo ::= GRUPO LL_A companero_list LL_C ;
 
 companero_list ::= companero_list companero
-                  | companero ;
+                 | companero
+                 ;
 
-companero ::= COMPANERO LL_A nomyape github_opt LL_C ;
+companero ::= COMPANERO LL_A nomyape github LL_C
+            | COMPANERO LL_A nomyape LL_C
+            ;
 
 tecnologias ::= TECNOLOGIAS PA_A CONJPALYNUM PA_C
-              | TECNOLOGIAS PA_A IDENT       PA_C ;
+              | TECNOLOGIAS PA_A IDENT PA_C
+              ;
+
+merito_list ::= merito_list merito
+              | merito
+              ;
 
 merito ::= MERITOS LL_A nombre descripcion LL_C ;
-
-horas ::= HORAS PA_A NUM PA_C ;

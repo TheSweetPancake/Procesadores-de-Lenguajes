@@ -7,7 +7,7 @@ local_var        ::= LVAR LL_A variable {variable} LL_C ;
 variable         ::= IDENT IG CONJPALYNUM PYC ;
 
 (* ==================== Curriculvbum Vitae ==================== *)
-cv               ::= CV IDENT LL_A {local_var} datospersonales formacion [idiomas] [experiencia] [habilidades] [portafolio] LL_C ;
+cv               ::= CV IDENT LL_A [local_var] datospersonales formacion [idiomas] [experiencia] [habilidades] [portafolio] LL_C ;
 
 (* ==================== Datos personales ==================== *)
 datospersonales  ::= DP LL_A nomyape [foto] fecha [bio] contacto LL_C ;
@@ -20,9 +20,9 @@ bio              ::= BIO PA_A CONJPAL PA_C
 contacto         ::= CONTACTO LL_A email telefono redes LL_C ;
 email            ::= EMAIL PA_A MAIL PA_C ;
 telefono         ::= TELEFONO PA_A TFNO PA_C ;
-redes            ::= REDES LL_A LINKEDIN [GITHUB] [WEB] LL_C
-                    |REDES LL_A GITHUB [WEB] LL_C
-                    |REDES LL_A WEB LL_C;
+redes            ::= REDES LL_A linkedin [github] [web] LL_C
+                    |REDES LL_A github [web] LL_C
+                    |REDES LL_A web LL_C;
 linkedin         ::= LINKEDIN PA_A RUTA PA_C ;
 github           ::= GITHUB PA_A RUTA PA_C ;
 web              ::= WEB PA_A RUTA PA_C ;
@@ -72,7 +72,7 @@ categoria        ::= CATEGORIA LL_A nombre habilidad nvh {CO habilidad nvh} LL_C
 (* ==================== Portafolio ==================== *)
 portafolio       ::= PORTAFOLIO LL_A proyecto {proyecto} {merito} LL_C
                     |PORTAFOLIO LL_A merito {merito} LL_C;
-proyecto         ::= PROYECTO LL_A nombre [grupo] descripcion categoria tecnologias [web] LL_C;
+proyecto         ::= PROYECTO LL_A nombre [grupo] descripcion tecnologias [web] LL_C;
 nombre           ::= NOMBRE PA_A CONJPAL PA_C
                     |NOMBRE PA_A IDENT PA_C;
 grupo            ::= GRUPO LL_A [companero] LL_C;

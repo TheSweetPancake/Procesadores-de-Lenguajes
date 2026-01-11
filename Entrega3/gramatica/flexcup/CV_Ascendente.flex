@@ -19,15 +19,15 @@ WS                = [ \t\r\n]+
 NUM               = (0|[1-9][0-9]*)
 PAL               = [A-Za-zÁÉÍÓÚáéíóúÑñ]+
 TFNO              = [5-9][0-9]{8}
-MAIL              = [A-Za-z0-9]+(\.[A-Za-z0-9]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*
+MAIL              = [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* '@' [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)*
 RUTA              = [A-Za-z]+([./\-:]+[A-Za-z]+)+
-FECHA_NUM         = (0[1-9]|[12][0-9]|30|31)"/"(0[1-9]|1[0-2])"/"([12][0-9]{3})
-BOOL              = Si|No
-NVI               = ([ABC][12])|nativo
-NVH               = bajo|medio|alto
-IDENT             = \"{PAL}({PAL}|{NUM})*\"
-CONJPAL           = {PAL}({WS}{PAL})*
-CONJPALYNUM       = {PAL}({WS}({PAL}|{NUM}))*
+FECHA_NUM         = (0[1-9]|[12][0-9]|30|31)'/'(0[1-9]|1[0-2])'/'([12][0-9]{3})
+BOOL              = "Si"|"No"
+NVI               = ([ABC][12])|"nativo"
+NVH               = "bajo"|"medio"|"alto"
+IDENT             = \" {PAL} ({PAL}|{NUM})* \"
+CONJPAL           = {PAL}(','? {WS}{PAL} '.'?)*
+CONJPALYNUM       = ({PAL}|{NUM})(','? {WS}({PAL}|{NUM}) '.'?)*
 
 %%
 
@@ -97,26 +97,26 @@ CONJPALYNUM       = {PAL}({WS}({PAL}|{NUM}))*
 /* ======== Símbolos y operadores ======== */
 <YYINITIAL>"/*"                  { yybegin(COMMENT); }
 
-<YYINITIAL>"{" { return new Symbol(sym.LL_A); }
-<YYINITIAL>"}" { return new Symbol(sym.LL_C); }
-<YYINITIAL>"(" { return new Symbol(sym.PA_A); }
-<YYINITIAL>")" { return new Symbol(sym.PA_C); }
-<YYINITIAL>"=" { return new Symbol(sym.IG); }
-<YYINITIAL>";" { return new Symbol(sym.PYC); }
-<YYINITIAL>"," { return new Symbol(sym.CO); }
-<YYINITIAL>"\"" { return new Symbol(sym.CD); }
+<YYINITIAL>'{' { return new Symbol(sym.LL_A); }
+<YYINITIAL>'}' { return new Symbol(sym.LL_C); }
+<YYINITIAL>'(' { return new Symbol(sym.PA_A); }
+<YYINITIAL>')' { return new Symbol(sym.PA_C); }
+<YYINITIAL>'=' { return new Symbol(sym.IG); }
+<YYINITIAL>';' { return new Symbol(sym.PYC); }
+<YYINITIAL>',' { return new Symbol(sym.CO); }
+<YYINITIAL>\" { return new Symbol(sym.CD); }
 
 /* ======== Macros ======== */
 <YYINITIAL>{IDENT}       { return new Symbol(sym.IDENT); }
-<YYINITIAL>{FECHA_NUM}   { return new Symbol(sym.FECHA_NUM); }
-<YYINITIAL>{MAIL}        { return new Symbol(sym.MAIL); }
-<YYINITIAL>{RUTA}        { return new Symbol(sym.RUTA); }
-<YYINITIAL>{TFNO}        { return new Symbol(sym.TFNO); }
-<YYINITIAL>{BOOL}        { return new Symbol(sym.BOOL); }
-<YYINITIAL>{NVI}         { return new Symbol(sym.NVI); }
 <YYINITIAL>{NVH}         { return new Symbol(sym.NVH); }
-<YYINITIAL>{NUM}         { return new Symbol(sym.NUM); }
+<YYINITIAL>{NVI}         { return new Symbol(sym.NVI); }
+<YYINITIAL>{BOOL}        { return new Symbol(sym.BOOL); }
+<YYINITIAL>{FECHA_NUM}   { return new Symbol(sym.FECHA_NUM); }
+<YYINITIAL>{RUTA}        { return new Symbol(sym.RUTA); }
+<YYINITIAL>{MAIL}        { return new Symbol(sym.MAIL); }
+<YYINITIAL>{TFNO}        { return new Symbol(sym.TFNO); }
 <YYINITIAL>{PAL}         { return new Symbol(sym.PAL); }
+<YYINITIAL>{NUM}         { return new Symbol(sym.NUM); }
 <YYINITIAL>{CONJPAL}     { return new Symbol(sym.CONJPAL); }
 <YYINITIAL>{CONJPALYNUM} { return new Symbol(sym.CONJPALYNUM); }
 

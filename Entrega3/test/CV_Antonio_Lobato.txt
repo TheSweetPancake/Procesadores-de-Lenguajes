@@ -4,13 +4,13 @@ gvar {
 }
 
 cv "Antonio Lobato" {
-  dp {
+  datospersonales {
     nomyape ("al")
     fecha (10/01/2026)
     bio (Soy Antonio Lobato y vengo a comprarte tu coche)
     contacto {
       email (antonio.lobato@compramostucoche.es)
-      telefono (699 99 99 99)
+      telefono (699999999)
       redes {
         web ("ctc")
       }
@@ -48,7 +48,6 @@ cv "Antonio Lobato" {
     proyecto {
       nombre ("ctc")
       descripcion (Página web de compraventa de coches)
-      categoria (Venta)
       tecnologias (Internet)
       web ("ctc")
     }

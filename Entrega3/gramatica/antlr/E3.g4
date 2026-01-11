@@ -93,8 +93,8 @@ NVH             : 'bajo' | 'medio' | 'alto' ;
 WS              : [ \t\r\n]+ -> skip ;
 
 // ======== token CONJPAL (conjunto de palabras) ========
-CONJPAL         : (PAL (WS PAL)*) ;
-CONJPALYNUM     : (PAL (WS PAL | WS NUM)*) ;
+CONJPAL         : PAL (','? WS PAL '.'?)* ;
+CONJPALYNUM     : PAL (','? (WS (PAL | NUM)) '.'?)* ;
 IDENT           : CD CONJPALYNUM CD ;
 
 // ======== Manejo de errores ========
@@ -117,9 +117,9 @@ bio:            BIO PA_A (CONJPALYNUM|IDENT) PA_C ;
 contacto:       CONTACTO LL_A email telefono redes LL_C ;
 email:          EMAIL PA_A MAIL PA_C ;
 telefono:       TELEFONO PA_A TFNO PA_C ;
-redes:          REDES (linkedin github? web?
+redes:          REDES LL_A (linkedin github? web?
             |   github web?
-            |   web);
+            |   web) LL_C;
 linkedin:       LINKEDIN PA_A RUTA PA_C ;
 github:         GITHUB PA_A RUTA PA_C ;
 web:            WEB PA_A RUTA PA_C ;
@@ -145,15 +145,15 @@ responsabilidades: RESPONSABILIDADES PA_A (CONJPALYNUM|IDENT) PA_C;
 voluntariado:   VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C;
 organizacion:   ORGANIZACION PA_A (CONJPALYNUM|IDENT) PA_C;
 
-habilidades:    HABILIDADES LL_A (soft hard* | hard+) LL_C ;
+habilidades:    HABILIDADES LL_A (soft hard | hard) LL_C ;
 soft:           SOFT LL_A habilidad (CO habilidad)* LL_C;
 hard:           HARD LL_A categoria+ LL_C;
 nvh:            NVHAB PA_A NVH PA_C;
 habilidad:      HABILIDAD PA_A (CONJPALYNUM|IDENT) PA_C;
-categoria:      CATEGORIA LL_A nombre habilidad nvh (CO habilidad nvh)+ LL_C;
+categoria:      CATEGORIA LL_A nombre habilidad nvh (CO habilidad nvh)* LL_C;
 
 portafolio:     PORTAFOLIO LL_A (proyecto+ merito* | merito+) LL_C;
-proyecto:       PROYECTO LL_A nombre grupo? descripcion categoria tecnologias web? LL_C;
+proyecto:       PROYECTO LL_A nombre grupo? descripcion tecnologias web? LL_C;
 nombre:         NOMBRE PA_A (CONJPALYNUM|IDENT) PA_C;
 grupo:          GRUPO LL_A companero+ LL_C;
 companero:      COMPANERO LL_A nomyape github? LL_C;
