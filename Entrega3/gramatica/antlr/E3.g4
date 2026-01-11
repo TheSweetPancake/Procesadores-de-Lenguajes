@@ -2,7 +2,6 @@ grammar E3;
 
 // ======== Palabras clave ========
 CV              : 'cv' ;
-ID              : 'id' ;
 GVAR            : 'gvar' ;
 LVAR            : 'lvar' ;
 
@@ -65,7 +64,6 @@ PA_C            : ')' ;
 IG              : '=' ;
 PYC             : ';' ;
 CO              : ',' ;
-CD              : '"' ;
 
 // ======== Comentarios estilo C ========
 ERR_COMMENT_CLOSE
@@ -79,23 +77,19 @@ COMMENT
     ;
 
 // ======== Macros ========
-TFNO            : ([5-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]) ;
+
+WS              : [ \t\r\n]+ -> skip ;
 NUM             : ('0' | [1-9][0-9]*) ;
 PAL             : [A-Za-zÁÉÍÓÚáéíóúÑñ]+ ;
+TFNO            : ([5-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]) ;
 MAIL            : [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* '@' [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* ;
 RUTA            : [A-Za-z]+ ( [./\-:]+ [A-Za-z]+ )+ ;
 FECHA_NUM       : ('0'[1-9] | [12][0-9] | '30' | '31') '/' ('0'[1-9] | '1'[0-2]) '/' ([12][0-9][0-9][0-9]);
 BOOL            : 'Si' | 'No' ;
 NVI             : ([ABC][12]) | 'nativo' ;
 NVH             : 'bajo' | 'medio' | 'alto' ;
-
-// ======== Espacios y saltos de línea ========
-WS              : [ \t\r\n]+ -> skip ;
-
-// ======== token CONJPAL (conjunto de palabras) ========
-CONJPAL         : PAL (','? WS PAL '.'?)* ;
+IDENT           : '"' CONJPALYNUM '"' ;
 CONJPALYNUM     : PAL (','? (WS (PAL | NUM)) '.'?)* ;
-IDENT           : CD CONJPALYNUM CD ;
 
 // ======== Manejo de errores ========
 ERROR : . { System.err.println("Error léxico: carácter no reconocido " + getText()); } ;
@@ -110,7 +104,7 @@ variable:       IDENT IG CONJPALYNUM PYC ;
 cv:             CV IDENT LL_A local_var? datospersonales formacion idiomas? experiencia? habilidades? portafolio? LL_C ;
 
 datospersonales:DP LL_A nomyape foto? fecha bio? contacto LL_C ;
-nomyape:        NOMYAPE PA_A (CONJPAL|IDENT) PA_C ;
+nomyape:        NOMYAPE PA_A (CONJPALYNUM|IDENT) PA_C ;
 foto:           FOTO PA_A RUTA PA_C ;
 fecha:          FECHA PA_A FECHA_NUM PA_C ;
 bio:            BIO PA_A (CONJPALYNUM|IDENT) PA_C ;
@@ -126,8 +120,8 @@ web:            WEB PA_A RUTA PA_C ;
 
 formacion:      FORMACION LL_A oficial+ complementaria* LL_C ;
 oficial:        OFICIAL LL_A titulo expedidor descripcion? logros? fecha LL_C ;
-titulo:         TITULO PA_A (CONJPAL|IDENT) PA_C ;
-expedidor:      EXPEDIDOR PA_A (CONJPAL|IDENT) PA_C ;
+titulo:         TITULO PA_A (CONJPALYNUM|IDENT) PA_C ;
+expedidor:      EXPEDIDOR PA_A (CONJPALYNUM|IDENT) PA_C ;
 descripcion:    DESCRIPCION PA_A (CONJPALYNUM|IDENT) PA_C ;
 logros:         LOGROS PA_A (CONJPALYNUM|IDENT) PA_C ;
 complementaria: COMPLEMENTARIA LL_A titulo certificado? expedidor horas? fecha LL_C;
@@ -145,7 +139,7 @@ responsabilidades: RESPONSABILIDADES PA_A (CONJPALYNUM|IDENT) PA_C;
 voluntariado:   VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C;
 organizacion:   ORGANIZACION PA_A (CONJPALYNUM|IDENT) PA_C;
 
-habilidades:    HABILIDADES LL_A (soft hard | hard) LL_C ;
+habilidades:    HABILIDADES LL_A (soft hard? | hard) LL_C ;
 soft:           SOFT LL_A habilidad (CO habilidad)* LL_C;
 hard:           HARD LL_A categoria+ LL_C;
 nvh:            NVHAB PA_A NVH PA_C;

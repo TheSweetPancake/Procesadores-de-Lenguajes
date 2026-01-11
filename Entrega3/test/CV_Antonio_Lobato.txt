@@ -1,18 +1,13 @@
-gvar {
-  "al" = Antonio Lobato ;
-  "ctc" = compramostucoche.es ;
-}
-
 cv "Antonio Lobato" {
   datospersonales {
-    nomyape ("al")
+    nomyape (Antonio Lobato)
     fecha (10/01/2026)
     bio (Soy Antonio Lobato y vengo a comprarte tu coche)
     contacto {
       email (antonio.lobato@compramostucoche.es)
       telefono (699999999)
       redes {
-        web ("ctc")
+        web (compramostucoche.es)
       }
     }
   }
@@ -40,7 +35,7 @@ cv "Antonio Lobato" {
       categoria {
         nombre (Venta)
         habilidad (Vender coches)
-        nvh (alto)
+        nvhab (alto)
       }
     }
   }
@@ -49,7 +44,7 @@ cv "Antonio Lobato" {
       nombre ("ctc")
       descripcion (Página web de compraventa de coches)
       tecnologias (Internet)
-      web ("ctc")
+      web (compramostucoche.es)
     }
   }
 }
