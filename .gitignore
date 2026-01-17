@@ -1,0 +1,11 @@
+*.class
+Yylex.java
+parser.java
+sym.java
+Yylex.java
+Yylex.java~
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
