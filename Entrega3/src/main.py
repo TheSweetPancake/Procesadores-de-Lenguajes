@@ -2,6 +2,7 @@ import sys
 import argparse
 from compilador_antlr import compilar_antlr, ejecutar_antlr
 from compilador_cup import compilar_cup, ejecutar_cup
+from salida import generar_html_cv
 
 
 def mostrar_menu_principal():
@@ -15,8 +16,11 @@ def mostrar_menu_principal():
     print("4. Ejecutar analizador CUP")
     print("5. Compilar y ejecutar ANTLR")
     print("6. Compilar y ejecutar CUP")
+    print("7. Generar HTML del CV")
+    print("8. Compilar, ejecutar ANTLR y generar HTML")
+    print("9. Compilar, ejecutar CUP y generar HTML")
     print("0. Salir")
-    return input("\nOpción (0-6): ").strip()
+    return input("\nOpción (0-9): ").strip()
 
 
 def main():
@@ -49,6 +53,16 @@ def main():
             elif opcion == '6':
                 compilar_cup()
                 ejecutar_cup(args.entrada)
+            elif opcion == '7':
+                generar_html_cv()
+            elif opcion == '8':
+                compilar_antlr()
+                ejecutar_antlr(args.entrada)
+                generar_html_cv()
+            elif opcion == '9':
+                compilar_cup()
+                ejecutar_cup(args.entrada)
+                generar_html_cv()
             else:
                 print("Error: Opción no válida", file=sys.stderr)
         
