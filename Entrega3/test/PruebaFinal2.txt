@@ -1,0 +1,82 @@
+/* Comentario de prueba para el analizador */
+
+cv "CVPruebaDos" {
+  datospersonales {
+    nomyape(Maria Lopez Garcia)
+    foto(recursos/fotos/maria.jpg)
+    fecha(03/09/1998)
+    bio(Ingeniera informatica interesada en inteligencia artificial)
+    contacto {
+      email(maria.lopez@uclm.com)
+      telefono(678123456)
+      redes {
+        github(github.com/marialopez)
+        web(marialopez.dev)
+      }
+    }
+  }
+
+  formacion {
+    oficial {
+      titulo(Grado en Ingenieria Informatica)
+      expedidor(Universidad Castilla La Mancha)
+      descripcion(Formacion general en computacion y software)
+      fecha(15/06/2021)
+    }
+
+    complementaria {
+      titulo(Curso de Machine Learning)
+      certificado(Si)
+      expedidor(Coursera)
+      horas(80)
+      fecha(20/03/2022)
+    }
+  }
+
+  idiomas {
+    idioma(
+      Ingles
+      nivel(C1)
+      expedidor(Cambridge)
+    )
+    idioma(
+      Frances
+      nivel(A2)
+    )
+    idioma(
+      Espanol
+      nivel(nativo)
+    )
+  }
+
+  experiencia {
+    laboral {
+      organizacion(UCLM)
+      puesto(Puesto de investigacion)
+      horas(450)
+      responsabilidades(Desarrollo de modelos de IA para analisis de datos)
+    }
+  }
+
+  habilidades {
+    soft {
+      habilidad(Trabajo en equipo)
+    }
+    hard {
+      categoria {
+        nombre(Programacion)
+        habilidad(Python)
+        nvhab(alto)
+      }
+    }
+  }
+
+  portafolio {
+    proyecto {
+      nombre(Analizador de CV)
+      descripcion(Herramienta para analizar curriculums)
+      tecnologias(Python ANTLR)
+      web(analizadorcv.app)
+    }
+  }
+}
