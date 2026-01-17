@@ -5,6 +5,7 @@ Módulo para compilar y ejecutar analizadores ANTLR.
 import os
 import sys
 import subprocess
+import glob
 from pathlib import Path
 
 
@@ -33,6 +34,27 @@ def compilar_antlr() -> None:
             raise RuntimeError("Error compilando ANTLR")
         
         print("Gramática ANTLR compilada exitosamente")
+        
+        print("\nCompilando archivos Java generados...")
+        java_files = glob.glob("*.java")
+        
+        if not java_files:
+            print("No hay archivos .java para compilar")
+            return
+        
+        print(f"Ejecutando: javac -cp .:antlr-4.13.2-complete.jar {' '.join(java_files)}")
+        
+        result = subprocess.run(
+            ["javac", "-cp", ".:antlr-4.13.2-complete.jar"] + java_files,
+            capture_output=True,
+            text=True
+        )
+        
+        if result.returncode != 0:
+            print(f"Error: {result.stderr}", file=sys.stderr)
+            raise RuntimeError("Error compilando archivos Java")
+        
+        print("Archivos Java compilados exitosamente")
         
     finally:
         os.chdir(original_dir)
