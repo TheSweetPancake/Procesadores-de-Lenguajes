@@ -1,0 +1,50 @@
+cv "Antonio Lobatosss" {
+  datospersonales {
+    nomyape (Antonio Lobatosss)
+    fecha (10/01/2026)
+    bio (Soy Antonio Lobato y vengo a comprarte tu coche)
+    contacto {
+      email (antonio.lobato@compramostucoche.es)
+      telefono (699999999)
+      redes {
+        web (compramostucoche.es)
+      }
+    }
+  }
+  formacion {
+    oficial {
+      titulo (Vendedor de coches)
+      expedidor ("ctc")
+      logros (Vender muchos coches)
+      fecha (10/01/2026)
+    }
+  }
+  experiencia {
+    laboral {
+      puesto (Vendedor de coches)
+      horas (99)
+      organizacion ("ctc")
+      responsabilidades (Vender coches)
+    }
+  }
+  habilidades {
+    soft {
+      habilidad (Trato con el publico)
+    }
+    hard {
+      categoria {
+        nombre (Venta)
+        habilidad (Vender coches)
+        nvhab (alto)
+      }
+    }
+  }
+  portafolio {
+    proyecto {
+      nombre ("ctc")
+      descripcion (Página web de compraventa de coches)
+      tecnologias (Internet)
+      web (compramostucoche.es)
+    }
+  }
+}

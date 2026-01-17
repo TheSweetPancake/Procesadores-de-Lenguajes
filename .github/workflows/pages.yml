@@ -30,24 +30,43 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r Entrega3/src/requirements.txt
+          pip install -r requirements.txt
 
-      - name: Sanity check templates
+      - name: Setup Java (for ANTLR)
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Generate ANTLR Python sources
         run: |
-          test -f Entrega3/templates/plantilla_cv.html
+          curl -L -o antlr.jar https://www.antlr.org/download/antlr-4.13.2-complete.jar
+          # Limpia generados previos por si acaso
+          rm -f CVLangLexer.py CVLangParser.py CVLangVisitor.py CVLangListener.py CVLang.tokens CVLang.interp
+          java -jar antlr.jar -Dlanguage=Python3 -visitor CVLang.g4
+
+      - name: Sanity checks
+        run: |
+          test -f templates/plantilla_cv.html
+          test -f styles.css
+          test -f entrada.txt
+          test -f main.py
 
       - name: Generate site (index.html)
         run: |
-          python Entrega3/src/salida.py
-          test -f Entrega3/generado/index.html
+          python main.py
+          test -f index.html
 
       - name: Prepare Pages artifact
         run: |
           mkdir -p site
-          cp Entrega3/generado/index.html site/index.html
-          # CSS fijo (no se modifica):
-          cp Entrega3/src/styles.css site/styles.css
+          cp index.html site/index.html
+          cp styles.css site/styles.css
 
+          # Si tienes carpeta de imágenes (como en tu DSL: imagenes/foto_perfil.jpg)
+          if [ -d "imagenes" ]; then cp -r imagenes site/imagenes; fi
+          if [ -d "assets" ]; then cp -r assets site/assets; fi
+          if [ -d "img" ]; then cp -r img site/img; fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
