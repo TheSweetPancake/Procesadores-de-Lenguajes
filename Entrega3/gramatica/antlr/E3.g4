@@ -76,20 +76,19 @@ COMMENT
     | '*/' .*?  EOF      { System.err.println("Error léxico: comentario no abierto."); skip(); }
     ;
 
-// ======== Macros ========
-
+// ======== Macros =======
 WS              : [ \t\r\n]+ -> skip ;
-NUM             : ('0' | [1-9][0-9]*) ;
-PAL             : [A-Za-zÁÉÍÓÚáéíóúÑñ]+ ;
 TFNO            : ([5-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]) ;
 MAIL            : [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* '@' [A-Za-z0-9]+ ('.' [A-Za-z0-9]+)* ;
-RUTA            : [A-Za-z]+ ( [./\-:]+ [A-Za-z]+ )+ ;
+RUTA            : [A-Za-z]+ ( [./-:]+ [A-Za-z]+ )+ ;
 FECHA_NUM       : ('0'[1-9] | [12][0-9] | '30' | '31') '/' ('0'[1-9] | '1'[0-2]) '/' ([12][0-9][0-9][0-9]);
 BOOL            : 'Si' | 'No' ;
 NVI             : ([ABC][12]) | 'nativo' ;
 NVH             : 'bajo' | 'medio' | 'alto' ;
 IDENT           : '"' CONJPALYNUM '"' ;
 CONJPALYNUM     : PAL (','? (WS (PAL | NUM)) '.'?)* ;
+NUM             : ('0' | [1-9][0-9]*) ;
+PAL             : [A-Za-zÁÉÍÓÚáéíóúÑñ]+ ;
 
 // ======== Manejo de errores ========
 ERROR : . { System.err.println("Error léxico: carácter no reconocido " + getText()); } ;
