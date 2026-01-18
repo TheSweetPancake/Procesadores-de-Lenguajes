@@ -84,53 +84,77 @@ jobs:
       - name: Build with Flex/CUP
         if: env.ENGINE == 'CUP'
         run: |
-          mkdir -p tools
-          curl -L -o tools/jflex.jar https://repo1.maven.org/maven2/de/jflex/jflex/1.9.1/jflex-1.9.1.jar
-          curl -L -o tools/java-cup.jar https://repo1.maven.org/maven2/com/github/vbmacher/java-cup/11b/java-cup-11b.jar
+          set -euo pipefail
       
-          cd "$BASE/gramatica/flexcup"
+          ROOT="$GITHUB_WORKSPACE"
+      
+          # Descarga herramientas EN LA RAIZ (puedes cambiarlo a "$BASE/tools" si quieres)
+          mkdir -p "$ROOT/tools"
+          curl -L -o "$ROOT/tools/jflex.jar" https://repo1.maven.org/maven2/de/jflex/jflex/1.9.1/jflex-1.9.1.jar
+          curl -L -o "$ROOT/tools/java-cup.jar" https://repo1.maven.org/maven2/com/github/vbmacher/java-cup/11b/java-cup-11b.jar
+      
+          # Comprobaciones
+          test -f "$ROOT/tools/jflex.jar"
+          test -f "$ROOT/tools/java-cup.jar"
+          test -f "$ROOT/$BASE/gramatica/flexcup/CV_Ascendente.flex"
+          test -f "$ROOT/$BASE/gramatica/flexcup/CV_Ascendente.cup"
+          test -f "$INPUT_PATH"
+          test -f "$TEMPLATE_PATH"
+      
+          FLEXCUP_DIR="$ROOT/$BASE/gramatica/flexcup"
+          cd "$FLEXCUP_DIR"
+      
           rm -f *.class parser.java sym.java Yylex.java 2>/dev/null || true
       
+          # Detectar clase principal de JFlex dentro del jar
           JLEX_MAIN=""
-          if jar tf ../../tools/jflex.jar | grep -q '^jflex/Main.class$'; then
+          if jar tf "$ROOT/tools/jflex.jar" | grep -q '^jflex/Main.class$'; then
             JLEX_MAIN="jflex.Main"
-          elif jar tf ../../tools/jflex.jar | grep -q '^jflex/MainClass.class$'; then
+          elif jar tf "$ROOT/tools/jflex.jar" | grep -q '^jflex/MainClass.class$'; then
             JLEX_MAIN="jflex.MainClass"
           else
-            echo "[ERROR] No se encuentra ni jflex.Main ni jflex.MainClass dentro de tools/jflex.jar"
-            jar tf ../../tools/jflex.jar | head -n 50
+            echo "[ERROR] No se encuentra jflex.Main ni jflex.MainClass en tools/jflex.jar"
+            jar tf "$ROOT/tools/jflex.jar" | head -n 80
             exit 1
           fi
-
           echo "Using JFlex main class: $JLEX_MAIN"
-          java -cp ../../tools/jflex.jar:../../tools/java-cup.jar "$JLEX_MAIN" CV_Ascendente.flex
-
-          java -cp ../../tools/java-cup.jar java_cup.Main -parser parser -symbols sym CV_Ascendente.cup
-          javac -encoding UTF-8 -cp .:../../tools/java-cup.jar *.java
       
-          cd ../..
-          cd ..
+          # 1) JFlex (necesita CUP runtime por %cup)
+          java -cp "$ROOT/tools/jflex.jar:$ROOT/tools/java-cup.jar" "$JLEX_MAIN" CV_Ascendente.flex
       
-          java -cp "$BASE/gramatica/flexcup:tools/java-cup.jar" parser "$INPUT_PATH" > cv.json
+          # 2) CUP (por clase main)
+          java -cp "$ROOT/tools/java-cup.jar" java_cup.Main -parser parser -symbols sym CV_Ascendente.cup
+      
+          # 3) Compilar (runtime CUP en classpath)
+          javac -encoding UTF-8 -cp ".:$ROOT/tools/java-cup.jar" *.java
+      
+          # 4) Ejecutar parser -> JSON (stdout)
+          cd "$ROOT"
+          java -cp "$FLEXCUP_DIR:$ROOT/tools/java-cup.jar" parser "$INPUT_PATH" > cv.json
           test -s cv.json
       
+          # 5) Render Jinja
           cat > render.py << 'PY'
           import json, sys
-          from jinja2 import Environment, FileSystemLoader
           from pathlib import Path
+          from jinja2 import Environment, FileSystemLoader
       
           cv_json, template_path, out_html = sys.argv[1], sys.argv[2], sys.argv[3]
           tp = Path(template_path)
+      
           with open(cv_json, "r", encoding="utf-8") as f:
             data = json.load(f)
+      
           env = Environment(loader=FileSystemLoader(str(tp.parent)))
           template = env.get_template(tp.name)
           html = template.render(**data)
+      
           Path(out_html).write_text(html, encoding="utf-8")
           PY
       
           python render.py cv.json "$TEMPLATE_PATH" index.html
           test -f index.html
+        
       
 
       - name: Prepare Pages artifact
