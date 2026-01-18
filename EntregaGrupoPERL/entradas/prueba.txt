@@ -1,0 +1,100 @@
+/* Archivo generado automáticamente a partir de datos_persona1.py */
+
+cv "CurriculumPrueba" {
+  datospersonales {
+    nomyape(Prueba)
+    fecha(01/11/1995)
+    bio(Desarrollador de IA y software)
+    contacto {
+      email(baltasar@example.com)
+      telefono(600000000)
+      redes {
+        linkedin(/in/baltasarlopez)
+        github(/baltasar-dev)
+        web(https://baltasar.dev)
+      }
+    }
+  }
+
+  formacion {
+    oficial {
+      titulo(Licenciatura en Informática)
+      expedidor(Universidad Nacional)
+      descripcion(Desarrollo de software)
+      logros(Tesis en PLN)
+      fecha(15/12/2018)
+    }
+    complementaria {
+      titulo(Curso de Python Avanzado)
+      expedidor(Coursera)
+      fecha(20/06/2022)
+    }
+  }
+
+  idiomas {
+    idioma(
+      Español
+      nivel(Nativo)
+    )
+    idioma(
+      Inglés
+      nivel(C1)
+      expedidor(Cambridge)
+    )
+  }
+
+  experiencia {
+    laboral{
+      organizacion(TechCorp)
+      puesto(Backend Developer)
+      horas(40)
+      responsabilidades(Microservicios en Python)
+    }
+    voluntariado{
+      organizacion(CodeForGood)
+      puesto(Mentor)
+      descripcion(Talleres de programación para jóvenes)
+      horas(8)
+    }
+  }
+
+  habilidades {
+    soft{
+      habilidad(Liderazgo)
+      habilidad(Comunicación)
+    }
+    hard{
+      habilidad(Python)
+      categoria(Programación)
+      nvhab(Avanzado)
+
+      habilidad(TensorFlow)
+      categoria(IA)
+      nvhab(Intermedio)
+    }
+  }
+
+  portafolio {
+    proyecto{
+      nombre(Sistema de Recomendación)
+      descripcion(Filtrado colaborativo para e-commerce)
+      tecnologias(Python, Pandas, TensorFlow)
+      grupo(Laura Pérez, Carlos Díaz)
+      web(https://recomsys.example.com)
+    }
+    proyecto{
+      nombre(Web Personal)
+      descripcion(Blog y portafolio)
+      tecnologias(HTML, CSS, JavaScript)
+      web(https://baltasar.dev)
+    }
+    meritos{
+      nombre(Premio Innovación)
+      descripcion(Soluciones con IA)
+    }
+    meritos{
+      nombre(Beca Excelencia)
+      descripcion(Rendimiento académico)
+    }
+  }
+}
