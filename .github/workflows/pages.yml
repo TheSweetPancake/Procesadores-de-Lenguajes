@@ -91,20 +91,7 @@ jobs:
           cd "$BASE/gramatica/flexcup"
           rm -f *.class parser.java sym.java Yylex.java 2>/dev/null || true
       
-          JLEX_MAIN=""
-          if jar tf ../../tools/jflex.jar | grep -q '^jflex/Main.class$'; then
-            JLEX_MAIN="jflex.Main"
-          elif jar tf ../../tools/jflex.jar | grep -q '^jflex/MainClass.class$'; then
-            JLEX_MAIN="jflex.MainClass"
-          else
-            echo "[ERROR] No se encuentra ni jflex.Main ni jflex.MainClass dentro de tools/jflex.jar"
-            jar tf ../../tools/jflex.jar | head -n 50
-            exit 1
-          fi
-
-          echo "Using JFlex main class: $JLEX_MAIN"
-          java -cp ../../tools/jflex.jar:../../tools/java-cup.jar "$JLEX_MAIN" CV_Ascendente.flex
-
+          java -cp ../../tools/jflex.jar:../../tools/java-cup.jar jflex.Main CV_Ascendente.flex
           java -cp ../../tools/java-cup.jar java_cup.Main -parser parser -symbols sym CV_Ascendente.cup
           javac -encoding UTF-8 -cp .:../../tools/java-cup.jar *.java
       
