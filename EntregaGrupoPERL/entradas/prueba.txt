@@ -1,4 +1,4 @@
-/* Archivo generado automáticamente a partir de datos_persona1.py */
+/* Archivo generado a partir de datos_persona1.py */
 
 cv "CurriculumPrueba" {
   datospersonales {
@@ -18,7 +18,7 @@ cv "CurriculumPrueba" {
 
   formacion {
     oficial {
-      titulo(Licenciatura en Informática)
+      titulo(Licenciatura en Informatica)
       expedidor(Universidad Nacional)
       descripcion(Desarrollo de software)
       logros(Tesis en PLN)
@@ -37,7 +37,7 @@ cv "CurriculumPrueba" {
       nivel(Nativo)
     )
     idioma(
-      Inglés
+      Ingles
       nivel(C1)
       expedidor(Cambridge)
     )
@@ -53,7 +53,7 @@ cv "CurriculumPrueba" {
     voluntariado{
       organizacion(CodeForGood)
       puesto(Mentor)
-      descripcion(Talleres de programación para jóvenes)
+      descripcion(Talleres de programacion para jovenes)
       horas(8)
     }
   }
@@ -61,11 +61,11 @@ cv "CurriculumPrueba" {
   habilidades {
     soft{
       habilidad(Liderazgo)
-      habilidad(Comunicación)
+      habilidad(Comunicacion)
     }
     hard{
       habilidad(Python)
-      categoria(Programación)
+      categoria(Programacion)
       nvhab(Avanzado)
 
       habilidad(TensorFlow)
@@ -76,25 +76,25 @@ cv "CurriculumPrueba" {
 
   portafolio {
     proyecto{
-      nombre(Sistema de Recomendación)
+      nombre(Sistema de Recomendacion)
       descripcion(Filtrado colaborativo para e-commerce)
       tecnologias(Python, Pandas, TensorFlow)
-      grupo(Laura Pérez, Carlos Díaz)
-      web(https://recomsys.example.com)
+      grupo(Laura Perez, Carlos Diaz)
+      web(recomsys.example.com)
     }
     proyecto{
       nombre(Web Personal)
       descripcion(Blog y portafolio)
       tecnologias(HTML, CSS, JavaScript)
-      web(https://baltasar.dev)
+      web(baltasar.dev)
     }
     meritos{
-      nombre(Premio Innovación)
+      nombre(Premio Innovacion)
       descripcion(Soluciones con IA)
     }
     meritos{
       nombre(Beca Excelencia)
-      descripcion(Rendimiento académico)
+      descripcion(Rendimiento academico)
     }
   }
 }
