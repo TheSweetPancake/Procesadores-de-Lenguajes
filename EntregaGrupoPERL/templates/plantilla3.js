@@ -1,5 +1,8 @@
 // Inicializar animaciones AOS al cargar
-AOS.init();
+AOS.init({
+  once: true,      // <- clave: no "desaparece" al volver a recalcular scroll
+  mirror: false
+});
 
 // Alternar modo oscuro/claro
 const toggleBtn = document.getElementById('theme-toggle');
@@ -32,7 +35,6 @@ function openCollapsibleIfNeeded(section) {
   const content = section.querySelector('.section-content');
   if (!content) return;
 
-  // Abrir siempre al mostrarla
   content.style.maxHeight = content.scrollHeight + "px";
   section.classList.add('open');
 }
@@ -57,10 +59,11 @@ function showOnlySection(targetId) {
   if (targetId === 'inicio') {
     allSections.forEach(sec => {
       sec.style.display = "";
-      // No forzamos a abrir/cerrar aquí: respetamos el estado actual
     });
 
-    // Scroll arriba al contenedor
+    // Recalcular AOS tras cambiar displays
+    AOS.refreshHard();
+
     const top = document.getElementById('inicio');
     if (top) top.scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
@@ -77,7 +80,9 @@ function showOnlySection(targetId) {
     }
   });
 
-  // Scroll a la sección visible
+  // Recalcular AOS tras cambiar displays (MUY IMPORTANTE)
+  AOS.refreshHard();
+
   const target = document.getElementById(targetId);
   if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
