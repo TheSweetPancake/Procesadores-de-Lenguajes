@@ -9,9 +9,9 @@ cv "CurriculumPrueba" {
       email(baltasar@example.com)
       telefono(600000000)
       redes {
-        linkedin(/in/baltasarlopez)
-        github(/baltasar-dev)
-        web(https://baltasar.dev)
+        linkedin(in.baltasarlopez)
+        github(baltasar-dev.github)
+        web(baltasar.dev)
       }
     }
   }
