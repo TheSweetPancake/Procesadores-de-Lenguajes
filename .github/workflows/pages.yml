@@ -169,7 +169,7 @@ jobs:
           CSS_PATH="${TEMPLATE_PATH%.html}.css"
       
           if [ -f "$CSS_PATH" ]; then
-            cp "$CSS_PATH" site/styles.css
+            cp "$CSS_PATH" "site/$(basename "$CSS_PATH")"
           else
             echo "[WARN] No existe CSS asociado: $CSS_PATH. Se omite styles.css"
           fi
