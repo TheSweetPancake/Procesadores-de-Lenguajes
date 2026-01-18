@@ -23,7 +23,7 @@ BOOL              = "Si"|"No"
 NVI               = ([ABC][12])|"nativo"
 NVH               = "bajo"|"medio"|"alto"
 IDENT             = \" {CONJPALYNUM} \"
-CONJPALYNUM       = ({PAL}|{NUM})([, ]?({PAL}|{NUM})\.?)*
+CONJPALYNUM       = ({PAL}|{NUM})(\,?{WS}?({PAL}|{NUM})\.?)*
 NUM               = (0|[1-9][0-9]*)
 PAL               = [A-Za-zÁÉÍÓÚáéíóúÑñ]+
 
