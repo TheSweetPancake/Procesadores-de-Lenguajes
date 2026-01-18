@@ -294,9 +294,23 @@ parser code {:
             parser p = new parser(new Yylex(reader));
             p.parse();
         } catch (Exception e) {
-            System.err.println("Analisis Incorrecto");
-            System.exit(1);
+          System.err.println("Analisis Incorrecto");
+
+          // Intento de info extra si es un error de CUP
+          try {
+              Symbol s = ((java_cup.runtime.lr_parser)p).cur_token();
+              if (s != null) {
+                  System.err.println("Token: " + s.sym + "  value=" + s.value);
+                  System.err.println("Pos: line=" + s.left + " col=" + s.right);
+              }
+          } catch (Throwable t) {
+              // ignore
+          }
+
+          e.printStackTrace(System.err);
+          System.exit(1);
         }
+
 
         System.out.print(toJson(root));
     }
