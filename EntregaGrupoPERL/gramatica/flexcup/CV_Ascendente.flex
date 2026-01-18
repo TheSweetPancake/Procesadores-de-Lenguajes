@@ -15,8 +15,6 @@ import java_cup.runtime.Symbol;
 /* ======== Macros (expresiones regulares) ======== */
 
 WS                = [ \t\r\n]+
-NUM               = (0|[1-9][0-9]*)
-PAL               = [A-Za-zÁÉÍÓÚáéíóúÑñ]+
 TFNO              = [5-9][0-9]{8}
 MAIL              = [A-Za-z0-9]+ ("." [A-Za-z0-9]+)* "@" [A-Za-z0-9]+ ("." [A-Za-z0-9]+)*
 RUTA              = [A-Za-z]+([./\\:-]+[A-Za-z]+)+
@@ -26,6 +24,8 @@ NVI               = ([ABC][12])|"nativo"
 NVH               = "bajo"|"medio"|"alto"
 IDENT             = \" {CONJPALYNUM} \"
 CONJPALYNUM       = ({PAL}|{NUM})([ ,]?({PAL}|{NUM})\.?)*
+NUM               = (0|[1-9][0-9]*)
+PAL               = [A-Za-zÁÉÍÓÚáéíóúÑñ]+
 
 %%
 
