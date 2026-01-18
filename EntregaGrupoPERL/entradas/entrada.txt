@@ -18,6 +18,22 @@ cv "Antonio Lobato" {
       logros (Vender muchos coches)
       fecha (10/01/2026)
     }
+    complementaria {
+      titulo(Curso de Python Avanzado)
+      expedidor(Coursera)
+      fecha(20/06/2022)
+    }
+  }
+  idiomas {
+    idioma(
+      Español
+      nivel(Nativo)
+    )
+    idioma(
+      Ingles
+      nivel(C1)
+      expedidor(Cambridge)
+    )
   }
   experiencia {
     laboral {
@@ -25,6 +41,12 @@ cv "Antonio Lobato" {
       horas (99)
       organizacion ("ctc")
       responsabilidades (Vender coches)
+    }
+    voluntariado{
+      organizacion(CodeForGood)
+      puesto(Mentor)
+      descripcion(Talleres de programacion para jovenes)
+      horas(8)
     }
   }
   habilidades {
@@ -45,6 +67,10 @@ cv "Antonio Lobato" {
       descripcion (Página web de compraventa de coches)
       tecnologias (Internet)
       web (compramostucoche.es)
+    }
+    meritos{
+      nombre(Beca Excelencia)
+      descripcion(Rendimiento academico)
     }
   }
 }
