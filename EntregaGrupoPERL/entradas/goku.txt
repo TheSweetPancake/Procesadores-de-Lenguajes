@@ -1,0 +1,76 @@
+cv "Goku" {
+	datospersonales {
+		nomyape (Son Goku)
+		fecha (12/04/737)
+		bio (Guerrero saiyan defensor de la tierra)
+		contacto {
+			email (goku@capsulecorp.db)
+			telefono (222222222)
+			redes {
+				web (capsulecorp.db)
+			}
+		}
+	}
+	formacion {
+		oficial {
+			titulo (Guerrero Z)
+			expedidor ("kaio")
+			logros (Salvar el universo)
+			fecha (01/01/750)
+		}
+		complementaria {
+			titulo(Entrenamiento extremo)
+			expedidor(Kaio Sama)
+			fecha(01/01/745)
+		}
+	}
+	idiomas {
+		idioma{
+			Saiyan
+			nivel(Nativo)
+		}
+		idioma{
+			Terricola
+			nivel(Alto)
+			expedidor(Tierra)
+		}
+	}
+	experiencia {
+		laboral {
+			puesto (Guerrero)
+			horas (9999)
+			organizacion ("universo 7")
+			responsabilidades (Combatir amenazas)
+		}
+		voluntariado{
+			organizacion(Tierra)
+			puesto(Protector)
+			descripcion(Defensa del planeta)
+			horas(3000)
+		}
+	}
+	habilidades {
+		soft {
+			habilidad (Espiritu de superacion)
+		}
+		hard {
+			categoria {
+				nombre (Combate)
+				habilidad (Kamehameha)
+				nvhab (muy alto)
+			}
+		}
+	}
+	portafolio {
+		proyecto {
+			nombre ("guerreros z")
+			descripcion (Defensa del universo)
+			tecnologias (Ki)
+			web (capsulecorp.db)
+		}
+		meritos{
+			nombre(Super saiyan)
+			descripcion(Transformacion legendaria)
+		}
+	}
+}

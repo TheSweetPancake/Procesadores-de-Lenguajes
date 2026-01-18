@@ -1,0 +1,76 @@
+cv "John Wick" {
+	datospersonales {
+		nomyape (John Wick)
+		fecha (02/09/1964)
+		bio (Ex asesino profesional retirado)
+		contacto {
+			email (johnwick@continental.ny)
+			telefono (333333333)
+			redes {
+				web (continental.ny)
+			}
+		}
+	}
+	formacion {
+		oficial {
+			titulo (Asesino profesional)
+			expedidor ("continental")
+			logros (Misiones completadas)
+			fecha (01/01/1990)
+		}
+		complementaria {
+			titulo(Combate tactico)
+			expedidor(Alta mesa)
+			fecha(01/01/1985)
+		}
+	}
+	idiomas {
+		idioma{
+			Ingles
+			nivel(Nativo)
+		}
+		idioma{
+			Ruso
+			nivel(Medio)
+			expedidor(Europa del este)
+		}
+	}
+	experiencia {
+		laboral {
+			puesto (Asesino)
+			horas (8000)
+			organizacion ("alta mesa")
+			responsabilidades (Eliminacion de objetivos)
+		}
+		voluntariado{
+			organizacion(Refugio de perros)
+			puesto(Cuidador)
+			descripcion(Cuidado animal)
+			horas(100)
+		}
+	}
+	habilidades {
+		soft {
+			habilidad (Autocontrol)
+		}
+		hard {
+			categoria {
+				nombre (Combate)
+				habilidad (Armas de fuego)
+				nvhab (alto)
+			}
+		}
+	}
+	portafolio {
+		proyecto {
+			nombre ("misiones")
+			descripcion (Contratos ejecutados)
+			tecnologias (Armas)
+			web (continental.ny)
+		}
+		meritos{
+			nombre(Baba Yaga)
+			descripcion(Reputacion legendaria)
+		}
+	}
+}

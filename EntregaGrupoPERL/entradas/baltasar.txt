@@ -1,0 +1,76 @@
+cv "Baltasar" {
+	datospersonales {
+		nomyape (Baltasar Rey Mago)
+		fecha (01/01/0001)
+		bio (Soy Baltasar uno de los reyes magos de oriente y experto en regalos)
+		contacto {
+			email (baltasar@reyesmagos.oriente)
+			telefono (111111111)
+			redes {
+				web (reyesmagos.oriente)
+			}
+		}
+	}
+	formacion {
+		oficial {
+			titulo (Rey Mago)
+			expedidor ("oriente")
+			logros (Entrega de regalos a nivel mundial)
+			fecha (01/01/0001)
+		}
+		complementaria {
+			titulo(Curso de logistica avanzada)
+			expedidor(Estrella de Belen)
+			fecha(01/01/0001)
+		}
+	}
+	idiomas {
+		idioma{
+			Arameo
+			nivel(Nativo)
+		}
+		idioma{
+			Latin
+			nivel(Alto)
+			expedidor(Imperio Romano)
+		}
+	}
+	experiencia {
+		laboral {
+			puesto (Rey Mago)
+			horas (9999)
+			organizacion ("oriente")
+			responsabilidades (Reparto de regalos)
+		}
+		voluntariado{
+			organizacion(Navidad)
+			puesto(Benefactor)
+			descripcion(Ayuda a ninos)
+			horas(500)
+		}
+	}
+	habilidades {
+		soft {
+			habilidad (Generosidad)
+		}
+		hard {
+			categoria {
+				nombre (Logistica)
+				habilidad (Gestion de regalos)
+				nvhab (alto)
+			}
+		}
+	}
+	portafolio {
+		proyecto {
+			nombre ("reyes magos")
+			descripcion (Entrega global de regalos)
+			tecnologias (Camellos)
+			web (reyesmagos.oriente)
+		}
+		meritos{
+			nombre(Rey legendario)
+			descripcion(Tradicion milenaria)
+		}
+	}
+}

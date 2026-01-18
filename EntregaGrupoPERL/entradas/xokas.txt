@@ -1,0 +1,76 @@
+cv "Xokas" {
+	datospersonales {
+		nomyape (Xokas)
+		fecha (13/04/1990)
+		bio (Streamer de elite y creador de contenido)
+		contacto {
+			email (xokas@streaming.tv)
+			telefono (555555555)
+			redes {
+				web (twitch.tv/xokas)
+			}
+		}
+	}
+	formacion {
+		oficial {
+			titulo (Creador de contenido)
+			expedidor ("internet")
+			logros (Audiencia masiva)
+			fecha (01/01/2018)
+		}
+		complementaria {
+			titulo(Streaming avanzado)
+			expedidor(Twitch)
+			fecha(01/01/2017)
+		}
+	}
+	idiomas {
+		idioma{
+			Espanol
+			nivel(Nativo)
+		}
+		idioma{
+			Ingles
+			nivel(Medio)
+			expedidor(Internet)
+		}
+	}
+	experiencia {
+		laboral {
+			puesto (Streamer)
+			horas (7000)
+			organizacion ("twitch")
+			responsabilidades (Emision en directo)
+		}
+		voluntariado{
+			organizacion(Comunidades online)
+			puesto(Creador)
+			descripcion(Contenido digital)
+			horas(500)
+		}
+	}
+	habilidades {
+		soft {
+			habilidad (Comunicacion)
+		}
+		hard {
+			categoria {
+				nombre (Streaming)
+				habilidad (Creacion de contenido)
+				nvhab (alto)
+			}
+		}
+	}
+	portafolio {
+		proyecto {
+			nombre ("canal twitch")
+			descripcion (Contenido en directo)
+			tecnologias (Streaming)
+			web (twitch.tv/xokas)
+		}
+		meritos{
+			nombre(Streamer de elite)
+			descripcion(Gran audiencia)
+		}
+	}
+}

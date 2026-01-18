@@ -1,0 +1,76 @@
+cv "Messi" {
+	datospersonales {
+		nomyape (Lionel Messi)
+		fecha (24/06/1987)
+		bio (Futbolista profesional de elite)
+		contacto {
+			email (messi@football.world)
+			telefono (444444444)
+			redes {
+				web (leomessi.com)
+			}
+		}
+	}
+	formacion {
+		oficial {
+			titulo (Futbolista profesional)
+			expedidor ("fc barcelona")
+			logros (Balones de oro)
+			fecha (01/01/2004)
+		}
+		complementaria {
+			titulo(Alto rendimiento deportivo)
+			expedidor(La Masia)
+			fecha(01/01/2000)
+		}
+	}
+	idiomas {
+		idioma{
+			Espanol
+			nivel(Nativo)
+		}
+		idioma{
+			Ingles
+			nivel(Medio)
+			expedidor(FIFA)
+		}
+	}
+	experiencia {
+		laboral {
+			puesto (Futbolista)
+			horas (15000)
+			organizacion ("clubes profesionales")
+			responsabilidades (Competicion deportiva)
+		}
+		voluntariado{
+			organizacion(Fundacion Messi)
+			puesto(Embajador)
+			descripcion(Ayuda social)
+			horas(1000)
+		}
+	}
+	habilidades {
+		soft {
+			habilidad (Trabajo en equipo)
+		}
+		hard {
+			categoria {
+				nombre (Deporte)
+				habilidad (Control del balon)
+				nvhab (muy alto)
+			}
+		}
+	}
+	portafolio {
+		proyecto {
+			nombre ("carrera deportiva")
+			descripcion (Trayectoria profesional)
+			tecnologias (Entrenamiento)
+			web (leomessi.com)
+		}
+		meritos{
+			nombre(Balon de oro)
+			descripcion(Maximo reconocimiento)
+		}
+	}
+}

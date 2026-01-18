@@ -1,0 +1,76 @@
+cv "Max Verstappen" {
+	datospersonales {
+		nomyape (Max Verstappen)
+		fecha (30/09/1997)
+		bio (Piloto profesional de formula 1)
+		contacto {
+			email (max@formula1.com)
+			telefono (666666666)
+			redes {
+				web (maxverstappen.com)
+			}
+		}
+	}
+	formacion {
+		oficial {
+			titulo (Piloto de formula 1)
+			expedidor ("fia")
+			logros (Campeonatos mundiales)
+			fecha (01/01/2015)
+		}
+		complementaria {
+			titulo(Conduccion avanzada)
+			expedidor(Red Bull Racing)
+			fecha(01/01/2014)
+		}
+	}
+	idiomas {
+		idioma{
+			Holandes
+			nivel(Nativo)
+		}
+		idioma{
+			Ingles
+			nivel(Alto)
+			expedidor(FIA)
+		}
+	}
+	experiencia {
+		laboral {
+			puesto (Piloto)
+			horas (6000)
+			organizacion ("formula 1")
+			responsabilidades (Competicion automovilistica)
+		}
+		voluntariado{
+			organizacion(Juventud deportiva)
+			puesto(Mentor)
+			descripcion(Formacion deportiva)
+			horas(200)
+		}
+	}
+	habilidades {
+		soft {
+			habilidad (Concentracion)
+		}
+		hard {
+			categoria {
+				nombre (Automovilismo)
+				habilidad (Conduccion extrema)
+				nvhab (muy alto)
+			}
+		}
+	}
+	portafolio {
+		proyecto {
+			nombre ("formula 1")
+			descripcion (Carrera profesional)
+			tecnologias (Monoplaza)
+			web (maxverstappen.com)
+		}
+		meritos{
+			nombre(Campeon mundial)
+			descripcion(Titulos consecutivos)
+		}
+	}
+}
