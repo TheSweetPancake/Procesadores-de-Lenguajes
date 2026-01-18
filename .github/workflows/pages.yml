@@ -159,14 +159,26 @@ jobs:
 
       - name: Prepare Pages artifact
         run: |
+          set -euo pipefail
+      
           mkdir -p site
           cp index.html site/index.html
       
-          if [ -f "$BASE/styles.css" ]; then cp "$BASE/styles.css" site/styles.css; fi
+          # Copiar el CSS "pareja" de la plantilla seleccionada
+          # Ej: templates/plantilla_cv.html -> templates/plantilla_cv.css
+          CSS_PATH="${TEMPLATE_PATH%.html}.css"
       
-          if [ -d "$BASE/imagenes" ]; then cp -r "$BASE/imagenes" site/imagenes; fi
+          if [ -f "$CSS_PATH" ]; then
+            cp "$CSS_PATH" site/styles.css
+          else
+            echo "[WARN] No existe CSS asociado: $CSS_PATH. Se omite styles.css"
+          fi
+      
+          # Copia de assets si los tienes
           if [ -d "$BASE/assets" ]; then cp -r "$BASE/assets" site/assets; fi
           if [ -d "$BASE/img" ]; then cp -r "$BASE/img" site/img; fi
+          if [ -d "$BASE/imagenes" ]; then cp -r "$BASE/imagenes" site/imagenes; fi
+      
       
 
       - name: Upload Pages artifact

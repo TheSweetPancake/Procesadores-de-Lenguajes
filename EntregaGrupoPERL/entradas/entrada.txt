@@ -5,7 +5,7 @@ cv "Antonio Lobato" {
     bio (Soy Antonio Lobato y vengo a comprarte tu coche, por favor sal de mi coche)
     contacto {
       email (antonio.lobato@compramostucoche.es)
-      telefono (699a999999)
+      telefono (699999999)
       redes {
         web (compramostucoche.es)
       }
