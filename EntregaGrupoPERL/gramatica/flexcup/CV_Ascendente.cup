@@ -284,36 +284,47 @@ parser code {:
         meritosList().add(it);
     }
 
-    public static void main(String args[]) throws Exception {
-        initRoot();
-
-        FileInputStream stream = new FileInputStream(args[0]);
-        Reader reader = new InputStreamReader(stream, "UTF-8");
-
-        try {
-            parser p = new parser(new Yylex(reader));
-            p.parse();
-        } catch (Exception e) {
-            System.err.println("Analisis Incorrecto");
-
-            // Intento de info extra si es un error de CUP
-            try {
-                Symbol s = ((java_cup.runtime.lr_parser)p).cur_token();
-                if (s != null) {
-                    System.err.println("Token: " + s.sym + "  value=" + s.value);
-                    System.err.println("Pos: line=" + s.left + " col=" + s.right);
-                }
-            } catch (Throwable t) {
-                // ignore
-            }
-
-            e.printStackTrace(System.err);
-            System.exit(1);
+    public void report_error(String message, Object info) {
+        System.err.print("[CUP ERROR] " + message);
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = (java_cup.runtime.Symbol) info;
+            System.err.print(" at sym=" + s.sym + " value=" + s.value + " (left=" + s.left + ", right=" + s.right + ")");
         }
-
-
-        System.out.print(toJson(root));
+        System.err.println();
     }
+
+    public void syntax_error(java_cup.runtime.Symbol cur_token) {
+        System.err.println("[CUP SYNTAX] Unexpected token: sym=" + cur_token.sym
+            + " value=" + cur_token.value
+            + " (left=" + cur_token.left + ", right=" + cur_token.right + ")");
+    }
+
+    public void unrecovered_syntax_error(java_cup.runtime.Symbol cur_token) throws Exception {
+        System.err.println("[CUP FATAL] Unrecovered token: sym=" + cur_token.sym
+            + " value=" + cur_token.value
+            + " (left=" + cur_token.left + ", right=" + cur_token.right + ")");
+        throw new Exception("Unrecovered syntax error");
+    }
+
+
+    public static void main(String args[]) throws Exception {
+      initRoot();
+
+      FileInputStream stream = new FileInputStream(args[0]);
+      Reader reader = new InputStreamReader(stream, "UTF-8");
+
+      try {
+          parser p = new parser(new Yylex(reader));
+          p.parse();
+      } catch (Exception e) {
+          System.err.println("Analisis Incorrecto");
+          e.printStackTrace(System.err);
+          System.exit(1);
+      }
+
+      System.out.print(toJson(root));
+    }
+
 :}
 
 
