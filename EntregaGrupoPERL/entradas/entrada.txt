@@ -25,15 +25,15 @@ cv "Antonio Lobato" {
     }
   }
   idiomas {
-    idioma(
+    idioma{
       Español
       nivel(Nativo)
-    )
-    idioma(
+    }
+    idioma{
       Ingles
       nivel(C1)
       expedidor(Cambridge)
-    )
+    }
   }
   experiencia {
     laboral {
