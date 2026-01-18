@@ -173,6 +173,14 @@ jobs:
           else
             echo "[WARN] No existe CSS asociado: $CSS_PATH. Se omite styles.css"
           fi
+
+          # JS: plantillaX.html -> plantillaX.js
+          JS_PATH="${TEMPLATE_PATH%.html}.js"
+          if [ -f "$JS_PATH" ]; then
+            cp "$JS_PATH" "site/$(basename "$JS_PATH")"
+          else
+            echo "[INFO] No hay JS asociado: $JS_PATH (ok si la plantilla no usa JS)"
+          fi
       
           # Copia de assets si los tienes
           if [ -d "$BASE/assets" ]; then cp -r "$BASE/assets" site/assets; fi

@@ -160,26 +160,10 @@
   /* (La clase .open se añade vía JS para expandir la sección) */
   
   /* Ajustes de tema oscuro específicos */
-  body.dark-mode {
-    /* Ajustar color para enlaces del menú */
-    .navbar a {
-      color: #e0e0e0;
-    }
-  
-    .navbar a:hover {
-      color: var(--primary-color);
-    }
-  
-    /* Botón de modo oscuro */
-    #theme-toggle {
-      color: #e0e0e0;
-    }
-  
-    #theme-toggle:hover {
-      color: var(--primary-color);
-      background: rgba(255, 255, 255, 0.1);
-    }
-  }
+  body.dark-mode .navbar a { color: #e0e0e0; }
+  body.dark-mode .navbar a:hover { color: var(--primary-color); }
+  body.dark-mode #theme-toggle { color: #e0e0e0; }
+  body.dark-mode #theme-toggle:hover { color: var(--primary-color); background: rgba(255,255,255,0.1); }  
   
   body.dark-mode .navbar {
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
