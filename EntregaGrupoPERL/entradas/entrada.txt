@@ -2,7 +2,7 @@ cv "Antonio Lobato" {
   datospersonales {
     nomyape (Antonio Lobato)
     fecha (10/01/2026)
-    bio (Soy Antonio Lobato y vengo a comprarte tu coche por favor sal de mi coche)
+    bio (Soy Antonio Lobato y vengo a comprarte tu coche, por favor sal de mi coche)
     contacto {
       email (antonio.lobato@compramostucoche.es)
       telefono (699999999)
