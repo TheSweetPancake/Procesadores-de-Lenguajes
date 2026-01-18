@@ -1,3 +1,3 @@
 CUP
 entrada.txt
-plantilla2.html
+plantilla3.html

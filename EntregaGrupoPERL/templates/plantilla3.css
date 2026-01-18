@@ -1,0 +1,193 @@
+/* Variables de tema y estilos globales */
+:root {
+    --bg-color: #fdfdfd;         /* fondo claro */
+    --text-color: #333;          /* texto principal en modo claro */
+    --primary-color: #0066cc;    /* color de acento (enlaces, destacados) en modo claro */
+    --link-hover-color: #004c99; /* color de enlace al hover en modo claro */
+    --nav-bg-color: rgba(255,255,255,0.8); /* fondo del nav con transparencia */
+  }
+  
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;  /* eliminar márgenes por defecto */
+    /* Habilitar scroll suave en todo el documento */
+    scroll-behavior: smooth;  /* desplazamiento suave al usar anchors :contentReference[oaicite:4]{index=4} */
+  }
+  
+  /* Estilos para el modo oscuro: sobreescribe variables */
+  body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #E0E0E0;
+    --primary-color: #4d90ff;
+    --link-hover-color: #82b1ff;
+    --nav-bg-color: rgba(34,34,34,0.9);
+  }
+  
+  /* Enlaces y elementos interactivos */
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+  }
+  button#theme-toggle {
+    /* Estilizar el botón de modo oscuro similar a un enlace */
+    background: none;
+    color: var(--text-color);
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 4px 8px;
+    transition: color 0.3s ease, background 0.3s ease;
+  }
+  button#theme-toggle:hover {
+    color: var(--primary-color);
+    background: rgba(0,0,0,0.05);
+  }
+  
+  /* Navbar (menú de navegación fijo superior) */
+  .navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: var(--nav-bg-color);
+    backdrop-filter: blur(5px);  /* difuminado de fondo para efecto moderno */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  .navbar ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+  }
+  .navbar li {
+    margin: 0 10px;
+  }
+  .navbar a, .navbar button {
+    /* Unificar estilo de texto de links y botón en el nav */
+    font-weight: 600;
+    font-size: 0.95em;
+    text-transform: capitalize;
+  }
+  
+  /* Cabecera de la página (nombre y contacto) */
+  .container h1 {
+    text-align: center;
+    font-size: 2.2em;
+    margin: 100px 0 10px;  /* gran separación superior (100px) y pequeña inferior */
+  }
+  .container p {
+    text-align: center;
+    margin: 4px 0;
+  }
+  .container p em {
+    font-style: italic;
+    color: #666;
+  }
+  
+  /* Secciones del CV */
+  .section {
+    margin: 60px 0;  /* espacio vertical entre secciones */
+  }
+  .section h2 {
+    font-size: 1.5em;
+    margin: 20px 0;
+    position: relative;
+  }
+  /* Indicador de despliegue en títulos de secciones colapsables */
+  .collapsible h2 {
+    cursor: pointer;
+    user-select: none;
+  }
+  .collapsible h2::after {
+    content: "▸";  /* flecha apuntando a la derecha (sección cerrada) */
+    position: absolute;
+    right: 0; 
+    font-size: 1.2em;
+    color: var(--primary-color);
+    transition: transform 0.3s;
+  }
+  .collapsible.open h2::after {
+    /* cambiar a flecha apuntando hacia abajo cuando está abierta */
+    content: "▾";
+  }
+  
+  /* Listas dentro de secciones */
+  .section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .section ul li {
+    margin: 10px 0;
+    line-height: 1.6;
+    /* Agregar transición para fondo en hover (proyectos, habilidades) */
+    transition: background 0.3s;
+  }
+  .section ul li:hover {
+    background: rgba(0,0,0,0.03);
+  }
+  .section ul li strong {
+    font-weight: 700;
+    /* Resaltar títulos de proyectos al hover del elemento */
+    transition: color 0.3s;
+  }
+  .section ul li:hover strong {
+    color: var(--primary-color);
+  }
+  
+  /* Subtítulos (h3) dentro de Portafolio */
+  .section h3 {
+    font-size: 1.2em;
+    margin: 15px 0 5px;
+    color: var(--primary-color);
+  }
+  
+  /* Secciones desplegables: contenido colapsado */
+  .collapsible .section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  /* (La clase .open se añade vía JS para expandir la sección) */
+  
+  /* Ajustes de tema oscuro específicos */
+  body.dark-mode {
+    /* Ajustar color para enlaces del menú */
+    .navbar a {
+      color: #e0e0e0;
+    }
+  
+    .navbar a:hover {
+      color: var(--primary-color);
+    }
+  
+    /* Botón de modo oscuro */
+    #theme-toggle {
+      color: #e0e0e0;
+    }
+  
+    #theme-toggle:hover {
+      color: var(--primary-color);
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  body.dark-mode .navbar {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+  body.dark-mode .section ul li:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  body.dark-mode strong {
+    color: #ffffff;
+  }
+  
