@@ -15,10 +15,28 @@ from E3Parser import E3Parser
 
 
 # ---------- helpers de texto ----------
-def _unquote(s: str) -> str:
+def _resolve_var(
+    s: str,
+    local_vars: Dict[str, str],
+    global_vars: Dict[str, str],
+) -> str:
     s = s.strip()
+
+    # Solo intentamos resolver si viene entre comillas
     if len(s) >= 2 and s[0] == '"' and s[-1] == '"':
-        return s[1:-1]
+        key = s[1:-1]
+
+        # Prioridad: variables locales
+        if key in local_vars:
+            return local_vars[key]
+
+        # Luego variables globales
+        if key in global_vars:
+            return global_vars[key]
+
+        # Si no existe variable, devolver literal
+        return key
+
     return s
 
 
@@ -41,14 +59,9 @@ def _ctx_text(ctx) -> str:
     return ctx.getText().strip()
 
 
-def _ctx_value(ctx, visitor: "BuildObjectsVisitor" = None) -> str:
-    text = ctx.getText().strip()
-    inner = _inside_parens(text)
-
-    if visitor is None:
-        return inner  # NO _unquote aquí
-
-    return visitor.resolve_value(inner)
+def _ctx_value(ctx, visitor: "BuildObjectsVisitor") -> str:
+    raw = _inside_parens(_ctx_text(ctx))
+    return _resolve_var(raw, visitor._local_vars, visitor._global_vars)
 
 
 def _split_tecnologias(s: str) -> List[str]:
@@ -58,27 +71,6 @@ def _split_tecnologias(s: str) -> List[str]:
     if "," in raw:
         return [t.strip() for t in raw.split(",") if t.strip()]
     return [t.strip() for t in raw.split() if t.strip()]
-
-
-def resolve_value(self, raw: str) -> str:
-    raw = raw.strip()
-
-    # Referencia a variable
-    if raw.startswith('"') and raw.endswith('"'):
-        key = raw[1:-1]
-
-        if key in self.local_vars:
-            return self.local_vars[key]
-
-        if key in self.global_vars:
-            return self.global_vars[key]
-
-        raise ValueError(
-            f"Variable '{key}' usada pero no definida"
-        )
-
-    return raw
-
 
 
 @dataclass
@@ -104,8 +96,8 @@ class BuildObjectsVisitor(E3Visitor):
         self._xp: Optional[Experiencia] = None
         self._skills: Optional[Habilidades] = None
         self._folio: Optional[Portafolio] = None
-        self.global_vars: Dict[str, str] = {}
-        self.local_vars: Dict[str, str] = {}
+        self._global_vars: Dict[str, str] = {}
+        self._local_vars: Dict[str, str] = {}
 
 
     def result(self) -> CVObjects:
@@ -121,8 +113,8 @@ class BuildObjectsVisitor(E3Visitor):
             experiencia=self._xp,
             habilidades=self._skills,
             portafolio=self._folio,
-            global_vars=self.global_vars,
-            local_vars=self.local_vars,
+            global_vars=self._global_vars,
+            local_vars=self._local_vars,
         )
 
     # ---------- ENTRY ----------
@@ -133,14 +125,14 @@ class BuildObjectsVisitor(E3Visitor):
         for v in ctx.variable():
             name = v.IDENT().getText()
             value = _ctx_value(v, self)
-            self.global_vars[name] = value
+            self._global_vars[name] = value
         return None
 
     def visitLocal_var(self, ctx: E3Parser.Local_varContext):
         for v in ctx.variable():
             name = v.IDENT().getText()
             value = _ctx_value(v, self)
-            self.local_vars[name] = value
+            self._local_vars[name] = value
         return None
 
     def visitCvs(self, ctx: E3Parser.CvsContext):
@@ -156,9 +148,9 @@ class BuildObjectsVisitor(E3Visitor):
         # Lo más robusto: usa getText() y extrae lo que haya tras 'cv'.
         # Si tu cv es: cv "Antonio Lobato" { ... }
         # suele existir IDENT() en el contexto.
-        self.local_vars = {}
+        self._local_vars = {}
         if hasattr(ctx, "IDENT") and ctx.IDENT():
-            self._cv_id = _unquote(ctx.IDENT().getText())
+            self._cv_id = _resolve_var(ctx.IDENT().getText(), self._local_vars, self._global_vars)
         else:
             # fallback: intenta capturar el "nombre" desde el texto completo
             full = _ctx_text(ctx)
@@ -166,7 +158,7 @@ class BuildObjectsVisitor(E3Visitor):
             head = full.split("{", 1)[0].strip()
             # quita el 'cv'
             head = head[2:].strip() if head.lower().startswith("cv") else head
-            self._cv_id = _unquote(head) if head else "CV"
+            self._cv_id = _resolve_var(head, self._local_vars, self._global_vars) if head else "CV"
         if ctx.local_var():
             self.visit(ctx.local_var())
         self.visit(ctx.datospersonales())
@@ -270,7 +262,7 @@ class BuildObjectsVisitor(E3Visitor):
 
             niv = _ctx_value(it.nivel(), self) if hasattr(it, "nivel") and it.nivel() else ""
             exp = _ctx_value(it.expedidor(), self) if hasattr(it, "expedidor") and it.expedidor() else None
-            lst.append(Idioma(nombre=_unquote(nombre), nivel=niv, expedidor=exp))
+            lst.append(Idioma(nombre=_resolve_var(nombre, self._local_vars, self._global_vars), nivel=niv, expedidor=exp))
 
         self._idiomas = Idiomas(idiomas=lst)
         return None
@@ -373,7 +365,7 @@ class BuildObjectsVisitor(E3Visitor):
         j = block_text.find(")", i)
         if j == -1:
             return ""
-        return _unquote(block_text[i + len(key) : j].strip())
+        return _resolve_var(block_text[i + len(key) : j].strip(), self._local_vars, self._global_vars)
 
     # ---------- PORTAFOLIO ----------
     def visitPortafolio(self, ctx: E3Parser.PortafolioContext):
