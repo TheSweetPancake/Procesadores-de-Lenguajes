@@ -64,6 +64,8 @@ class CVObjects:
     experiencia: Optional[Experiencia]
     habilidades: Optional[Habilidades]
     portafolio: Optional[Portafolio]
+    global_vars: Dict[str, str]
+    local_vars: Dict[str, str]
 
 
 class BuildObjectsVisitor(E3Visitor):
@@ -76,6 +78,9 @@ class BuildObjectsVisitor(E3Visitor):
         self._xp: Optional[Experiencia] = None
         self._skills: Optional[Habilidades] = None
         self._folio: Optional[Portafolio] = None
+        self._global_vars: Dict[str, str] = {}
+        self._local_vars: Dict[str, str] = {}
+
 
     def result(self) -> CVObjects:
         if self._datos is None:
@@ -90,11 +95,27 @@ class BuildObjectsVisitor(E3Visitor):
             experiencia=self._xp,
             habilidades=self._skills,
             portafolio=self._folio,
+            global_vars=self._global_vars,
+            local_vars=self._local_vars,
         )
 
     # ---------- ENTRY ----------
     def visitStart(self, ctx: E3Parser.StartContext):
         return self.visit(ctx.cvs())
+    
+    def visitGlobal_var(self, ctx: E3Parser.Global_varContext):
+        for v in ctx.variable():
+            name = v.IDENT().getText()
+            value = _ctx_value(v)
+            self._global_vars[name] = value
+        return None
+
+    def visitLocal_var(self, ctx: E3Parser.Local_varContext):
+        for v in ctx.variable():
+            name = v.IDENT().getText()
+            value = _ctx_value(v)
+            self._local_vars[name] = value
+        return None
 
     def visitCvs(self, ctx: E3Parser.CvsContext):
         cvs = ctx.cv()
@@ -109,6 +130,7 @@ class BuildObjectsVisitor(E3Visitor):
         # Lo más robusto: usa getText() y extrae lo que haya tras 'cv'.
         # Si tu cv es: cv "Antonio Lobato" { ... }
         # suele existir IDENT() en el contexto.
+        self._local_vars = {}
         if hasattr(ctx, "IDENT") and ctx.IDENT():
             self._cv_id = _unquote(ctx.IDENT().getText())
         else:
@@ -119,7 +141,8 @@ class BuildObjectsVisitor(E3Visitor):
             # quita el 'cv'
             head = head[2:].strip() if head.lower().startswith("cv") else head
             self._cv_id = _unquote(head) if head else "CV"
-
+        if ctx.local_var():
+            self.visit(ctx.local_var())
         self.visit(ctx.datospersonales())
         self.visit(ctx.formacion())
 

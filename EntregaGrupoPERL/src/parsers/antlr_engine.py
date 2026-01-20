@@ -26,4 +26,6 @@ def parse_with_antlr(input_path: Path) -> dict:
         "experiencia": getattr(objs, "experiencia", None),
         "habilidades": getattr(objs, "habilidades", None),
         "portafolio": getattr(objs, "portafolio", None),
+        "global_vars": getattr(objs, "global_vars", {}),
+        "local_vars": getattr(objs, "local_vars", {}),
     }

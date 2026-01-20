@@ -1,26 +1,18 @@
-/*  CV_Ascendente.cup  (LIMPIO + Estrategia A)
-    - Sin tocar workflow
-    - Sin "mil alternativas"
-    - Opcionales con _opt
-    - official/complementaria limpias (desc/logros/certificado/horas opcionales)
-    - El parser imprime JSON a stdout (para > cv.json)
-*/
-
 import java_cup.runtime.*;
 import java.io.*;
 import java.util.*;
 
 parser code {:
-    /* =========================
-       Estado: root + contexto + temporales
-       ========================= */
-
     public static Map<String,Object> root;
     public static Deque<String> ctx = new ArrayDeque<>();
 
+    /* ----- temporales variables ----- */
+    public static Map<String,String> globalVars;
+    public static Map<String,String> localVars;
+
     // ---------- temporales FORMACION ----------
     static String tmpFormTitulo, tmpFormExpedidor, tmpFormDesc, tmpFormLogros, tmpFormFecha;
-    static boolean tmpFormEnCurso; // (si quieres usarlo, por ejemplo con certificado)
+    static boolean tmpFormEnCurso;
 
     // ---------- temporales IDIOMAS ----------
     static String tmpIdiomaNombre, tmpIdiomaNivel, tmpIdiomaExpedidor;
@@ -28,7 +20,7 @@ parser code {:
     // ---------- temporales EXPERIENCIA ----------
     static String tmpXPOrg, tmpXPPuesto, tmpXPDesc;
     static Integer tmpXPHoras;
-    static String tmpXPTipo; // "laboral" / "voluntariado"
+    static String tmpXPTipo;
 
     // ---------- temporales HABILIDADES HARD ----------
     static String tmpHardCategoria, tmpHardHabilidad, tmpHardNivel;
@@ -70,6 +62,18 @@ parser code {:
             "proyectos", new ArrayList<>(),
             "meritos", new ArrayList<>()
         )));
+        globalVars = new LinkedHashMap<>();
+        localVars = new LinkedHashMap<>();
+        root.put("global_vars", globalVars);
+        root.put("local_vars", localVars);
+    }
+
+    public static void commitGlobalVar(String name, String value) {
+        globalVars.put(name, value);
+    }
+
+    public static void commitLocalVar(String name, String value) {
+        localVars.put(name, value);
     }
 
     public static void pushCtx(String c) { ctx.push(c); }
@@ -333,56 +337,39 @@ parser code {:
    ========================= */
 
 terminal CV, GVAR, LVAR;
-
 terminal DP, NOMYAPE, FOTO, FECHA, BIO, CONTACTO, EMAIL, TELEFONO, REDES, LINKEDIN, GITHUB, WEB;
-
 terminal FORMACION, OFICIAL, TITULO, EXPEDIDOR, DESCRIPCION, LOGROS, COMPLEMENTARIA, CERTIFICADO, HORAS;
-
 terminal IDIOMAS, IDIOMA, NIVEL;
-
 terminal EXPERIENCIA, LABORAL, PUESTO, RESPONSABILIDADES, VOLUNTARIADO, ORGANIZACION;
-
 terminal HABILIDADES, SOFT, HARD, HABILIDAD, NVHAB, CATEGORIA;
-
 terminal PORTAFOLIO, PROYECTO, NOMBRE, GRUPO, COMPANERO, TECNOLOGIAS, MERITOS;
-
 terminal LL_A, LL_C, PA_A, PA_C, IG, PYC, CO;
-
-/* Tokens con valor */
 terminal String IDENT, CONJPALYNUM, RUTA, MAIL, TFNO, NUM, FECHA_NUM, BOOL, NVI, NVH;
-
 
 /* =========================
    NO TERMINALES
    ========================= */
 
 non terminal cvs, cv_list, cv;
-
 non terminal global_var_opt, global_var, local_var_opt, local_var, variable_list, variable;
-
 non terminal datospersonales, nomyape, foto, fecha, bio, contacto, email, telefono;
 non terminal foto_opt, fecha_opt, bio_opt;
 non terminal redes, linkedin, github, web;
 non terminal linkedin_opt, github_opt;
-
 non terminal formacion, oficial_list, oficial;
 non terminal titulo, expedidor, descripcion, logros;
 non terminal descripcion_opt, logros_opt;
 non terminal complementaria_list_opt, complementaria_list, complementaria;
 non terminal certificado_opt, certificado;
 non terminal horas_opt, horas;
-
 non terminal idiomas, idioma_list, idioma, nvi;
-
 non terminal experiencia, laboral_list, laboral;
 non terminal voluntariado_list_opt, voluntariado_list, voluntariado;
 non terminal puesto, responsabilidades, organizacion;
-
 non terminal habilidades, soft, hard_opt, hard;
 non terminal habilidad_list, habilidad;
 non terminal categoria_list, categoria;
 non terminal habilidad_nvh_list, nvh;
-
 non terminal portafolio;
 non terminal proyecto_list_opt, proyecto_list, proyecto;
 non terminal grupo_opt, grupo, companero_list, companero;
@@ -390,7 +377,6 @@ non terminal tecnologias_opt, tecnologias;
 non terminal web_opt;
 non terminal merito_list_opt, merito_list, merito;
 non terminal nombre;
-
 non terminal idiomas_opt, experiencia_opt, habilidades_opt, portafolio_opt;
 non terminal expedidor_opt;
 non terminal responsabilidades_opt;
@@ -410,26 +396,42 @@ cvs ::= global_var_opt cv_list
       ;
 
 global_var_opt ::= global_var
-                 | /* empty */
-                 ;
+                 | /* empty */;
 
-global_var ::= GVAR LL_A variable_list LL_C;
-
-cv_list ::= cv_list cv
-          | cv
-          ;
+global_var ::= GVAR LL_A variable_list LL_C
+               {: 
+                  for(Object o : ((java.util.List) $variable_list)) {
+                      java.util.Map.Entry<String,String> e = (java.util.Map.Entry<String,String>) o;
+                      commitGlobalVar(e.getKey(), e.getValue());
+                  }
+               :};
 
 local_var_opt ::= local_var
-                | /* empty */
-                ;
+                | /* empty */;
 
-local_var ::= LVAR LL_A variable_list LL_C;
+local_var ::= LVAR LL_A variable_list LL_C
+               {:
+                  for(Object o : ((java.util.List) $variable_list)) {
+                      java.util.Map.Entry<String,String> e = (java.util.Map.Entry<String,String>) o;
+                      commitLocalVar(e.getKey(), e.getValue());
+                  }
+               :};
 
 variable_list ::= variable_list variable
-                | variable
-                ;
+                | variable;
 
-variable ::= IDENT IG CONJPALYNUM PYC;
+variable ::= IDENT IG CONJPALYNUM PYC
+            {:
+                java.util.List<java.util.Map.Entry<String,String>> list = new ArrayList<>();
+                list.add(new AbstractMap.SimpleEntry<>(unquote($IDENT), unquote($CONJPALYNUM)));
+                RESULT = list;
+            :}
+          | variable_list variable
+            {:
+                List<java.util.Map.Entry<String,String>> list = new ArrayList<>($variable_list);
+                list.add(new AbstractMap.SimpleEntry<>(unquote($variable.CONJPALYNUM), unquote($variable.CONJPALYNUM)));
+                RESULT = list;
+            :};
 
 
 /* --- CV (orden fijo + secciones opcionales) --- */
