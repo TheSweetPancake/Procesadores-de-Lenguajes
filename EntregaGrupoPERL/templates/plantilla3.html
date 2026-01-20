@@ -41,7 +41,7 @@
             {% if datos.telefono %}<p><strong>Teléfono:</strong> {{ datos.telefono }}</p>{% endif %}
             {% if datos.linkedin %}<p><strong>LinkedIn:</strong> {{ datos.linkedin }}</p>{% endif %}
             {% if datos.github %}<p><strong>GitHub:</strong> {{ datos.github }}</p>{% endif %}
-            {% if datos.web %}<p><strong>Web:</strong> {{ datos.web }}</p>{% endif %}
+            {% if datos.web %}<p><strong>Web:</strong> <a href="{{ p.web }}">{{ datos.web }}</a></p>{% endif %}
         </div>
     </section>
 
