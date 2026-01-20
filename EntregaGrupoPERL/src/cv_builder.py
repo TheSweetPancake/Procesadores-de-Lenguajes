@@ -22,19 +22,19 @@ def _resolve_var(
 ) -> str:
     s = s.strip()
 
-    # Solo intentamos resolver si viene entre comillas
+    # Solo resolvemos si viene entre comillas
     if len(s) >= 2 and s[0] == '"' and s[-1] == '"':
-        key = s[1:-1]
+        key = s
 
-        # Prioridad: variables locales
+        # Primero variables locales
         if key in local_vars:
             return local_vars[key]
 
-        # Luego variables globales
+        # Luego globales
         if key in global_vars:
             return global_vars[key]
 
-        # Si no existe variable, devolver literal
+        # Si no existe, devolvemos el literal sin comillas
         return key
 
     return s
