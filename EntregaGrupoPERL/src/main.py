@@ -44,7 +44,7 @@ def render_html(objs, template_path: str) -> str:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--input", required=True, help="Ruta al .txt (ej: entradas/entrada.txt)")
+    ap.add_argument("--input", required=True, help="Ruta al .cv (ej: entradas/entrada.cv)")
     ap.add_argument("--template", required=True, help="Ruta al .html (ej: templates/plantilla_cv.html)")
     ap.add_argument("--out", required=True, help="Ruta de salida (ej: index.html)")
     args = ap.parse_args()
