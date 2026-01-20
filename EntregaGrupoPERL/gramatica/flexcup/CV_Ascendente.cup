@@ -42,9 +42,12 @@ parser code {:
     @SuppressWarnings("unchecked")
     public static void initRoot() {
         root = new LinkedHashMap<>();
-        
-        root.put("global_vars", new LinkedHashMap<>());
-        root.put("local_vars", new LinkedHashMap<>());
+
+        globalVars = new LinkedHashMap<>();
+        localVars = new LinkedHashMap<>();
+
+        root.put("global_vars", globalVars);
+        root.put("local_vars", localVars);
 
         Map<String,Object> datos = new LinkedHashMap<>();
         datos.put("nombre", "");
@@ -66,6 +69,7 @@ parser code {:
             "meritos", new ArrayList<>()
         )));
     }
+
 
     public static void commitGlobalVar(String name, String value) {
         globalVars.put(name, value);
