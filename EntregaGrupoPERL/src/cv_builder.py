@@ -144,26 +144,26 @@ class BuildObjectsVisitor(E3Visitor):
 
     # ---------- CV ----------
     def visitCv(self, ctx: E3Parser.CvContext):
-        # Dependiendo de tu gramática, el nombre puede ser IDENT o algo similar.
-        # Lo más robusto: usa getText() y extrae lo que haya tras 'cv'.
-        # Si tu cv es: cv "Antonio Lobato" { ... }
-        # suele existir IDENT() en el contexto.
+        # Reset de variables locales al iniciar CV
         self._local_vars = {}
+
+        # Primero procesamos las variables locales
+        if ctx.local_var():
+            self.visit(ctx.local_var())
+
+        # Procesar nombre del CV
         if hasattr(ctx, "IDENT") and ctx.IDENT():
             self._cv_id = _resolve_var(ctx.IDENT().getText(), self._local_vars, self._global_vars)
         else:
             # fallback: intenta capturar el "nombre" desde el texto completo
             full = _ctx_text(ctx)
-            # full empieza por "cv..." -> toma hasta la primera '{'
             head = full.split("{", 1)[0].strip()
-            # quita el 'cv'
             head = head[2:].strip() if head.lower().startswith("cv") else head
             self._cv_id = _resolve_var(head, self._local_vars, self._global_vars) if head else "CV"
-        if ctx.local_var():
-            self.visit(ctx.local_var())
+
+        # Procesar secciones del CV
         self.visit(ctx.datospersonales())
         self.visit(ctx.formacion())
-
         if ctx.idiomas():
             self.visit(ctx.idiomas())
         if ctx.experiencia():
