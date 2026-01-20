@@ -1,5 +1,5 @@
 cv "Goku" {
-	local_var{
+	lvar{
 		"name" = Son Goku;
 	}
 	datospersonales {
