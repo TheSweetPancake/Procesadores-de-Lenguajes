@@ -427,6 +427,9 @@ variable ::= IDENT IG CONJPALYNUM PYC
                 RESULT = list;
             :};
 
+cv_list ::= cv_list cv
+          | cv;
+
 
 /* --- CV (orden fijo + secciones opcionales) --- */
 cv ::= CV IDENT LL_A local_var_opt datospersonales formacion idiomas_opt experiencia_opt habilidades_opt portafolio_opt LL_C
