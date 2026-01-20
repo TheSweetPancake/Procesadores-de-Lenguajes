@@ -41,9 +41,14 @@ def _ctx_text(ctx) -> str:
     return ctx.getText().strip()
 
 
-def _ctx_value(ctx) -> str:
-    # Saca el texto del nodo y devuelve lo de dentro de (...)
-    return _unquote(_inside_parens(_ctx_text(ctx)))
+def _ctx_value(ctx, visitor: "BuildObjectsVisitor" = None) -> str:
+    text = ctx.getText().strip()
+    inner = _inside_parens(text)
+
+    if visitor is None:
+        return _unquote(inner)
+
+    return visitor._resolve_value(inner)
 
 
 def _split_tecnologias(s: str) -> List[str]:
@@ -53,6 +58,31 @@ def _split_tecnologias(s: str) -> List[str]:
     if "," in raw:
         return [t.strip() for t in raw.split(",") if t.strip()]
     return [t.strip() for t in raw.split() if t.strip()]
+
+
+def resolve_value(self, raw: str) -> str:
+    """
+    Si raw viene entre comillas -> es referencia a variable.
+    Si no -> literal.
+    """
+    raw = raw.strip()
+
+    # ¿Venía entre comillas en el DSL?
+    if raw.startswith('"') and raw.endswith('"'):
+        key = raw[1:-1]
+
+        if key in self.local_vars:
+            return self.local_vars[key]
+
+        if key in self.global_vars:
+            return self.global_vars[key]
+
+        raise ValueError(
+            f"Variable '{key}' usada pero no definida en local_vars ni global_vars"
+        )
+
+    # No es variable, es literal
+    return raw
 
 
 @dataclass
@@ -78,8 +108,8 @@ class BuildObjectsVisitor(E3Visitor):
         self._xp: Optional[Experiencia] = None
         self._skills: Optional[Habilidades] = None
         self._folio: Optional[Portafolio] = None
-        self._global_vars: Dict[str, str] = {}
-        self._local_vars: Dict[str, str] = {}
+        self.global_vars: Dict[str, str] = {}
+        self.local_vars: Dict[str, str] = {}
 
 
     def result(self) -> CVObjects:
@@ -95,8 +125,8 @@ class BuildObjectsVisitor(E3Visitor):
             experiencia=self._xp,
             habilidades=self._skills,
             portafolio=self._folio,
-            global_vars=self._global_vars,
-            local_vars=self._local_vars,
+            global_vars=self.global_vars,
+            local_vars=self.local_vars,
         )
 
     # ---------- ENTRY ----------
@@ -106,15 +136,15 @@ class BuildObjectsVisitor(E3Visitor):
     def visitGlobal_var(self, ctx: E3Parser.Global_varContext):
         for v in ctx.variable():
             name = v.IDENT().getText()
-            value = _ctx_value(v)
-            self._global_vars[name] = value
+            value = _ctx_value(v, self)
+            self.global_vars[name] = value
         return None
 
     def visitLocal_var(self, ctx: E3Parser.Local_varContext):
         for v in ctx.variable():
             name = v.IDENT().getText()
-            value = _ctx_value(v)
-            self._local_vars[name] = value
+            value = _ctx_value(v, self)
+            self.local_vars[name] = value
         return None
 
     def visitCvs(self, ctx: E3Parser.CvsContext):
@@ -130,7 +160,7 @@ class BuildObjectsVisitor(E3Visitor):
         # Lo más robusto: usa getText() y extrae lo que haya tras 'cv'.
         # Si tu cv es: cv "Antonio Lobato" { ... }
         # suele existir IDENT() en el contexto.
-        self._local_vars = {}
+        self.local_vars = {}
         if hasattr(ctx, "IDENT") and ctx.IDENT():
             self._cv_id = _unquote(ctx.IDENT().getText())
         else:
@@ -159,28 +189,28 @@ class BuildObjectsVisitor(E3Visitor):
 
     # ---------- DATOS PERSONALES ----------
     def visitDatospersonales(self, ctx: E3Parser.DatospersonalesContext):
-        nombre = _ctx_value(ctx.nomyape())
+        nombre = _ctx_value(ctx.nomyape(), self)
         datos = DatosPersonales(nombre=nombre)
 
         if ctx.foto():
-            datos.foto = _ctx_value(ctx.foto())
+            datos.foto = _ctx_value(ctx.foto(), self)
         if ctx.fecha():
-            datos.fecha_nacimiento = _ctx_value(ctx.fecha())
+            datos.fecha_nacimiento = _ctx_value(ctx.fecha(), self)
         if ctx.bio():
-            datos.bio = _ctx_value(ctx.bio())
+            datos.bio = _ctx_value(ctx.bio(), self)
 
         c = ctx.contacto()
-        datos.email = _ctx_value(c.email())
-        datos.telefono = _ctx_value(c.telefono())
+        datos.email = _ctx_value(c.email(), self)
+        datos.telefono = _ctx_value(c.telefono(), self)
 
         if c.redes():
             redes = c.redes()
             if redes.linkedin():
-                datos.linkedin = _ctx_value(redes.linkedin())
+                datos.linkedin = _ctx_value(redes.linkedin(), self)
             if redes.github():
-                datos.github = _ctx_value(redes.github())
+                datos.github = _ctx_value(redes.github(), self)
             if redes.web():
-                datos.web = _ctx_value(redes.web())
+                datos.web = _ctx_value(redes.web(), self)
 
         self._datos = datos
         return None
@@ -190,11 +220,11 @@ class BuildObjectsVisitor(E3Visitor):
         items: List[FormacionItem] = []
 
         for o in ctx.oficial():
-            titulo = _ctx_value(o.titulo())
-            inst = _ctx_value(o.expedidor())
-            desc = _ctx_value(o.descripcion()) if o.descripcion() else None
-            logros = _ctx_value(o.logros()) if o.logros() else None
-            fecha = _ctx_value(o.fecha())
+            titulo = _ctx_value(o.titulo(), self)
+            inst = _ctx_value(o.expedidor(), self)
+            desc = _ctx_value(o.descripcion(), self) if o.descripcion() else None
+            logros = _ctx_value(o.logros(), self) if o.logros() else None
+            fecha = _ctx_value(o.fecha(), self)
 
             items.append(
                 FormacionItem(
@@ -211,9 +241,9 @@ class BuildObjectsVisitor(E3Visitor):
         # Si tienes complementaria en tu gramática, descomenta y adapta:
         if hasattr(ctx, "complementaria"):
             for c in ctx.complementaria() or []:
-                titulo = _ctx_value(c.titulo())
-                inst = _ctx_value(c.expedidor()) if hasattr(c, "expedidor") and c.expedidor() else "—"
-                fecha = _ctx_value(c.fecha()) if hasattr(c, "fecha") and c.fecha() else None
+                titulo = _ctx_value(c.titulo(), self)
+                inst = _ctx_value(c.expedidor(), self) if hasattr(c, "expedidor") and c.expedidor() else "—"
+                fecha = _ctx_value(c.fecha(), self) if hasattr(c, "fecha") and c.fecha() else None
                 en_curso = (fecha or "").strip().lower() in {"en_curso", "encurso", "en curso"}
                 items.append(
                     FormacionItem(
@@ -242,8 +272,8 @@ class BuildObjectsVisitor(E3Visitor):
             else:
                 nombre = _ctx_text(it).strip("()").strip()
 
-            niv = _ctx_value(it.nivel()) if hasattr(it, "nivel") and it.nivel() else ""
-            exp = _ctx_value(it.expedidor()) if hasattr(it, "expedidor") and it.expedidor() else None
+            niv = _ctx_value(it.nivel(), self) if hasattr(it, "nivel") and it.nivel() else ""
+            exp = _ctx_value(it.expedidor(), self) if hasattr(it, "expedidor") and it.expedidor() else None
             lst.append(Idioma(nombre=_unquote(nombre), nivel=niv, expedidor=exp))
 
         self._idiomas = Idiomas(idiomas=lst)
@@ -284,23 +314,23 @@ class BuildObjectsVisitor(E3Visitor):
         out: Dict[str, Any] = {}
 
         if hasattr(ctx, "organizacion") and ctx.organizacion():
-            out["organizacion"] = _ctx_value(ctx.organizacion())
+            out["organizacion"] = _ctx_value(ctx.organizacion(), self)
         if hasattr(ctx, "puesto") and ctx.puesto():
-            out["puesto"] = _ctx_value(ctx.puesto())
+            out["puesto"] = _ctx_value(ctx.puesto(), self)
         if hasattr(ctx, "horas") and ctx.horas():
             # horas(NUM) normalmente
             try:
-                out["horas"] = _ctx_value(ctx.horas())
+                out["horas"] = _ctx_value(ctx.horas(), self)
             except Exception:
                 out["horas"] = None
 
         # laboral: responsabilidades(...)
         if hasattr(ctx, "responsabilidades") and ctx.responsabilidades():
-            out["descripcion"] = _ctx_value(ctx.responsabilidades())
+            out["descripcion"] = _ctx_value(ctx.responsabilidades(), self)
 
         # voluntariado: descripcion(...)
         if hasattr(ctx, "descripcion") and ctx.descripcion():
-            out["descripcion"] = _ctx_value(ctx.descripcion())
+            out["descripcion"] = _ctx_value(ctx.descripcion(), self)
 
         return out
 
@@ -312,7 +342,7 @@ class BuildObjectsVisitor(E3Visitor):
         s = ctx.soft()
         if s:
             for h in s.habilidad():
-                hs.append(Habilidad(nombre=_ctx_value(h), tipo="soft"))
+                hs.append(Habilidad(nombre=_ctx_value(h, self), tipo="soft"))
 
         # hard? -> ctx.hard() es None o HardContext (NO lista)
         hd = ctx.hard()
@@ -356,16 +386,16 @@ class BuildObjectsVisitor(E3Visitor):
 
         if hasattr(ctx, "proyecto") and ctx.proyecto():
             for p in ctx.proyecto():
-                nombre = _ctx_value(p.nombre()) if hasattr(p, "nombre") and p.nombre() else ""
-                desc = _ctx_value(p.descripcion()) if hasattr(p, "descripcion") and p.descripcion() else ""
-                tec = _split_tecnologias(_ctx_value(p.tecnologias())) if hasattr(p, "tecnologias") and p.tecnologias() else []
+                nombre = _ctx_value(p.nombre(), self) if hasattr(p, "nombre") and p.nombre() else ""
+                desc = _ctx_value(p.descripcion(), self) if hasattr(p, "descripcion") and p.descripcion() else ""
+                tec = _split_tecnologias(_ctx_value(p.tecnologias(), self)) if hasattr(p, "tecnologias") and p.tecnologias() else []
                 proyectos.append(Proyecto(nombre=nombre, descripcion=desc, categoria=None, tecnologias=tec))
 
         # Si en tu gramática existen meritos(), también podrías leerlos:
         if hasattr(ctx, "meritos") and ctx.meritos():
             for m in ctx.meritos():
-                n = _ctx_value(m.nombre()) if hasattr(m, "nombre") and m.nombre() else ""
-                d = _ctx_value(m.descripcion()) if hasattr(m, "descripcion") and m.descripcion() else ""
+                n = _ctx_value(m.nombre(), self) if hasattr(m, "nombre") and m.nombre() else ""
+                d = _ctx_value(m.descripcion(), self) if hasattr(m, "descripcion") and m.descripcion() else ""
                 meritos.append(Merito(nombre=n, descripcion=d))
 
         self._folio = Portafolio(proyectos=proyectos, meritos=meritos)

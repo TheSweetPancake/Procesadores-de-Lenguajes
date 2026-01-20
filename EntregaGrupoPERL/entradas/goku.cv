@@ -1,6 +1,9 @@
 cv "Goku" {
+	local_var{
+		"name" = Son Goku;
+	}
 	datospersonales {
-		nomyape (Son Goku)
+		nomyape ("name")
 		fecha (12/04/1737)
 		bio (Guerrero saiyan defensor de la tierra)
 		contacto {
