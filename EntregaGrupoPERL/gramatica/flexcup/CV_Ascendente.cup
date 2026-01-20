@@ -400,8 +400,7 @@ global_var_opt ::= global_var
 
 global_var ::= GVAR LL_A variable_list LL_C
                {: 
-                  for(Object o : ((java.util.List) $variable_list)) {
-                      java.util.Map.Entry<String,String> e = (java.util.Map.Entry<String,String>) o;
+                  for(Map.Entry<String,String> e : (List<Map.Entry<String,String>>) $3) {
                       commitGlobalVar(e.getKey(), e.getValue());
                   }
                :};
@@ -411,21 +410,28 @@ local_var_opt ::= local_var
 
 local_var ::= LVAR LL_A variable_list LL_C
                {:
-                  for(Object o : ((java.util.List) $variable_list)) {
-                      java.util.Map.Entry<String,String> e = (java.util.Map.Entry<String,String>) o;
+                  for(Map.Entry<String,String> e : (List<Map.Entry<String,String>>) $3) {
                       commitLocalVar(e.getKey(), e.getValue());
                   }
                :};
 
 variable_list ::= variable_list variable
-                | variable;
+                {:
+                    List<Map.Entry<String,String>> merged = new ArrayList<>($1);
+                    merged.addAll($2);
+                    RESULT = merged;
+                :}
+                | variable
+                {: RESULT = $1; :}
+                ;
 
 variable ::= IDENT IG CONJPALYNUM PYC
             {:
-                java.util.List<java.util.Map.Entry<String,String>> list = new ArrayList<>();
-                list.add(new AbstractMap.SimpleEntry<>(unquote($IDENT), unquote($CONJPALYNUM)));
+                List<Map.Entry<String,String>> list = new ArrayList<>();
+                list.add(new AbstractMap.SimpleEntry<>(unquote($1), unquote($3)));
                 RESULT = list;
             :};
+
 
 cv_list ::= cv_list cv
           | cv;
