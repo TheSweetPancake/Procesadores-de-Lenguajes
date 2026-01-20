@@ -425,12 +425,6 @@ variable ::= IDENT IG CONJPALYNUM PYC
                 java.util.List<java.util.Map.Entry<String,String>> list = new ArrayList<>();
                 list.add(new AbstractMap.SimpleEntry<>(unquote($IDENT), unquote($CONJPALYNUM)));
                 RESULT = list;
-            :}
-          | variable_list variable
-            {:
-                List<java.util.Map.Entry<String,String>> list = new ArrayList<>($variable_list);
-                list.add(new AbstractMap.SimpleEntry<>(unquote($variable.CONJPALYNUM), unquote($variable.CONJPALYNUM)));
-                RESULT = list;
             :};
 
 
