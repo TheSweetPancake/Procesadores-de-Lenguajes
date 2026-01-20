@@ -528,8 +528,8 @@ bio ::= BIO PA_A CONJPALYNUM:x PA_C
       | BIO PA_A IDENT:x PA_C
         {:
           String key = stripParensLike(x);
-          String v = localVars.containsKey(key) ? localVars.get(key)
-                   : globalVars.containsKey(key) ? globalVars.get(key)
+          String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                   : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                    : unquote(key);
           if (inCtx("DATOS")) datos().put("bio", v);
         :}
@@ -621,8 +621,8 @@ titulo ::= TITULO PA_A CONJPALYNUM:x PA_C
        | TITULO PA_A IDENT:x PA_C
          {:
            String key = stripParensLike(x);
-           String v = localVars.containsKey(key) ? localVars.get(key)
-                    : globalVars.containsKey(key) ? globalVars.get(key)
+           String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                    : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                     : unquote(key);
            if (inCtx("FORM_OFICIAL") || inCtx("FORM_COMP")) tmpFormTitulo = v;
          :}
@@ -637,8 +637,8 @@ expedidor ::= EXPEDIDOR PA_A CONJPALYNUM:x PA_C
           | EXPEDIDOR PA_A IDENT:x PA_C
             {:
               String key = stripParensLike(x);
-              String v = localVars.containsKey(key) ? localVars.get(key)
-                       : globalVars.containsKey(key) ? globalVars.get(key)
+              String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                       : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                        : unquote(key);
               if (inCtx("FORM_OFICIAL") || inCtx("FORM_COMP")) tmpFormExpedidor = v;
               else if (inCtx("IDIOMA")) tmpIdiomaExpedidor = v;
@@ -656,8 +656,8 @@ descripcion ::= DESCRIPCION PA_A CONJPALYNUM:x PA_C
             | DESCRIPCION PA_A IDENT:x PA_C
               {:
                 String key = stripParensLike(x);
-                String v = localVars.containsKey(key) ? localVars.get(key)
-                         : globalVars.containsKey(key) ? globalVars.get(key)
+                String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                         : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                          : unquote(key);
                 if (inCtx("FORM_OFICIAL") || inCtx("FORM_COMP")) tmpFormDesc = v;
                 else if (inCtx("LABORAL") || inCtx("VOLUNTARIADO")) tmpXPDesc = v;
@@ -673,8 +673,8 @@ logros ::= LOGROS PA_A CONJPALYNUM:x PA_C
        | LOGROS PA_A IDENT:x PA_C
          {:
            String key = stripParensLike(x);
-           String v = localVars.containsKey(key) ? localVars.get(key)
-                    : globalVars.containsKey(key) ? globalVars.get(key)
+           String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                    : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                     : unquote(key);
            if (inCtx("FORM_OFICIAL") || inCtx("FORM_COMP")) tmpFormLogros = v;
          :}
@@ -802,8 +802,8 @@ puesto ::= PUESTO PA_A CONJPALYNUM:x PA_C
       | PUESTO PA_A IDENT:x PA_C
         {:
           String key = stripParensLike(x);
-          String v = localVars.containsKey(key) ? localVars.get(key)
-                   : globalVars.containsKey(key) ? globalVars.get(key)
+          String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                   : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                    : unquote(key);
           if (inCtx("LABORAL") || inCtx("VOLUNTARIADO")) tmpXPPuesto = v;
         :}
@@ -816,8 +816,8 @@ responsabilidades ::= RESPONSABILIDADES PA_A CONJPALYNUM:x PA_C
                   | RESPONSABILIDADES PA_A IDENT:x PA_C
                     {:
                       String key = stripParensLike(x);
-                      String v = localVars.containsKey(key) ? localVars.get(key)
-                               : globalVars.containsKey(key) ? globalVars.get(key)
+                      String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                               : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                                : unquote(key);
                       if (inCtx("LABORAL")) tmpXPDesc = v;
                     :}
@@ -830,8 +830,8 @@ organizacion ::= ORGANIZACION PA_A CONJPALYNUM:x PA_C
             | ORGANIZACION PA_A IDENT:x PA_C
               {:
                 String key = stripParensLike(x);
-                String v = localVars.containsKey(key) ? localVars.get(key)
-                         : globalVars.containsKey(key) ? globalVars.get(key)
+                String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                         : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                          : unquote(key);
                 if (inCtx("LABORAL") || inCtx("VOLUNTARIADO")) tmpXPOrg = v;
               :}
@@ -866,8 +866,8 @@ habilidad ::= HABILIDAD PA_A CONJPALYNUM:x PA_C
           | HABILIDAD PA_A IDENT:x PA_C
             {:
               String key = stripParensLike(x);
-              String v = localVars.containsKey(key) ? localVars.get(key)
-                       : globalVars.containsKey(key) ? globalVars.get(key)
+              String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                       : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                        : unquote(key);
               if (inCtx("SOFT")) addSoftSkill(v);
               else if (inCtx("HARD")) tmpHardHabilidad = v;
@@ -971,8 +971,8 @@ tecnologias ::= TECNOLOGIAS PA_A CONJPALYNUM:x PA_C
             | TECNOLOGIAS PA_A IDENT:x PA_C
               {:
                 String key = stripParensLike(x);
-                String v = localVars.containsKey(key) ? localVars.get(key)
-                         : globalVars.containsKey(key) ? globalVars.get(key)
+                String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                         : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                          : unquote(key);
                 if (inCtx("PROYECTO")) tmpProyTecnologias = splitTecnologias(v);
               :}
@@ -1007,8 +1007,8 @@ nombre ::= NOMBRE PA_A CONJPALYNUM:x PA_C
       | NOMBRE PA_A IDENT:x PA_C
         {:
           String key = stripParensLike(x);
-          String v = localVars.containsKey(key) ? localVars.get(key)
-                   : globalVars.containsKey(key) ? globalVars.get(key)
+          String v = localVars.containsKey(unquote(key)) ? localVars.get(unquote(key))
+                   : globalVars.containsKey(unquote(key)) ? globalVars.get(unquote(key))
                    : unquote(key);
           if (inCtx("IDIOMA")) tmpIdiomaNombre = v;
           else if (inCtx("PROYECTO")) tmpProyNombre = v;
