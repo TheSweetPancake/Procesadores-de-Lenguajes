@@ -498,9 +498,14 @@ nomyape ::= NOMYAPE PA_A CONJPALYNUM:x PA_C
           | NOMYAPE PA_A IDENT:x PA_C
             {:
               String key = stripParensLike(x);
-              String v = key in localVars ? localVars.get(key)
-                       : globalVars.containsKey(key) ? globalVars.get(key)
-                       : key;
+              String v;
+              if (localVars.containsKey(key)) {
+                  v = localVars.get(key);
+              } else if (globalVars.containsKey(key)) {
+                  v = globalVars.get(key);
+              } else {
+                  v = key;
+              }
               if (inCtx("COMPANERO")) tmpCompaneroNombre = v;
               else datos().put("nombre", v);
             :}
