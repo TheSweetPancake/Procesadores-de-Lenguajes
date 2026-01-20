@@ -132,6 +132,10 @@ jobs:
           cd "$ROOT"
           java -cp "$FLEXCUP_DIR:$ROOT/tools/java-cup.jar" parser "$INPUT_PATH" > cv.json
           test -s cv.json
+          echo "===== cv.json ====="
+          cat cv.json
+          echo "==================="
+
       
           # 5) Render Jinja
           cat > render.py << 'PY'
