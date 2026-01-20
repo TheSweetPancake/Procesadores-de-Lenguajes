@@ -398,32 +398,32 @@ cvs ::= global_var_opt cv_list
 global_var_opt ::= global_var
                  | /* empty */;
 
-global_var ::= GVAR LL_A variable_list LL_C
+global_var ::= GVAR LL_A variable_list:x LL_C
                {: 
-                  for(Object o : ((java.util.List) variable_list)) {
+                  for(Object o : (java.util.List) x) {
                       java.util.Map.Entry<String,String> e = (java.util.Map.Entry<String,String>) o;
-                      commitGlobalVar(e.getKey(), e.getValue());
+                      parser.commitGlobalVar(e.getKey(), e.getValue());
                   }
                :};
 
 local_var_opt ::= local_var
                 | /* empty */;
 
-local_var ::= LVAR LL_A variable_list LL_C
-               {:
-                  for(Object o : ((java.util.List) variable_list)) {
+local_var ::= LVAR LL_A variable_list:x LL_C
+               {: 
+                  for(Object o : (java.util.List) x) {
                       java.util.Map.Entry<String,String> e = (java.util.Map.Entry<String,String>) o;
-                      commitLocalVar(e.getKey(), e.getValue());
+                      parser.commitLocalVar(e.getKey(), e.getValue());
                   }
                :};
 
 variable_list ::= variable_list variable
                 | variable;
 
-variable ::= IDENT IG CONJPALYNUM PYC
+variable ::= IDENT:x IG CONJPALYNUM:y PYC
             {:
                 java.util.List<java.util.Map.Entry<String,String>> list = new ArrayList<>();
-                list.add(new AbstractMap.SimpleEntry<>(unquote(IDENT), unquote(CONJPALYNUM)));
+                list.add(new AbstractMap.SimpleEntry<>(parser.unquote(x), parser.unquote(y)));
                 RESULT = list;
             :};
 
