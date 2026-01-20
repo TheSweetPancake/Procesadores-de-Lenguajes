@@ -417,8 +417,16 @@ local_var ::= LVAR LL_A variable_list:x LL_C
                   }
                :};
 
-variable_list ::= variable_list variable
-                | variable;
+variable_list ::= variable_list:l variable:v
+                {:
+                    l.addAll(v);
+                    RESULT = l;
+                :}
+                | variable:v
+                {:
+                    RESULT = v;
+                :}
+                ;
 
 variable ::= IDENT:x IG CONJPALYNUM:y PYC
             {:
