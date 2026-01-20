@@ -26,11 +26,11 @@ cv "Antonio Lobato" {
   }
   idiomas {
     idioma{
-      Español
+      nombre(Español)
       nivel(Nativo)
     }
     idioma{
-      Ingles
+      nombre(Ingles)
       nivel(C1)
       expedidor(Cambridge)
     }
