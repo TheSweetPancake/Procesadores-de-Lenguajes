@@ -751,7 +751,7 @@ voluntariado_list ::= voluntariado_list voluntariado
 
 voluntariado ::= VOLUNTARIADO LL_A
                {: resetXPTemps("voluntariado"); pushCtx("VOLUNTARIADO"); :}
-               puesto descripcion_opt horas_opt organizacion
+               organizacion puesto descripcion_opt horas_opt
                LL_C
                {:
                  commitXPItem();
