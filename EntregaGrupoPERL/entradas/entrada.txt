@@ -27,7 +27,7 @@ cv "Antonio Lobato" {
   idiomas {
     idioma{
       nombre(Español)
-      nivel(Nativo)
+      nivel(nativo)
     }
     idioma{
       nombre(Ingles)
