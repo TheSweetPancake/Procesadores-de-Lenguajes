@@ -419,8 +419,13 @@ local_var ::= LVAR LL_A variable_list:x LL_C
 
 variable_list ::= variable_list:l variable:v
                 {:
-                    l.addAll(v);
-                    RESULT = l;
+                    java.util.List<java.util.Map.Entry<String,String>> ll =
+                        (java.util.List<java.util.Map.Entry<String,String>>) l;
+                    java.util.List<java.util.Map.Entry<String,String>> vv =
+                        (java.util.List<java.util.Map.Entry<String,String>>) v;
+
+                    ll.addAll(vv);
+                    RESULT = ll;
                 :}
                 | variable:v
                 {:
