@@ -5,7 +5,7 @@ cv "John Wick" {
 		bio (Ex asesino profesional retirado)
 		contacto {
 			email (johnwick@continental.ny)
-			telefono (333333333)
+			telefono (733333333)
 			redes {
 				web (continental.ny)
 			}
@@ -14,7 +14,7 @@ cv "John Wick" {
 	formacion {
 		oficial {
 			titulo (Asesino profesional)
-			expedidor ("continental")
+			expedidor (continental)
 			logros (Misiones completadas)
 			fecha (01/01/1990)
 		}
@@ -26,20 +26,20 @@ cv "John Wick" {
 	}
 	idiomas {
 		idioma{
-			Ingles
-			nivel(Nativo)
+			nombre(Ingles)
+			nivel(nativo)
 		}
 		idioma{
-			Ruso
-			nivel(Medio)
+			nombre(Ruso)
+			nivel(B1)
 			expedidor(Europa del este)
 		}
 	}
 	experiencia {
 		laboral {
+			organizacion (alta mesa)
 			puesto (Asesino)
 			horas (8000)
-			organizacion ("alta mesa")
 			responsabilidades (Eliminacion de objetivos)
 		}
 		voluntariado{
@@ -63,7 +63,7 @@ cv "John Wick" {
 	}
 	portafolio {
 		proyecto {
-			nombre ("misiones")
+			nombre (misiones)
 			descripcion (Contratos ejecutados)
 			tecnologias (Armas)
 			web (continental.ny)

@@ -733,7 +733,7 @@ laboral_list ::= laboral_list laboral
 
 laboral ::= LABORAL LL_A
           {: resetXPTemps("laboral"); pushCtx("LABORAL"); :}
-          puesto horas_opt organizacion responsabilidades_opt
+          organizacion puesto horas_opt responsabilidades_opt
           LL_C
           {:
             commitXPItem();

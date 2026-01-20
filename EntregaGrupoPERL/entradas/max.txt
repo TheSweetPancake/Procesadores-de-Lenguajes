@@ -26,20 +26,20 @@ cv "Max Verstappen" {
 	}
 	idiomas {
 		idioma{
-			Holandes
-			nivel(Nativo)
+			nombre(Holandes)
+			nivel(nativo)
 		}
 		idioma{
-			Ingles
-			nivel(Alto)
+			nombre(Ingles)
+			nivel(B2)
 			expedidor(FIA)
 		}
 	}
 	experiencia {
 		laboral {
+			organizacion (formula 1)
 			puesto (Piloto)
 			horas (6000)
-			organizacion ("formula 1")
 			responsabilidades (Competicion automovilistica)
 		}
 		voluntariado{
@@ -57,13 +57,13 @@ cv "Max Verstappen" {
 			categoria {
 				nombre (Automovilismo)
 				habilidad (Conduccion extrema)
-				nvhab (muy alto)
+				nvhab (alto)
 			}
 		}
 	}
 	portafolio {
 		proyecto {
-			nombre ("formula 1")
+			nombre (formula 1)
 			descripcion (Carrera profesional)
 			tecnologias (Monoplaza)
 			web (maxverstappen.com)

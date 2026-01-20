@@ -5,17 +5,17 @@ import sys
 from antlr4 import FileStream, CommonTokenStream
 from jinja2 import Environment, FileSystemLoader
 
-from CVLangLexer import CVLangLexer
-from CVLangParser import CVLangParser
+from E3Lexer import E3Lexer
+from E3Parser import E3Parser
 
 from cv_builder import BuildObjectsVisitor
 
 
 def parse_cv(input_path: str):
     stream = FileStream(input_path, encoding="utf-8")
-    lexer = CVLangLexer(stream)
+    lexer = E3Lexer(stream)
     tokens = CommonTokenStream(lexer)
-    parser = CVLangParser(tokens)
+    parser = E3Parser(tokens)
 
     # Regla raíz: start
     tree = parser.start()

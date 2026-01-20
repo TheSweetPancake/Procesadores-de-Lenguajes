@@ -1,4 +1,4 @@
-grammar CVLang;
+grammar E3;
 
 // ======== Palabras clave ========
 CV              : 'cv' ;
@@ -142,7 +142,7 @@ idioma:         IDIOMA LL_A nombre nvi expedidor? LL_C  ;
 nvi:            NIVEL PA_A NVI PA_C ;
 
 experiencia:    EXPERIENCIA LL_A (laboral+ voluntariado* | voluntariado+) LL_C;
-laboral:        LABORAL LL_A puesto horas organizacion responsabilidades? LL_C;
+laboral:        LABORAL LL_A organizacion puesto horas responsabilidades? LL_C;
 puesto:         PUESTO PA_A (CONJPALYNUM|IDENT) PA_C;
 responsabilidades: RESPONSABILIDADES PA_A (CONJPALYNUM|IDENT) PA_C;
 voluntariado:   VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C;

@@ -1,4 +1,7 @@
 cv "Xokas" {
+	local_var{
+		"I" = internet;
+	}
 	datospersonales {
 		nomyape (Xokas)
 		fecha (13/04/1990)
@@ -14,7 +17,7 @@ cv "Xokas" {
 	formacion {
 		oficial {
 			titulo (Creador de contenido)
-			expedidor ("internet")
+			expedidor ("I")
 			logros (Audiencia masiva)
 			fecha (01/01/2018)
 		}
@@ -26,20 +29,20 @@ cv "Xokas" {
 	}
 	idiomas {
 		idioma{
-			Espanol
-			nivel(Nativo)
+			nombre(Español)
+			nivel(nativo)
 		}
 		idioma{
-			Ingles
-			nivel(Medio)
-			expedidor(Internet)
+			nombre(Ingles)
+			nivel(a1)
+			expedidor("I")
 		}
 	}
 	experiencia {
 		laboral {
+			organizacion (twitch)
 			puesto (Streamer)
 			horas (7000)
-			organizacion ("twitch")
 			responsabilidades (Emision en directo)
 		}
 		voluntariado{
@@ -63,7 +66,7 @@ cv "Xokas" {
 	}
 	portafolio {
 		proyecto {
-			nombre ("canal twitch")
+			nombre (Canal de twitch)
 			descripcion (Contenido en directo)
 			tecnologias (Streaming)
 			web (twitch.tv/xokas)

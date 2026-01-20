@@ -1,4 +1,4 @@
-/* Archivo generado a partir de datos_persona1.py */
+/* Archivo de prueba */
 
 cv "CurriculumPrueba" {
   datospersonales {
@@ -33,11 +33,11 @@ cv "CurriculumPrueba" {
 
   idiomas {
     idioma(
-      Español
-      nivel(Nativo)
+      nombre(Español)
+      nivel(nativo)
     )
     idioma(
-      Ingles
+      nombre(Ingles)
       nivel(C1)
       expedidor(Cambridge)
     )
@@ -64,13 +64,16 @@ cv "CurriculumPrueba" {
       habilidad(Comunicacion)
     }
     hard{
-      habilidad(Python)
-      categoria(Programacion)
-      nvhab(Avanzado)
-
-      habilidad(TensorFlow)
-      categoria(IA)
-      nvhab(Intermedio)
+      categoria{
+        nombre (Programacion)
+        habilidad(Python)
+        nvhab(alto)
+      }
+      categoria{
+        nombre (IA)
+        habilidad(TensorFlow)
+        nvhab(medio)
+      }
     }
   }
 

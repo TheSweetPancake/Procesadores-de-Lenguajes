@@ -1,3 +1,6 @@
+gvar {
+  "ctc" = compramostucoche;
+}
 cv "Antonio Lobato" {
   datospersonales {
     nomyape (Antonio Lobato)
@@ -37,9 +40,9 @@ cv "Antonio Lobato" {
   }
   experiencia {
     laboral {
+      organizacion ("ctc")
       puesto (Vendedor de coches)
       horas (99)
-      organizacion ("ctc")
       responsabilidades (Vender coches)
     }
     voluntariado{

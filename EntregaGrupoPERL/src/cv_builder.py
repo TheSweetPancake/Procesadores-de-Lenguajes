@@ -10,8 +10,8 @@ from experiencia import Experiencia, ExperienciaItem
 from habilidades import Habilidades, Habilidad
 from portafolio import Portafolio, Proyecto, Merito
 
-from CVLangVisitor import CVLangVisitor
-from CVLangParser import CVLangParser
+from E3Visitor import E3Visitor
+from E3Parser import E3Parser
 
 
 # ---------- helpers de texto ----------
@@ -66,7 +66,7 @@ class CVObjects:
     portafolio: Optional[Portafolio]
 
 
-class BuildObjectsVisitor(CVLangVisitor):
+class BuildObjectsVisitor(E3Visitor):
     def __init__(self) -> None:
         super().__init__()
         self._cv_id: str = "CV"
@@ -93,10 +93,10 @@ class BuildObjectsVisitor(CVLangVisitor):
         )
 
     # ---------- ENTRY ----------
-    def visitStart(self, ctx: CVLangParser.StartContext):
+    def visitStart(self, ctx: E3Parser.StartContext):
         return self.visit(ctx.cvs())
 
-    def visitCvs(self, ctx: CVLangParser.CvsContext):
+    def visitCvs(self, ctx: E3Parser.CvsContext):
         cvs = ctx.cv()
         if not cvs:
             raise ValueError("No se encontró ningún bloque cv en el archivo.")
@@ -104,7 +104,7 @@ class BuildObjectsVisitor(CVLangVisitor):
         return self.visit(cvs[0])
 
     # ---------- CV ----------
-    def visitCv(self, ctx: CVLangParser.CvContext):
+    def visitCv(self, ctx: E3Parser.CvContext):
         # Dependiendo de tu gramática, el nombre puede ser IDENT o algo similar.
         # Lo más robusto: usa getText() y extrae lo que haya tras 'cv'.
         # Si tu cv es: cv "Antonio Lobato" { ... }
@@ -135,7 +135,7 @@ class BuildObjectsVisitor(CVLangVisitor):
         return self.result()
 
     # ---------- DATOS PERSONALES ----------
-    def visitDatospersonales(self, ctx: CVLangParser.DatospersonalesContext):
+    def visitDatospersonales(self, ctx: E3Parser.DatospersonalesContext):
         nombre = _ctx_value(ctx.nomyape())
         datos = DatosPersonales(nombre=nombre)
 
@@ -163,7 +163,7 @@ class BuildObjectsVisitor(CVLangVisitor):
         return None
 
     # ---------- FORMACIÓN ----------
-    def visitFormacion(self, ctx: CVLangParser.FormacionContext):
+    def visitFormacion(self, ctx: E3Parser.FormacionContext):
         items: List[FormacionItem] = []
 
         for o in ctx.oficial():
@@ -208,7 +208,7 @@ class BuildObjectsVisitor(CVLangVisitor):
         return None
 
     # ---------- IDIOMAS ----------
-    def visitIdiomas(self, ctx: CVLangParser.IdiomasContext):
+    def visitIdiomas(self, ctx: E3Parser.IdiomasContext):
         lst: List[Idioma] = []
         for it in ctx.idioma():
             # En muchas gramáticas: idioma( Inglés nivel(B2) expedidor(...) )
@@ -227,7 +227,7 @@ class BuildObjectsVisitor(CVLangVisitor):
         return None
 
     # ---------- EXPERIENCIA ----------
-    def visitExperiencia(self, ctx: CVLangParser.ExperienciaContext):
+    def visitExperiencia(self, ctx: E3Parser.ExperienciaContext):
         items: List[ExperienciaItem] = []
 
         for l in ctx.laboral() or []:
@@ -282,7 +282,7 @@ class BuildObjectsVisitor(CVLangVisitor):
         return out
 
     # ---------- HABILIDADES ----------
-    def visitHabilidades(self, ctx: CVLangParser.HabilidadesContext):
+    def visitHabilidades(self, ctx: E3Parser.HabilidadesContext):
         hs: List[Habilidad] = []
 
         # soft?  -> ctx.soft() es None o SoftContext (NO lista)
@@ -327,7 +327,7 @@ class BuildObjectsVisitor(CVLangVisitor):
         return _unquote(block_text[i + len(key) : j].strip())
 
     # ---------- PORTAFOLIO ----------
-    def visitPortafolio(self, ctx: CVLangParser.PortafolioContext):
+    def visitPortafolio(self, ctx: E3Parser.PortafolioContext):
         proyectos: List[Proyecto] = []
         meritos: List[Merito] = []
 

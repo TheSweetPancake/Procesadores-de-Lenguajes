@@ -5,7 +5,7 @@ cv "Messi" {
 		bio (Futbolista profesional de elite)
 		contacto {
 			email (messi@football.world)
-			telefono (444444444)
+			telefono (544444444)
 			redes {
 				web (leomessi.com)
 			}
@@ -14,7 +14,7 @@ cv "Messi" {
 	formacion {
 		oficial {
 			titulo (Futbolista profesional)
-			expedidor ("fc barcelona")
+			expedidor (fc barcelona)
 			logros (Balones de oro)
 			fecha (01/01/2004)
 		}
@@ -37,9 +37,9 @@ cv "Messi" {
 	}
 	experiencia {
 		laboral {
+			organizacion ("clubes profesionales")
 			puesto (Futbolista)
 			horas (15000)
-			organizacion ("clubes profesionales")
 			responsabilidades (Competicion deportiva)
 		}
 		voluntariado{
@@ -63,7 +63,7 @@ cv "Messi" {
 	}
 	portafolio {
 		proyecto {
-			nombre ("carrera deportiva")
+			nombre (carrera deportiva)
 			descripcion (Trayectoria profesional)
 			tecnologias (Entrenamiento)
 			web (leomessi.com)

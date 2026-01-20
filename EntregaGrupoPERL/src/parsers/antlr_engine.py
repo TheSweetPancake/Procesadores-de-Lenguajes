@@ -2,15 +2,15 @@ from __future__ import annotations
 from pathlib import Path
 from antlr4 import FileStream, CommonTokenStream
 
-from CVLangLexer import CVLangLexer
-from CVLangParser import CVLangParser
+from E3Lexer import E3Lexer
+from E3Parser import E3Parser
 from cv_builder import BuildObjectsVisitor
 
 def parse_with_antlr(input_path: Path) -> dict:
     stream = FileStream(str(input_path), encoding="utf-8")
-    lexer = CVLangLexer(stream)
+    lexer = E3Lexer(stream)
     tokens = CommonTokenStream(lexer)
-    parser = CVLangParser(tokens)
+    parser = E3Parser(tokens)
 
     tree = parser.start()  # tu regla raíz
     visitor = BuildObjectsVisitor()
