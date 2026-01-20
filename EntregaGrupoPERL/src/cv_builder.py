@@ -46,9 +46,9 @@ def _ctx_value(ctx, visitor: "BuildObjectsVisitor" = None) -> str:
     inner = _inside_parens(text)
 
     if visitor is None:
-        return _unquote(inner)
+        return inner  # NO _unquote aquí
 
-    return visitor._resolve_value(inner)
+    return visitor.resolve_value(inner)
 
 
 def _split_tecnologias(s: str) -> List[str]:
@@ -61,13 +61,9 @@ def _split_tecnologias(s: str) -> List[str]:
 
 
 def resolve_value(self, raw: str) -> str:
-    """
-    Si raw viene entre comillas -> es referencia a variable.
-    Si no -> literal.
-    """
     raw = raw.strip()
 
-    # ¿Venía entre comillas en el DSL?
+    # Referencia a variable
     if raw.startswith('"') and raw.endswith('"'):
         key = raw[1:-1]
 
@@ -78,11 +74,11 @@ def resolve_value(self, raw: str) -> str:
             return self.global_vars[key]
 
         raise ValueError(
-            f"Variable '{key}' usada pero no definida en local_vars ni global_vars"
+            f"Variable '{key}' usada pero no definida"
         )
 
-    # No es variable, es literal
     return raw
+
 
 
 @dataclass
