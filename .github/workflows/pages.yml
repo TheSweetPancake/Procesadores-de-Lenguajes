@@ -65,11 +65,11 @@ jobs:
           rm -rf "$BASE/src/antlr_gen"
           mkdir -p "$BASE/src/antlr_gen"
       
-          java -jar antlr.jar -Dlanguage=Python3 -visitor -o "$BASE/src/antlr_gen" "$BASE/gramatica/antlr/CVLang.g4"
+          java -jar antlr.jar -Dlanguage=Python3 -visitor -o "$BASE/src/antlr_gen" "$BASE/gramatica/antlr/E3.g4"
       
-          ANTLR_PY_DIR="$(dirname "$(find "$BASE/src/antlr_gen" -name CVLangLexer.py | head -n 1)")"
+          ANTLR_PY_DIR="$(dirname "$(find "$BASE/src/antlr_gen" -name E3Lexer.py | head -n 1)")"
           if [ -z "$ANTLR_PY_DIR" ]; then
-            echo "[ERROR] CVLangLexer.py no generado"
+            echo "[ERROR] E3Lexer.py no generado"
             exit 1
           fi
           echo "ANTLR_PY_DIR=$ANTLR_PY_DIR"
