@@ -5,7 +5,6 @@ from typing import List, Optional
 class Proyecto:
     nombre: str
     descripcion: str
-    categoria: str
     tecnologias: List[str] = field(default_factory=list)
     web: Optional[str] = None
     grupo: Optional[List[str]] = None  # nombres de compañeros
