@@ -1,4 +1,6 @@
-from __future__ import annotations
+"""
+Engine ANTLR: Parser CV → datos estructurados listos para Jinja2
+"""
 from pathlib import Path
 from antlr4 import FileStream, CommonTokenStream
 
@@ -6,18 +8,9 @@ from E3Lexer import E3Lexer
 from E3Parser import E3Parser
 from cv_builder import BuildObjectsVisitor
 
-def parse_with_antlr(input_path: Path) -> dict:
-    stream = FileStream(str(input_path), encoding="utf-8")
-    lexer = E3Lexer(stream)
-    tokens = CommonTokenStream(lexer)
-    parser = E3Parser(tokens)
 
-    tree = parser.start()  # tu regla raíz
-    visitor = BuildObjectsVisitor()
-    objs = visitor.visit(tree)
-
-    # Unifica salida a dict para Jinja
-    # Si tu visitor devuelve dataclass CVObjects, conviértelo:
+def _to_jinja_dict(objs) -> dict:
+    """Convierte objetos CV a diccionario para renderizar con Jinja2."""
     return {
         "cv_id": getattr(objs, "cv_id", ""),
         "datos": getattr(objs, "datos", None),
@@ -26,6 +19,26 @@ def parse_with_antlr(input_path: Path) -> dict:
         "experiencia": getattr(objs, "experiencia", None),
         "habilidades": getattr(objs, "habilidades", None),
         "portafolio": getattr(objs, "portafolio", None),
-        "global_vars": getattr(objs, "global_vars", {}),
-        "local_vars": getattr(objs, "local_vars", {}),
     }
+
+
+def parse_with_antlr(input_path: Path) -> dict:
+    """
+    Parsea un archivo .cv con ANTLR y devuelve datos estructurados.
+    
+    Args:
+        input_path: Ruta al archivo .cv
+        
+    Returns:
+        dict: Datos del CV listos para Jinja2
+    """
+    stream = FileStream(str(input_path), encoding="utf-8")
+    lexer = E3Lexer(stream)
+    tokens = CommonTokenStream(lexer)
+    parser = E3Parser(tokens)
+
+    tree = parser.start()
+    visitor = BuildObjectsVisitor()
+    objs = visitor.visit(tree)
+
+    return _to_jinja_dict(objs)

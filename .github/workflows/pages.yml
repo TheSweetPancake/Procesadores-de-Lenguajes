@@ -2,7 +2,7 @@ name: Build and Deploy CV (ANTLR or Flex/CUP)
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "feature/pages"]
   workflow_dispatch:
 
 permissions:
@@ -78,6 +78,49 @@ jobs:
             python "$BASE/src/main.py" --input "$INPUT_PATH" --template "$TEMPLATE_PATH" --out index.html
       
           test -f index.html
+          
+          # Imprimir JSON directo del parser ANTLR
+          PYTHONPATH="$(pwd)/$BASE/src:$(pwd)/$ANTLR_PY_DIR" python << PYSCRIPT
+          import json
+          from pathlib import Path
+          from antlr4 import FileStream, CommonTokenStream
+          from E3Lexer import E3Lexer
+          from E3Parser import E3Parser
+          from cv_builder import BuildObjectsVisitor
+          
+          input_path = Path("$INPUT_PATH")
+          stream = FileStream(str(input_path), encoding="utf-8")
+          lexer = E3Lexer(stream)
+          tokens = CommonTokenStream(lexer)
+          parser = E3Parser(tokens)
+          tree = parser.start()
+          visitor = BuildObjectsVisitor()
+          objs = visitor.visit(tree)
+          
+          print("===== JSON DIRECTO del visitor (ANTLR) =====")
+          print(f"cv_id: {objs.cv_id}")
+          print(f"datos: {objs.datos}")
+          print(f"formacion: {objs.formacion}")
+          print(f"idiomas: {objs.idiomas}")
+          print(f"experiencia: {objs.experiencia}")
+          print(f"habilidades: {objs.habilidades}")
+          print(f"portafolio: {objs.portafolio}")
+          print("=============================================")
+          PYSCRIPT
+          
+          # Imprimir resultado de _to_jinja_dict desde ANTLR
+          PYTHONPATH="$(pwd)/$BASE/src:$(pwd)/$ANTLR_PY_DIR" python << PYSCRIPT
+          import json
+          from pathlib import Path
+          from parsers.antlr_engine import parse_with_antlr
+          
+          input_path = Path("$INPUT_PATH")
+          data = parse_with_antlr(input_path)
+          
+          print("===== Resultado de _to_jinja_dict (ANTLR) =====")
+          print(json.dumps(data, indent=2, default=str, ensure_ascii=False))
+          print("===============================================")
+          PYSCRIPT
         
         
 
@@ -137,26 +180,18 @@ jobs:
           echo "==================="
 
       
-          # 5) Render Jinja
-          cat > render.py << 'PY'
-          import json, sys
+          # 5) Render Jinja con flexcup_engine.py
+          PYTHONPATH="$(pwd)/$BASE/src" python << 'PY'
           from pathlib import Path
-          from jinja2 import Environment, FileSystemLoader
-      
-          cv_json, template_path, out_html = sys.argv[1], sys.argv[2], sys.argv[3]
-          tp = Path(template_path)
-      
-          with open(cv_json, "r", encoding="utf-8") as f:
-            data = json.load(f)
-      
-          env = Environment(loader=FileSystemLoader(str(tp.parent)))
-          template = env.get_template(tp.name)
-          html = template.render(**data)
-      
-          Path(out_html).write_text(html, encoding="utf-8")
+          from parsers.flexcup_engine import render_jinja
+          
+          render_jinja(
+              cv_json_path=Path("cv.json"),
+              template_path=Path("$TEMPLATE_PATH"),
+              output_html_path=Path("index.html")
+          )
           PY
-      
-          python render.py cv.json "$TEMPLATE_PATH" index.html
+          
           test -f index.html
         
       
