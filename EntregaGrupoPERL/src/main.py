@@ -2,42 +2,29 @@ import argparse
 from pathlib import Path
 import sys
 
-from antlr4 import FileStream, CommonTokenStream
 from jinja2 import Environment, FileSystemLoader
 
-from E3Lexer import E3Lexer
-from E3Parser import E3Parser
-
-from cv_builder import BuildObjectsVisitor
+from parsers.antlr_engine import parse_with_antlr
 
 
-def parse_cv(input_path: str):
-    stream = FileStream(input_path, encoding="utf-8")
-    lexer = E3Lexer(stream)
-    tokens = CommonTokenStream(lexer)
-    parser = E3Parser(tokens)
-
-    # Regla raíz: start
-    tree = parser.start()
-
-    visitor = BuildObjectsVisitor()
-    objs = visitor.visit(tree)
-    return objs
-
-
-def render_html(objs, template_path: str) -> str:
+def render_html(data: dict, template_path: str) -> str:
+    """Renderiza CV con Jinja2 usando datos del parser.
+    
+    Args:
+        data: Diccionario con datos CV (desde antlr_engine.parse_with_antlr)
+        template_path: Ruta al template HTML
+    """
     template_path = Path(template_path)
     env = Environment(loader=FileSystemLoader(str(template_path.parent)))
     template = env.get_template(template_path.name)
 
     html = template.render(
-        datos=objs.datos.to_dict(),
-        formacion=objs.formacion.to_dict(),
-        idiomas=objs.idiomas.to_dict() if objs.idiomas else {"idiomas": []},
-        # FIX: la clave debe ser "experiencia" (no "experiencias")
-        experiencia=objs.experiencia.to_dict() if objs.experiencia else {"experiencia": []},
-        habilidades=objs.habilidades.to_dict() if objs.habilidades else {"habilidades": []},
-        portafolio=objs.portafolio.to_dict() if objs.portafolio else {"proyectos": [], "meritos": []},
+        datos=data["datos"].to_dict() if data["datos"] else {},
+        formacion=data["formacion"].to_dict() if data["formacion"] else {"formacion": []},
+        idiomas=data["idiomas"].to_dict() if data["idiomas"] else {"idiomas": []},
+        experiencia=data["experiencia"].to_dict() if data["experiencia"] else {"experiencia": []},
+        habilidades=data["habilidades"].to_dict() if data["habilidades"] else {"habilidades": []},
+        portafolio=data["portafolio"].to_dict() if data["portafolio"] else {"proyectos": [], "meritos": []},
     )
     return html
 
@@ -61,8 +48,8 @@ def main():
         print(f"[ERROR] No existe template: {template_path}", file=sys.stderr)
         sys.exit(2)
 
-    objs = parse_cv(str(input_path))
-    html = render_html(objs, str(template_path))
+    data = parse_with_antlr(input_path)
+    html = render_html(data, str(template_path))
 
     out_path.write_text(html, encoding="utf-8")
 

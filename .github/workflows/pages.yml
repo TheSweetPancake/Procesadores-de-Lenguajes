@@ -2,7 +2,7 @@ name: Build and Deploy CV (ANTLR or Flex/CUP)
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "feature/pages"]
   workflow_dispatch:
 
 permissions:
@@ -137,26 +137,18 @@ jobs:
           echo "==================="
 
       
-          # 5) Render Jinja
-          cat > render.py << 'PY'
-          import json, sys
+          # 5) Render Jinja con flexcup_engine.py
+          PYTHONPATH="$(pwd)/$BASE/src" python << 'PY'
           from pathlib import Path
-          from jinja2 import Environment, FileSystemLoader
-      
-          cv_json, template_path, out_html = sys.argv[1], sys.argv[2], sys.argv[3]
-          tp = Path(template_path)
-      
-          with open(cv_json, "r", encoding="utf-8") as f:
-            data = json.load(f)
-      
-          env = Environment(loader=FileSystemLoader(str(tp.parent)))
-          template = env.get_template(tp.name)
-          html = template.render(**data)
-      
-          Path(out_html).write_text(html, encoding="utf-8")
+          from parsers.flexcup_engine import render_jinja
+          
+          render_jinja(
+              cv_json_path=Path("cv.json"),
+              template_path=Path("$TEMPLATE_PATH"),
+              output_html_path=Path("index.html")
+          )
           PY
-      
-          python render.py cv.json "$TEMPLATE_PATH" index.html
+          
           test -f index.html
         
       
