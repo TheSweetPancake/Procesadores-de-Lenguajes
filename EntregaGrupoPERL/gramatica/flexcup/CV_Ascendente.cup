@@ -161,7 +161,6 @@ parser code {:
         return "\"" + jsonEscape(o.toString()) + "\"";
     }
 
-    // accessors
     @SuppressWarnings("unchecked")
     public static Map<String,Object> datos() { return (Map<String,Object>)root.get("datos"); }
 
@@ -195,7 +194,6 @@ parser code {:
         return (List<Map<String,Object>>)((Map<String,Object>)root.get("portafolio")).get("meritos");
     }
 
-    // resets
     static void resetFormacionTemps() {
         tmpFormTitulo = tmpFormExpedidor = tmpFormDesc = tmpFormLogros = tmpFormFecha = null;
         tmpFormEnCurso = false;
@@ -222,7 +220,6 @@ parser code {:
         tmpMeritoNombre = tmpMeritoDesc = null;
     }
 
-    // commits
     static void commitFormacionItem(String tipo) {
         Map<String,Object> it = new LinkedHashMap<>();
         it.put("titulo", tmpFormTitulo == null ? "" : tmpFormTitulo);
@@ -231,8 +228,6 @@ parser code {:
         it.put("descripcion", tmpFormDesc);
         it.put("logros", tmpFormLogros);
         it.put("en_curso", Boolean.valueOf(tmpFormEnCurso));
-        // si quieres, puedes guardar tipo:
-        // it.put("tipo", tipo);
         formacionList().add(it);
     }
 
@@ -516,8 +511,6 @@ fecha ::= FECHA PA_A FECHA_NUM:x PA_C
         {:
           String v = unquote(stripParensLike(x));
           if (inCtx("FORM_OFICIAL") || inCtx("FORM_COMP")) tmpFormFecha = v;
-          // si quisieras guardarla en datos:
-          // if (inCtx("DATOS")) datos().put("fecha", v);
         :}
         ;
 
@@ -680,7 +673,6 @@ logros ::= LOGROS PA_A CONJPALYNUM:x PA_C
          :}
        ;
 
-/* complementaria: limpia con certificado/horas opcionales */
 complementaria_list ::= complementaria_list complementaria
                       | complementaria
                       ;
@@ -705,9 +697,7 @@ horas_opt ::= horas
 
 certificado ::= CERTIFICADO PA_A BOOL:x PA_C
               {:
-                // opcional: puedes usar esto para en_curso
-                // String v = unquote(stripParensLike(x));
-                // tmpFormEnCurso = "No".equalsIgnoreCase(v);
+
               :}
               ;
 

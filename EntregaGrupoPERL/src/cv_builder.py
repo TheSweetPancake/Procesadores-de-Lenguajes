@@ -146,7 +146,6 @@ class BuildObjectsVisitor(E3Visitor):
         cvs = ctx.cv()
         if not cvs:
             raise ValueError("No se encontró ningún bloque cv en el archivo.")
-        # Si hay varios cv, aquí podrías iterar. Por ahora, usamos el primero:
         return self.visit(cvs[0])
 
     # ---------- CV ----------
@@ -162,7 +161,6 @@ class BuildObjectsVisitor(E3Visitor):
         if hasattr(ctx, "IDENT") and ctx.IDENT():
             self._cv_id = _resolve_var(ctx.IDENT().getText(), self._local_vars, self._global_vars)
         else:
-            # fallback: intenta capturar el "nombre" desde el texto completo
             full = _ctx_text(ctx)
             head = full.split("{", 1)[0].strip()
             head = head[2:].strip() if head.lower().startswith("cv") else head
@@ -233,7 +231,6 @@ class BuildObjectsVisitor(E3Visitor):
                 )
             )
 
-        # Si tienes complementaria en tu gramática, descomenta y adapta:
         if hasattr(ctx, "complementaria"):
             for c in ctx.complementaria() or []:
                 titulo = _ctx_value(c.titulo(), self)
@@ -342,7 +339,6 @@ class BuildObjectsVisitor(E3Visitor):
         # hard? -> ctx.hard() es None o HardContext (NO lista)
         hd = ctx.hard()
         if hd:
-            # Si tu hard usa categoria{...} como en tu ejemplo:
             if hasattr(hd, "categoria") and hd.categoria():
                 for cat in hd.categoria():
                     txt = _ctx_text(cat)
@@ -351,10 +347,6 @@ class BuildObjectsVisitor(E3Visitor):
                     nivel = self._extract_field(txt, "nvhab")
                     if hab_nombre:
                         hs.append(Habilidad(nombre=hab_nombre, tipo="hard", categoria=cat_nombre, nivel=nivel))
-            else:
-                # fallback si tu gramática hard es la antigua (habilidad/categoria/nvhab sueltos)
-                # (deja esto si no aplica; no hace daño)
-                pass
 
         self._skills = Habilidades(habilidades=hs)
         return None
