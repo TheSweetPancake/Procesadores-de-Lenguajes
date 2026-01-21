@@ -23,8 +23,8 @@ def _resolve_var(
     s = s.strip()
 
     # Solo resolvemos si viene entre comillas
-    if len(s) >= 2 and s[0] == '"' and s[-1] == '"':
-        key = s
+    if len(s) >= 2 and s[0] == '"':
+        key = s.strip("=")[0]
 
         # Primero variables locales
         if key in local_vars:
