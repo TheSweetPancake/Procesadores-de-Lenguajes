@@ -60,7 +60,7 @@ def _ctx_text(ctx) -> str:
 
 
 def _ctx_value(ctx, visitor: "BuildObjectsVisitor") -> str:
-    s = s.strip()
+    s = _ctx_text(ctx).strip()
     if "=" in s and s.endswith(";"):
         return s[s.find("=") + 1 : -1].strip()
     if s.startswith("=") and s.endswith(";"):
