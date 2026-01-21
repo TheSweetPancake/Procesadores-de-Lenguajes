@@ -386,9 +386,8 @@ class BuildObjectsVisitor(E3Visitor):
                 tec = _split_tecnologias(_ctx_value(p.tecnologias(), self)) if hasattr(p, "tecnologias") and p.tecnologias() else []
                 proyectos.append(Proyecto(nombre=nombre, descripcion=desc, tecnologias=tec))
 
-        # Si en tu gramática existen meritos(), también podrías leerlos:
-        if hasattr(ctx, "meritos") and ctx.meritos():
-            for m in ctx.meritos():
+        if hasattr(ctx, "merito") and ctx.merito():
+            for m in ctx.merito():
                 n = _ctx_value(m.nombre(), self) if hasattr(m, "nombre") and m.nombre() else ""
                 d = _ctx_value(m.descripcion(), self) if hasattr(m, "descripcion") and m.descripcion() else ""
                 meritos.append(Merito(nombre=n, descripcion=d))
