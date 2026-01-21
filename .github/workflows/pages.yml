@@ -88,7 +88,6 @@ jobs:
       
           ROOT="$GITHUB_WORKSPACE"
       
-          # Descarga herramientas EN LA RAIZ (puedes cambiarlo a "$BASE/tools" si quieres)
           mkdir -p "$ROOT/tools"
           curl -L -o "$ROOT/tools/jflex.jar" https://repo1.maven.org/maven2/de/jflex/jflex/1.9.1/jflex-1.9.1.jar
           curl -L -o "$ROOT/tools/java-cup.jar" https://repo1.maven.org/maven2/com/github/vbmacher/java-cup/11b/java-cup-11b.jar
@@ -160,8 +159,8 @@ jobs:
           mkdir -p site
           cp index.html site/index.html
       
-          # Copiar el CSS "pareja" de la plantilla seleccionada
-          # Ej: templates/plantilla_cv.html -> templates/plantilla_cv.css
+          # Copiar el CSS asociado a la plantilla seleccionada
+          # En el caso tipico templates/plantilla_cv.html -> templates/plantilla_cv.css
           CSS_PATH="${TEMPLATE_PATH%.html}.css"
       
           if [ -f "$CSS_PATH" ]; then
@@ -170,7 +169,7 @@ jobs:
             echo "[WARN] No existe CSS asociado: $CSS_PATH. Se omite styles.css"
           fi
 
-          # JS: plantillaX.html -> plantillaX.js
+          # Igual que para el css   JS: plantillaX.html -> plantillaX.js
           JS_PATH="${TEMPLATE_PATH%.html}.js"
           if [ -f "$JS_PATH" ]; then
             cp "$JS_PATH" "site/$(basename "$JS_PATH")"
@@ -178,7 +177,6 @@ jobs:
             echo "[INFO] No hay JS asociado: $JS_PATH (ok si la plantilla no usa JS)"
           fi
       
-          # Copia de assets si los tienes
           if [ -d "$BASE/assets" ]; then cp -r "$BASE/assets" site/assets; fi
           if [ -d "$BASE/img" ]; then cp -r "$BASE/img" site/img; fi
           if [ -d "$BASE/imagenes" ]; then cp -r "$BASE/imagenes" site/imagenes; fi
