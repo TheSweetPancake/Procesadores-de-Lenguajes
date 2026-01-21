@@ -106,9 +106,9 @@ class BuildObjectsVisitor(E3Visitor):
         if self._form is None:
             raise ValueError("formacion no parseada")
         return CVObjects(
-            _global_vars=self._global_vars,
+            global_vars=self._global_vars,
             cv_id=self._cv_id,
-            _local_vars=self._local_vars,
+            local_vars=self._local_vars,
             datos=self._datos,
             formacion=self._form,
             idiomas=self._idiomas,
@@ -252,14 +252,13 @@ class BuildObjectsVisitor(E3Visitor):
     def visitIdiomas(self, ctx: E3Parser.IdiomasContext):
         lst: List[Idioma] = []
         for it in ctx.idioma():
-            # Estructura: idioma{ nombre(Inglés) nivel(B2) expedidor(...) }"
+            # En muchas gramáticas: idioma( Inglés nivel(B2) expedidor(...) )
+            # Como no usamos value(), cogemos texto y buscamos sub-nodos:
             nombre = ""
-            if hasattr(it, "nombre") and it.nombre():
-                nombre = _ctx_value(it.nombre(), self)
-            elif hasattr(it, "CONJPALYNUM") and it.CONJPALYNUM():
+            if hasattr(it, "CONJPALYNUM") and it.CONJPALYNUM():
                 nombre = it.CONJPALYNUM().getText()
             else:
-                nombre = _ctx_text(it).strip("()").split()[0] if _ctx_text(it).strip() else ""
+                nombre = _ctx_text(it).strip("()").strip()
 
             niv = _ctx_value(it.nivel(), self) if hasattr(it, "nivel") and it.nivel() else ""
             exp = _ctx_value(it.expedidor(), self) if hasattr(it, "expedidor") and it.expedidor() else None
