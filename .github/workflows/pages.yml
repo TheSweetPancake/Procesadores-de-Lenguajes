@@ -138,7 +138,7 @@ jobs:
 
       
           # 5) Render Jinja con flexcup_engine.py
-          PYTHONPATH="$(pwd)/$BASE/src" python << 'PY'
+          PYTHONPATH="$(pwd)/$BASE/src" python << PY
           from pathlib import Path
           from parsers.flexcup_engine import render_jinja
           
