@@ -58,8 +58,11 @@ def _inside_parens(s: str) -> str:
 def _ctx_text(ctx) -> str:
     return ctx.getText().strip()
 
-
 def _ctx_value(ctx, visitor: "BuildObjectsVisitor") -> str:
+    raw = _inside_parens(_ctx_text(ctx))
+    return _resolve_var(raw, visitor._local_vars, visitor._global_vars)
+
+def _ctx_value_var(ctx, visitor: "BuildObjectsVisitor") -> str:
     s = _ctx_text(ctx).strip()
     if "=" in s and s.endswith(";"):
         return s[s.find("=") + 1 : -1].strip()
@@ -128,14 +131,14 @@ class BuildObjectsVisitor(E3Visitor):
     def visitGlobal_var(self, ctx: E3Parser.Global_varContext):
         for v in ctx.variable():
             name = v.IDENT().getText()
-            value = _ctx_value(v, self)
+            value = _ctx_value_var(v, self)
             self._global_vars[name] = value
         return None
 
     def visitLocal_var(self, ctx: E3Parser.Local_varContext):
         for v in ctx.variable():
             name = v.IDENT().getText()
-            value = _ctx_value(v, self)
+            value = _ctx_value_var(v, self)
             self._local_vars[name] = value
         return None
 
