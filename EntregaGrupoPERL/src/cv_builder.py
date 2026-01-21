@@ -61,7 +61,7 @@ def _ctx_text(ctx) -> str:
 
 def _ctx_value(ctx, visitor: "BuildObjectsVisitor") -> str:
     raw = _inside_parens(_ctx_text(ctx))
-    return _resolve_var(raw, visitor._local_vars, visitor.__global_vars)
+    return _resolve_var(raw, visitor._local_vars, visitor._global_vars)
 
 
 def _split_tecnologias(s: str) -> List[str]:
@@ -89,7 +89,7 @@ class CVObjects:
 class BuildObjectsVisitor(E3Visitor):
     def __init__(self) -> None:
         super().__init__()
-        self.__global_vars: Dict[str, str] = {}
+        self._global_vars: Dict[str, str] = {}
         self._cv_id: str = "CV"
         self._local_vars: Dict[str, str] = {}
         self._datos: Optional[DatosPersonales] = None
@@ -106,7 +106,7 @@ class BuildObjectsVisitor(E3Visitor):
         if self._form is None:
             raise ValueError("formacion no parseada")
         return CVObjects(
-            _global_vars=self.__global_vars,
+            _global_vars=self._global_vars,
             cv_id=self._cv_id,
             _local_vars=self._local_vars,
             datos=self._datos,
@@ -125,7 +125,7 @@ class BuildObjectsVisitor(E3Visitor):
         for v in ctx.variable():
             name = v.IDENT().getText()
             value = _ctx_value(v, self)
-            self.__global_vars[name] = value
+            self._global_vars[name] = value
         return None
 
     def visitLocal_var(self, ctx: E3Parser.Local_varContext):
@@ -153,13 +153,13 @@ class BuildObjectsVisitor(E3Visitor):
 
         # Procesar nombre del CV
         if hasattr(ctx, "IDENT") and ctx.IDENT():
-            self._cv_id = _resolve_var(ctx.IDENT().getText(), self._local_vars, self.__global_vars)
+            self._cv_id = _resolve_var(ctx.IDENT().getText(), self._local_vars, self._global_vars)
         else:
             # fallback: intenta capturar el "nombre" desde el texto completo
             full = _ctx_text(ctx)
             head = full.split("{", 1)[0].strip()
             head = head[2:].strip() if head.lower().startswith("cv") else head
-            self._cv_id = _resolve_var(head, self._local_vars, self.__global_vars) if head else "CV"
+            self._cv_id = _resolve_var(head, self._local_vars, self._global_vars) if head else "CV"
 
         # Procesar secciones del CV
         self.visit(ctx.datospersonales())
@@ -262,7 +262,7 @@ class BuildObjectsVisitor(E3Visitor):
 
             niv = _ctx_value(it.nivel(), self) if hasattr(it, "nivel") and it.nivel() else ""
             exp = _ctx_value(it.expedidor(), self) if hasattr(it, "expedidor") and it.expedidor() else None
-            lst.append(Idioma(nombre=_resolve_var(nombre, self._local_vars, self.__global_vars), nivel=niv, expedidor=exp))
+            lst.append(Idioma(nombre=_resolve_var(nombre, self._local_vars, self._global_vars), nivel=niv, expedidor=exp))
 
         self._idiomas = Idiomas(idiomas=lst)
         return None
@@ -365,7 +365,7 @@ class BuildObjectsVisitor(E3Visitor):
         j = block_text.find(")", i)
         if j == -1:
             return ""
-        return _resolve_var(block_text[i + len(key) : j].strip(), self._local_vars, self.__global_vars)
+        return _resolve_var(block_text[i + len(key) : j].strip(), self._local_vars, self._global_vars)
 
     # ---------- PORTAFOLIO ----------
     def visitPortafolio(self, ctx: E3Parser.PortafolioContext):
