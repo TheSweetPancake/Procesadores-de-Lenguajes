@@ -22,19 +22,15 @@ def _resolve_var(
 ) -> str:
     s = s.strip()
 
-    # Solo resolvemos si viene entre comillas
     if len(s) >= 2 and s[0] == '"':
         key = s.split('=')[0].strip()
 
-        # Primero variables locales
         if key in _local_vars:
             return _local_vars[key]
 
-        # Luego globales
         if key in _global_vars:
             return _global_vars[key]
 
-        # Si no existe, devolvemos el literal sin comillas
         return key
 
     return s
@@ -150,14 +146,11 @@ class BuildObjectsVisitor(E3Visitor):
 
     # ---------- CV ----------
     def visitCv(self, ctx: E3Parser.CvContext):
-        # Reset de variables locales al iniciar CV
         self._local_vars = {}
 
-        # Primero procesamos las variables locales
         if ctx.local_var():
             self.visit(ctx.local_var())
 
-        # Procesar nombre del CV
         if hasattr(ctx, "IDENT") and ctx.IDENT():
             self._cv_id = _resolve_var(ctx.IDENT().getText(), self._local_vars, self._global_vars)
         else:
@@ -166,7 +159,6 @@ class BuildObjectsVisitor(E3Visitor):
             head = head[2:].strip() if head.lower().startswith("cv") else head
             self._cv_id = _resolve_var(head, self._local_vars, self._global_vars) if head else "CV"
 
-        # Procesar secciones del CV
         self.visit(ctx.datospersonales())
         self.visit(ctx.formacion())
         if ctx.idiomas():
@@ -310,17 +302,14 @@ class BuildObjectsVisitor(E3Visitor):
         if hasattr(ctx, "puesto") and ctx.puesto():
             out["puesto"] = _ctx_value(ctx.puesto(), self)
         if hasattr(ctx, "horas") and ctx.horas():
-            # horas(NUM) normalmente
             try:
                 out["horas"] = _ctx_value(ctx.horas(), self)
             except Exception:
                 out["horas"] = None
 
-        # laboral: responsabilidades(...)
         if hasattr(ctx, "responsabilidades") and ctx.responsabilidades():
             out["descripcion"] = _ctx_value(ctx.responsabilidades(), self)
 
-        # voluntariado: descripcion(...)
         if hasattr(ctx, "descripcion") and ctx.descripcion():
             out["descripcion"] = _ctx_value(ctx.descripcion(), self)
 
@@ -330,13 +319,11 @@ class BuildObjectsVisitor(E3Visitor):
     def visitHabilidades(self, ctx: E3Parser.HabilidadesContext):
         hs: List[Habilidad] = []
 
-        # soft?  -> ctx.soft() es None o SoftContext (NO lista)
         s = ctx.soft()
         if s:
             for h in s.habilidad():
                 hs.append(Habilidad(nombre=_ctx_value(h, self), tipo="soft"))
 
-        # hard? -> ctx.hard() es None o HardContext (NO lista)
         hd = ctx.hard()
         if hd:
             if hasattr(hd, "categoria") and hd.categoria():
