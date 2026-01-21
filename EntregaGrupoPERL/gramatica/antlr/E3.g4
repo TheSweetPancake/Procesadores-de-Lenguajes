@@ -145,7 +145,7 @@ experiencia:    EXPERIENCIA LL_A (laboral+ voluntariado* | voluntariado+) LL_C;
 laboral:        LABORAL LL_A organizacion puesto horas responsabilidades? LL_C;
 puesto:         PUESTO PA_A (CONJPALYNUM|IDENT) PA_C;
 responsabilidades: RESPONSABILIDADES PA_A (CONJPALYNUM|IDENT) PA_C;
-voluntariado:   VOLUNTARIADO LL_A puesto descripcion horas organizacion LL_C;
+voluntariado:   VOLUNTARIADO LL_A organizacion puesto descripcion horas LL_C;
 organizacion:   ORGANIZACION PA_A (CONJPALYNUM|IDENT) PA_C;
 
 habilidades:    HABILIDADES LL_A (soft hard? | hard) LL_C ;
