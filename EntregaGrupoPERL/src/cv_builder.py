@@ -75,9 +75,9 @@ def _split_tecnologias(s: str) -> List[str]:
 
 @dataclass
 class CVObjects:
-    _global_vars: Dict[str, str]
+    global_vars: Dict[str, str]
     cv_id: str
-    _local_vars: Dict[str, str]
+    local_vars: Dict[str, str]
     datos: DatosPersonales
     formacion: Formacion
     idiomas: Optional[Idiomas]
