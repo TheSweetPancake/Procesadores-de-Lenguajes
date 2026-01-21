@@ -98,6 +98,8 @@ jobs:
           objs = visitor.visit(tree)
           
           print("===== JSON DIRECTO del visitor (ANTLR) =====")
+          print(f"global: {objs.global_vars}")
+          print(f"local: {objs.local_vars}")
           print(f"cv_id: {objs.cv_id}")
           print(f"datos: {objs.datos}")
           print(f"formacion: {objs.formacion}")
