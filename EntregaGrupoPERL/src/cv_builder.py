@@ -259,13 +259,13 @@ class BuildObjectsVisitor(E3Visitor):
     def visitIdiomas(self, ctx: E3Parser.IdiomasContext):
         lst: List[Idioma] = []
         for it in ctx.idioma():
-            # En muchas gramáticas: idioma( Inglés nivel(B2) expedidor(...) )
-            # Como no usamos value(), cogemos texto y buscamos sub-nodos:
             nombre = ""
-            if hasattr(it, "CONJPALYNUM") and it.CONJPALYNUM():
+            if hasattr(it, "nombre") and it.nombre():
+                nombre = _ctx_value(it.nombre(), self)
+            elif hasattr(it, "CONJPALYNUM") and it.CONJPALYNUM():
                 nombre = it.CONJPALYNUM().getText()
             else:
-                nombre = _ctx_text(it).strip("()").strip()
+                nombre = _ctx_text(it).strip("()").split()[0] if _ctx_text(it).strip() else ""
 
             niv = _ctx_value(it.nivel(), self) if hasattr(it, "nivel") and it.nivel() else ""
             exp = _ctx_value(it.expedidor(), self) if hasattr(it, "expedidor") and it.expedidor() else None
