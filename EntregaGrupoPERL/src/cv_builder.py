@@ -24,7 +24,7 @@ def _resolve_var(
 
     # Solo resolvemos si viene entre comillas
     if len(s) >= 2 and s[0] == '"':
-        key = s.strip("=")[0]
+        key = s.split('=')[0].strip()
 
         # Primero variables locales
         if key in local_vars:
