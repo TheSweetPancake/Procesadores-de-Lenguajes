@@ -80,7 +80,7 @@ jobs:
           test -f index.html
           
           # Imprimir JSON directo del parser ANTLR
-          PYTHONPATH="$(pwd)/$BASE/src:$(pwd)/$ANTLR_PY_DIR" python << 'PYSCRIPT'
+          PYTHONPATH="$(pwd)/$BASE/src:$(pwd)/$ANTLR_PY_DIR" python << PYSCRIPT
           import json
           from pathlib import Path
           from antlr4 import FileStream, CommonTokenStream
@@ -109,7 +109,7 @@ jobs:
           PYSCRIPT
           
           # Imprimir resultado de _to_jinja_dict desde ANTLR
-          PYTHONPATH="$(pwd)/$BASE/src:$(pwd)/$ANTLR_PY_DIR" python << 'PYSCRIPT'
+          PYTHONPATH="$(pwd)/$BASE/src:$(pwd)/$ANTLR_PY_DIR" python << PYSCRIPT
           import json
           from pathlib import Path
           from parsers.antlr_engine import parse_with_antlr
