@@ -8,7 +8,7 @@ cv "Messi" {
 			telefono (544444444)
 			redes {
 				web (leomessi.com)
-			}
+			
 		}
 	}
 	formacion {
